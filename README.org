@@ -1,0 +1,121 @@
+#+title: WIPWIPWIPWIPWIP
+
+** First
+go to hlissners' dotfiles, scroll to bottom and read / watch all the sources
+
+Get some help with 'configuration.nix(5)' man page and in the NixOS manual
+(accessible by running ‘nixos-help’).
+
+** Flakes
+Any subsequent build of this flake will use the version of nixpkgs recorded in
+the lock file. If you add new inputs to flake.nix, when you run any command such
+as nix build, Nix will automatically add corresponding locks to flake.lock.
+However, it won’t replace existing locks. If you want to update a locked input
+to the latest version, you need to ask for it:
+
+: $ nix flake lock --update-input nixpkgs
+: $ nix build
+
+https://www.tweag.io/blog/2020-07-31-nixos-flakes - nix flakes, templates,
+updating lock files etc..
+
+
+*** Nix CLI - Flakes Usage
+Source: https://github.com/colemickens/nixos-flake-example#nix-cli---flakes-usage
+
+Nix is in flakes mode when:
+
+ ~--flake~ is used with the ~nixos-rebuild~ command or, when nix build is used with
+ an argument like ~.#something~ (the hash symbol separates the flake source from
+ the attribute to build)
+
+When in this mode:
+
+ Nix flake commands will implicitly take a directory path, it expects a
+ ~flake.nix~ inside when you see: ~nix build '.#something'~, the '.' means current
+ directory, and ~#something~ means to build the ~something~ output attribute
+
+*** Useful commands and examples
+
+~nixos-rebuild build --flake '.#'~ :
+- looks for flake.nix in . (current dir)
+- since it's nixos-rebuild, it automatically tries to build:
+  - #nixosConfigurations.{hostname}.config.system.build.toplevel
+
+: nixos-rebuild build --flake '/code/nixos-config#mysystem'
+
+** things removed from original configuration.nix
+
+#+begin_src nix
+  # Some programs need SUID wrappers, can be configured further or are
+  # started in user sessions.
+  # programs.mtr.enable = true;
+  # programs.gnupg.agent = {
+  #   enable = true;
+  #   enableSSHSupport = true;
+  # };
+
+  # Copy the NixOS configuration file and link it from the resulting system
+  # (/run/current-system/configuration.nix). This is useful in case you
+  # accidentally delete configuration.nix.
+  # system.copySystemConfiguration = true;
+
+  # This value determines the NixOS release from which the default
+  # settings for stateful data, like file locations and database versions
+  # on your system were taken. It‘s perfectly fine and recommended to leave
+  # this value at the release version of the first install of this system.
+  # Before changing this value read the documentation for this option
+  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
+
+#+end_src
+
+** Todo / to check
+hardware ->autio module -> easyeffects app
+
+
+possible home-manager options:
+
+#+begin_src nix
+# XXX: customize theme for different one / custom, and cursor as well
+pointerCursor = {
+  name = "Dracula-cursors";
+  package = pkgs.dracula-theme;
+  size = 16;
+};
+# NixOS uses location below for default wallpaper, so below you can source it from wherever you want
+# file.".config/wall".source = ../modules/themes/wall;
+#+end_src
+
+GTK theming setup example:
+#+begin_src nix
+gtk = {
+  enable = true;
+  theme = {
+    name = "Dracula";
+    package = pkgs.dracula-theme;
+  };
+  iconTheme = {
+    name = "Papirus-Dark";
+    package = pkgs.papirus-icon-theme;
+  };
+  font = {
+    # or FiraCode Nerd Font Mono Medium
+    name = "JetBrains Mono Medium";
+  };
+};
+#+end_src
+
+Gaming performance:
+#+begin_src nix
+programs = {
+    steam.enable = true;
+    dconf.enable = true;
+
+    # Better gaming performance
+    # Steam: right-click game - properties - launch options: gamemoderun %command%
+    # Lutris: General Preferences - enable feral gamemode
+    # 			      - global options - add environment variables:
+    # LD_PRELOAD=/nix/xtore/*-gamemode-*-lib/lib/libgamemodeauto.so
+    # gamemode.enable = true; # XXX: any1 uses it this setting?
+};
+#+end_src

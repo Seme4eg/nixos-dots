@@ -1,0 +1,28 @@
+[user]
+	name = sad
+	email = 418@duck.com
+[init]
+	defaultBranch = main
+[github]
+	user = seme4eg
+[push]
+	default = current
+	gpgSign = if-asked
+[pull]
+	rebase = true
+[alias]
+	unadd = reset HEAD
+[url "https://github.com/"]
+    insteadOf = gh:
+[url "git@github.com:"]
+    insteadOf = ssh+gh:
+[url "git@github.com:hlissner/"]
+    insteadOf = gh:/
+[url "https://gitlab.com/"]
+    insteadOf = gl:
+[url "https://gist.github.com/"]
+    insteadOf = gist:
+[diff "lisp"]
+	xfuncname = "^(((;;;+ )|\\(|([ \t]+\\(((cl-|el-patch-)?def(un|var|macro|method|custom)|gb/))).*)$"
+[diff "org"]
+	xfuncname = "^(\\*+ +.*)$"
