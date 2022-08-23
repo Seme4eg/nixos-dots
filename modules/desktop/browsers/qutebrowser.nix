@@ -14,21 +14,24 @@ in {
   options.modules.desktop.browsers.qutebrowser = with types; {
     enable = mkBoolOpt false;
     userStyles = mkOpt lines "";
+    # option to pass some additional per-host settings
     extraConfig = mkOpt lines "";
-    dicts = mkOpt (listOf str) [ "en-US" ];
+    dicts = mkOpt (listOf str) [ "en-US" "ru-RU" ];
   };
 
   config = mkIf cfg.enable {
     user.packages = with pkgs; [
       pkg
-      (makeDesktopItem {
-        name = "qutebrowser-private";
-        desktopName = "Qutebrowser (Private)";
-        genericName = "Open a private Qutebrowser window";
-        icon = "qutebrowser";
-        exec = ''${pkg}/bin/qutebrowser -T -s content.private_browsing true'';
-        categories = [ "Network" ];
-      })
+
+      # (makeDesktopItem {
+      #   name = "qutebrowser-private";
+      #   desktopName = "Qutebrowser (Private)";
+      #   genericName = "Open a private Qutebrowser window";
+      #   icon = "qutebrowser";
+      #   exec = ''${pkg}/bin/qutebrowser -T -s content.private_browsing true'';
+      #   categories = [ "Network" ];
+      # })
+
       # For Brave adblock in qutebrowser, which is significantly better than the
       # built-in host blocking. Works on youtube and crunchyroll ads!
       python39Packages.adblock
@@ -46,11 +49,18 @@ in {
     };
 
     # Install language dictionaries for spellcheck backends
-    system.userActivationScripts.qutebrowserInstallDicts =
-      concatStringsSep "\\\n" (map (lang: ''
-        if ! find "$XDG_DATA_HOME/qutebrowser/qtwebengine_dictionaries" -type d -maxdepth 1 -name "${lang}*" 2>/dev/null | grep -q .; then
-          ${pkgs.python3}/bin/python ${pkg}/share/qutebrowser/scripts/dictcli.py install ${lang}
-        fi
-      '') cfg.dicts);
+    system.userActivationScripts = {
+      qutebrowserCreateDownDir = {
+        text = ''
+          [ ! -d "$HOME/Downloads" ] && mkdir $HOME/Downloads;
+        '';
+      };
+      qutebrowserInstallDicts =
+        concatStringsSep "\\\n" (map (lang: ''
+          if ! find "$XDG_DATA_HOME/qutebrowser/qtwebengine_dictionaries" -type d -maxdepth 1 -name "${lang}*" 2>/dev/null | grep -q .; then
+            ${pkgs.python3}/bin/python ${pkg}/share/qutebrowser/scripts/dictcli.py install ${lang}
+          fi
+        '') cfg.dicts);
+    };
   };
 }

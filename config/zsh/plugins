@@ -1,0 +1,15 @@
+# prompts:
+#   with prompt plugins, remember to add this to your .zshrc:
+#   `autoload -Uz promptinit && promptinit && prompt pure`
+# sindresorhus/pure     kind:fpath
+
+# NOTE Be extra careful about plugin load order, or subtle breakage can
+#   emerge. This is the best order I've sussed out for these plugins.
+junegunn/fzf path:shell
+jeffreytse/zsh-vi-mode kind:defer
+zdharma-continuum/fast-syntax-highlighting
+zsh-users/zsh-completions path:src
+zsh-users/zsh-autosuggestions
+zsh-users/zsh-history-substring-search
+romkatv/powerlevel10k
+hlissner/zsh-autopair path:autopair.zsh

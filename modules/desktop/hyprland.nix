@@ -12,26 +12,60 @@ in {
   config = mkIf cfg.enable {
     services.xserver = {
       enable = true;
-        # layout = "us";
+      # layout = "us";
       displayManager = {
         lightdm.enable = false;
         gdm.enable = false;
       };
     };
 
+    # services = {
+    #   picom.enable = true;
+    #   redshift.enable = true;
+    #   xserver = {
+    #     enable = true;
+    #     displayManager = {
+    #       lightdm.enable = true;
+    #     #  lightdm.greeters.mini.enable = true;
+    #     };
+    #     windowManager.awesome.enable = true;
+    #   };
+    # };
+
     programs.hyprland.enable = true;
 
     user.packages = with pkgs; [
-      alacritty
+      alacritty # XXX move it away from here
       mako
       hyprpaper
       waybar
       wlsunset
       brillo
       bemenu
+      swayidle
+      swaylock
     ];
 
-    # programs.nm-applet.enable = true; # in case that didn't start in hyprland
+    # Icons MS Nerdfont Icons override
+    fonts = {
+      fontDir.enable = true;
+      enableGhostscriptFonts = true; # XXX what's that
+      fonts = with pkgs; [
+        source-code-pro
+        font-awesome
+        dejavu_fonts
+        symbola
+        corefonts
+        (nerdfonts.override {
+          fonts = [
+            "FiraCode"
+          ];
+        })
+      ];
+    };
+
+
+    programs.nm-applet.enable = true; # in case that didn't start in hyprland
     xdg.portal.wlr.enable = true;
 
     env = {
@@ -45,10 +79,32 @@ in {
       XCURSOR_SIZE = "24";
     };
 
+    # modules.theme.onReload.bspwm = ''
+    #   ${pkgs.bspwm}/bin/bspc wm -r
+    #   source $XDG_CONFIG_HOME/bspwm/bspwmrc
+    # '';
+
+    # systemd.user.services."dunst" = {
+    #   enable = true;
+    #   description = "";
+    #   wantedBy = [ "default.target" ];
+    #   serviceConfig.Restart = "always";
+    #   serviceConfig.RestartSec = 2;
+    #   serviceConfig.ExecStart = "${pkgs.dunst}/bin/dunst";
+    # };
+
     home.configFile = {
+      # "sxhkd".source = "${configDir}/sxhkd"; # XXX
       # Write it recursively so other modules can link files in their dirs
       "hypr" = { source = "${configDir}/hypr"; recursive = true; };
     };
 
+    # Clean up leftovers, as much as we can (for X)
+    # system.userActivationScripts.cleanupHome = ''
+    #   pushd "${config.user.home}"
+    #   rm -rf .compose-cache .nv .pki .dbus .fehbg
+    #   [ -s .xsession-errors ] || rm -f .xsession-errors*
+    #   popd
+    # '';
   };
 }

@@ -62,11 +62,11 @@ in {
 
     env.PATH = [ "$XDG_CONFIG_HOME/emacs/bin" ];
 
-    # XXX: add it later
-    # modules.shell.zsh.rcFiles = [ "${configDir}/emacs/aliases.zsh" ];
+    modules.shell.zsh.rcFiles = [ "${configDir}/emacs/aliases.zsh" ];
 
     fonts.fonts = [ pkgs.emacs-all-the-icons-fonts ];
 
+    # XXX: script doesn't work
     system.userActivationScripts = mkIf cfg.doom.enable {
       installDoomEmacs = {
         text = ''
@@ -78,6 +78,7 @@ in {
         };
     };
 
+    # NOTE: this script does work
     # Installation script every time nixos-rebuild is run. So not during initial install.
     # system.userActivationScripts = {                    
     #   doomEmacs = {
