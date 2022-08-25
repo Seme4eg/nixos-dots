@@ -69,9 +69,15 @@ When in this mode:
 
 #+end_src
 
+** Notes
+Setup with dual monitors, making one primary, arranging those can be looked up
+in hlissners' dots in 'murasaki' host.
+
+Server setup can be looked up in 'ao' host also there.
 ** Todo / to check
 hardware ->autio module -> easyeffects app
 
+How to autoreload hyprland config on any change in flake hypr config dir?
 
 possible home-manager options:
 
@@ -118,4 +124,13 @@ programs = {
     # LD_PRELOAD=/nix/xtore/*-gamemode-*-lib/lib/libgamemodeauto.so
     # gamemode.enable = true; # XXX: any1 uses it this setting?
 };
+#+end_src
+
+Add ssh keygen operation automatically:
+#+begin_src bash
+ssh-keygen -t ed25519 -C "418@duck.com"
+# add no passphrase
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_ed25519
+cat ~/.ssh/id_ed25519.pub
 #+end_src

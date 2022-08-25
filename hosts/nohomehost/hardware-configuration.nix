@@ -10,6 +10,17 @@
     };
     extraModulePackages = [ ];
     kernelModules = [ "kvm-intel" ];
+
+    # kernelParams = [
+      # HACK Disables fixes for spectre, meltdown, L1TF and a number of CPU
+      #      vulnerabilities. Don't copy this blindly! And especially not for
+      #      mission critical or server/headless builds exposed to the world.
+      # "mitigations=off"
+    # ];
+
+    # Refuse ICMP echo requests on my desktop/laptop; nobody has any business
+    # pinging them, unlike my servers.
+    kernel.sysctl."net.ipv4.icmp_echo_ignore_broadcasts" = 1;
 	};
 
   # Modules
@@ -32,9 +43,26 @@
 	# Enable touchpad support (enabled default in most desktopManager).
   services.xserver.libinput.enable = true;
 
+  # Power management
+  environment.systemPackages = [ pkgs.acpi ];
+  powerManagement.powertop.enable = true;
+
+  # Networking
+  # Without this wpa_supplicant may fail to auto-discover wireless interfaces at
+  # startup (and must be restarted).
+  # networking.wireless.interfaces = [ "wlp2s0" ];
+  # networking.interfaces = {
+  #   enp42s0.useDHCP = true;
+  #   wlo1.useDHCP = true;
+  # };
+
+  # Xbox controller support
+  # hardware.xpadneo.enable = true;
+
   # CPU
   # nix.settings.max-jobs = lib.mkDefault 16;
-  powerManagement.cpuFreqGovernor = "performance"; # ondemand (default), powersave
+  # ondemand (default), powersave, performance
+  powerManagement.cpuFreqGovernor = "powersave";
   hardware.cpu.intel.updateMicrocode = true;
 
   # XXX: i didn't name my drives when i created them, name them and change it to

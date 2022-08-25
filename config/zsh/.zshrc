@@ -2,8 +2,7 @@
 
 # --- Sourcing ---
 . $ZDOTDIR/config.zsh
-. $ZDOTDIR/.zprofile
-. $ZDOTDIR/aliases.zsh
+# . $ZDOTDIR/.zprofile
 # for now using powerlevel10k instead
 # [ -f "~/.config/zsh/theming.zsh" ] && . "~/.config/zsh/theming.zsh"
 
@@ -31,7 +30,7 @@ if [[ ! -d $ANTIDOTE_DIR ]]; then
   git clone https://github.com/mattmc3/antidote.git "$ANTIDOTE_DIR"
 fi
 . $ANTIDOTE_DIR/antidote.zsh
-antidote load $ZDOTDIR/plugins
+antidote load $ZDOTDIR/plugins # XXX: doesn't load plugins
 
 # stty stop undef # disable C-s to freeze terminal
 # Nobody needs flow control anymore. Troublesome feature.
@@ -52,8 +51,8 @@ if [[ $TERM != dumb ]]; then
   # If you have host-local configuration, put it here
   _source $ZDOTDIR/local.zshrc
 
-  _cache fasd --init posix-alias zsh-{hook,{c,w}comp{,-install}}
-  autopair-init
+  # _cache fasd --init posix-alias zsh-{hook,{c,w}comp{,-install}}
+  # autopair-init
 fi
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.

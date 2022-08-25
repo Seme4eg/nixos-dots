@@ -9,6 +9,10 @@ in {
     enable = mkBoolOpt false;
   };
 
+  # NOTE: in case of problems with notifications / gtk check
+  # 'dbus-sway-environment' and 'configure-gtk' here -
+  # https://nixos.wiki/wiki/Sway
+
   config = mkIf cfg.enable {
     services.xserver = {
       enable = true;
@@ -19,32 +23,32 @@ in {
       };
     };
 
-    # services = {
-    #   picom.enable = true;
-    #   redshift.enable = true;
-    #   xserver = {
-    #     enable = true;
-    #     displayManager = {
-    #       lightdm.enable = true;
-    #     #  lightdm.greeters.mini.enable = true;
-    #     };
-    #     windowManager.awesome.enable = true;
-    #   };
-    # };
-
     programs.hyprland.enable = true;
+    services.dbus.enable = true;
 
     user.packages = with pkgs; [
-      alacritty # XXX move it away from here
-      mako
-      hyprpaper
-      waybar
-      wlsunset
-      brillo
-      bemenu
+      mako # notifications
+      hyprpaper # background
+      waybar # bar
+      wlsunset # nightlight
+      brillo # brightness
+      bemenu # dmenu
+
+      # Screenshot
+      grim
+      slock
+      wl-clipboard
+
+      # Screenlock
       swayidle
       swaylock
+
+      # Taken from sway nixos.wiki page
+      dracula-theme # gtk-theme
+      # gnome3.adwaita-icon-theme # default gnome cursors
     ];
+
+    programs.waybar.enable = true;
 
     # Icons MS Nerdfont Icons override
     fonts = {
@@ -64,9 +68,12 @@ in {
       ];
     };
 
-
     programs.nm-applet.enable = true; # in case that didn't start in hyprland
     xdg.portal.wlr.enable = true;
+
+    # This will allow brightness control from users in the video group.
+    user.extraGroups = [ "video" ];
+    hardware.brillo.enable = true;
 
     env = {
       CLUTTER_BACKEND = "wayland";
@@ -97,6 +104,7 @@ in {
       # "sxhkd".source = "${configDir}/sxhkd"; # XXX
       # Write it recursively so other modules can link files in their dirs
       "hypr" = { source = "${configDir}/hypr"; recursive = true; };
+      "waybar" = { source = "${configDir}/waybar"; recursive = true; };
     };
 
     # Clean up leftovers, as much as we can (for X)

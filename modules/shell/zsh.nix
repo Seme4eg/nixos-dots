@@ -37,7 +37,6 @@ in {
     };
 
     user.packages = with pkgs; [
-      zsh
       bat # A cat(1) clone with syntax highlighting and Git integration
       exa # modern replacement for the command-line program ls
 

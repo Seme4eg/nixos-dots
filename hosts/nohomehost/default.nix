@@ -12,43 +12,30 @@
 	modules = {
 		desktop = {
 			hyprland.enable = true;
-		# 	apps = {
 		# 		rofi.enable = true;
-		# 		# godot.enable = true;
-		# 	};
 			browsers = {
 				default = "qutebrowser";
 				# firefox.enable = true; # XXX
 				qutebrowser.enable = true;
 			};
-		};
-		# desktop = {
-		# 	gaming = {
-		# 		steam.enable = true;
-		# 		# emulators.enable = true;
-		# 		# emulators.psx.enable = true;
-		# 	};
-		# 	media = {
-		# 		daw.enable = true;
-		# 		documents.enable = true;
-		# 		graphics.enable = true;
-		# 		mpv.enable = true;
-		# 		recording.enable = true;
-		# 		spotify.enable = true;
-		# 	};
-		# 	term = {
-		# 		default = "xst";
-		# 		st.enable = true;
-		# 	};
+			steam.enable = true;
+			graphics.enable = true; # REVIEW: not sure about naming
+			mpv.enable = true;
+			term = {
+				default = "alacritty"; # xst
+				alacritty.enable = true;
+				# st.enable = true;
+			};
 		# 	vm = {
 		# 		qemu.enable = true;
 		# 	};
-		# };
-		# dev = {
-		# 	node.enable = true;
-		# 	rust.enable = true;
-		# 	python.enable = true;
-		# };
+		};
+		dev = {
+			lua.enable = true;
+			node.enable = true;
+			# shell.enable = true;
+			# common-lisp.enable = true;
+		};
 		editors = {
 			default = "emacs"; # nvim
 			emacs.enable = true;
@@ -66,9 +53,15 @@
 		};
 		services = {
 			ssh.enable = true;
-			# docker.enable = true;
-			# Needed occasionally to help the parental units with PC problems
-			# teamviewer.enable = true;
+			# syncthing
+
+			# TODO:
+			# wireguard.enable = true; # migrate from openvpn to wireguard
+			# transmission.enable = true; # bittorrent client - https://transmissionbt.com/
+
+			# maybe i'll need those some day
+			# discourse.enable = true;
+			# jellyfin.enable = true;
 		};
 		# theme.active = "alucard";
 	};
@@ -78,5 +71,7 @@
 	services.openssh.startWhenNeeded = true;
 
 	networking.networkmanager.enable = true;
+  # networking.wireless.enable = true;
 
+  time.timeZone = "Europe/Moscow";
 }

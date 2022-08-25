@@ -18,6 +18,7 @@ in {
 
     # allow pulseaudio to acquire realtime priority
     security.rtkit.enable = true;
+    sound.enable = true;
 
     environment.systemPackages = with pkgs; [
       easyeffects
