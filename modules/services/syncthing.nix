@@ -10,12 +10,13 @@ in {
 
   config = mkIf cfg.enable {
     user.packages = with pkgs; [
+      syncthing
       syncthing-tray
     ];
 
     # TODO: setup secrets in agenix so the synchting runs automatically after
     # intallation
-    services.syncthing = rec {
+    services.syncthing = {
       enable = true;
       openDefaultPorts = true;
       user = config.user.name;

@@ -16,8 +16,8 @@
     insteadOf = gh:
 [url "git@github.com:"]
     insteadOf = ssh+gh:
-[url "git@github.com:hlissner/"]
-    insteadOf = gh:/
+[url "git@github.com:Seme4eg/"]
+    insteadOf = g4:/
 [url "https://gitlab.com/"]
     insteadOf = gl:
 [url "https://gist.github.com/"]

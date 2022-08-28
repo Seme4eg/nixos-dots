@@ -9,9 +9,8 @@ in {
     enable = mkBoolOpt false;
   };
 
-  # NOTE: in case of problems with notifications / gtk check
-  # 'dbus-sway-environment' and 'configure-gtk' here -
-  # https://nixos.wiki/wiki/Sway
+  # NOTE: in case of problems with notifications check 'dbus-sway-environment'
+  # and 'configure-gtk' here - https://nixos.wiki/wiki/Sway
 
   config = mkIf cfg.enable {
     services.xserver = {

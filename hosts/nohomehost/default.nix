@@ -45,13 +45,14 @@
 		shell = {
 			# adl.enable = true;
 			# vaultwarden.enable = true; # lightweigt client for bitwarden
-		 	git.enable    = true;
-			gnupg.enable  = true;
-			zsh.enable    = true;
+		 	git.enable   = true;
+			gnupg.enable = true;
+			pass.enable  = true;
+			zsh.enable   = true;
 		};
 		services = {
 			ssh.enable = true;
-			syncthing = true;
+			syncthing.enable = true;
 
 			# TODO:
 			# wireguard.enable = true; # migrate from openvpn to wireguard
