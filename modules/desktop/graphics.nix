@@ -4,9 +4,9 @@
 
 with lib;
 with lib.my;
-let cfg = config.modules.desktop.media.graphics;
+let cfg = config.modules.desktop.graphics;
 in {
-  options.modules.desktop.media.graphics = {
+  options.modules.desktop.graphics = {
     enable = mkBoolOpt false;
   };
 

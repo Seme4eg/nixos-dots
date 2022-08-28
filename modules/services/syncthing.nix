@@ -13,6 +13,8 @@ in {
       syncthing-tray
     ];
 
+    # TODO: setup secrets in agenix so the synchting runs automatically after
+    # intallation
     services.syncthing = rec {
       enable = true;
       openDefaultPorts = true;

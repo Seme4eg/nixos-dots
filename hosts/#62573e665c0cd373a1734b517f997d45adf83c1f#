@@ -6,11 +6,8 @@
 with lib;
 with lib.my;
 {
-	imports = [
-		# I use home-manager to deploy files to $HOME; little else
-			inputs.home-manager.nixosModules.home-manager
-			inputs.hyprland.nixosModules.default
-		]
+	# I use home-manager to deploy files to $HOME; little else
+	imports = [inputs.home-manager.nixosModules.home-manager]
 		# Import all personal modules to every host
 		++ (mapModulesRec' (toString ../modules) import);
 

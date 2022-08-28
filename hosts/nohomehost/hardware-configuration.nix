@@ -3,7 +3,7 @@
 {
   imports = [ (modulesPath + "/installer/scan/not-detected.nix")];
 
-	boot = {
+  boot = {
     initrd = {
       availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "sd_mod" "rtsx_usb_sdmmc" ];
       kernelModules = [ ];
@@ -11,17 +11,17 @@
     extraModulePackages = [ ];
     kernelModules = [ "kvm-intel" ];
 
-    # kernelParams = [
+    kernelParams = [
       # HACK Disables fixes for spectre, meltdown, L1TF and a number of CPU
       #      vulnerabilities. Don't copy this blindly! And especially not for
       #      mission critical or server/headless builds exposed to the world.
-      # "mitigations=off"
-    # ];
+      "mitigations=off"
+    ];
 
     # Refuse ICMP echo requests on my desktop/laptop; nobody has any business
     # pinging them, unlike my servers.
     kernel.sysctl."net.ipv4.icmp_echo_ignore_broadcasts" = 1;
-	};
+  };
 
   # Modules
   modules.hardware = {

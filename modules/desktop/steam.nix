@@ -2,9 +2,9 @@
 
 with lib;
 with lib.my;
-let cfg = config.modules.desktop.gaming.steam;
+let cfg = config.modules.desktop.steam;
 in {
-  options.modules.desktop.gaming.steam = with types; {
+  options.modules.desktop.steam = with types; {
     enable = mkBoolOpt false;
   };
 

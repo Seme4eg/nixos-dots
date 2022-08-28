@@ -33,6 +33,7 @@ in {
       wlsunset # nightlight
       brillo # brightness
       bemenu # dmenu
+      networkmanagerapplet
 
       # Screenshot
       grim
@@ -53,7 +54,7 @@ in {
     # Icons MS Nerdfont Icons override
     fonts = {
       fontDir.enable = true;
-      enableGhostscriptFonts = true; # XXX what's that
+      enableGhostscriptFonts = true;
       fonts = with pkgs; [
         source-code-pro
         font-awesome

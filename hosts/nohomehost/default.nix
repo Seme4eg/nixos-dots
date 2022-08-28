@@ -12,7 +12,7 @@
 	modules = {
 		desktop = {
 			hyprland.enable = true;
-		# 		rofi.enable = true;
+			# rofi.enable = true;
 			browsers = {
 				default = "qutebrowser";
 				# firefox.enable = true; # XXX
@@ -26,9 +26,9 @@
 				alacritty.enable = true;
 				# st.enable = true;
 			};
-		# 	vm = {
-		# 		qemu.enable = true;
-		# 	};
+			# vm = {
+			# 	qemu.enable = true;
+			# };
 		};
 		dev = {
 			lua.enable = true;
@@ -43,17 +43,15 @@
 			# vim.enable = true;
 		};
 		shell = {
-		# 	adl.enable = true;
-		# 	vaultwarden.enable = true;
-		# 	direnv.enable = true;
+			# adl.enable = true;
+			# vaultwarden.enable = true; # lightweigt client for bitwarden
 		 	git.enable    = true;
-		# 	gnupg.enable  = true;
-		# 	tmux.enable   = true;
+			gnupg.enable  = true;
 			zsh.enable    = true;
 		};
 		services = {
 			ssh.enable = true;
-			# syncthing
+			syncthing = true;
 
 			# TODO:
 			# wireguard.enable = true; # migrate from openvpn to wireguard
