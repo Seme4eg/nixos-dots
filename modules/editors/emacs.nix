@@ -58,6 +58,9 @@ in {
       # :lang beancount
       # beancount
       unstable.fava  # HACK Momentarily broken on nixos-unstable
+
+      # Telegram
+      tdlib
     ];
 
     env.PATH = [ "$XDG_CONFIG_HOME/emacs/bin" ];
@@ -66,14 +69,19 @@ in {
 
     fonts.fonts = [ pkgs.emacs-all-the-icons-fonts ];
 
-    # XXX: script doesn't work
+    # XXX: Why using user activation scripts is disencouraged?
     system.userActivationScripts = mkIf cfg.doom.enable {
+      # XXX: and if so then how to symlink installed pkg to another directory
+      symlinkTdlib= ''
+        sudo ln -s ${pkgs.tdlib} /usr/local
+      '';
+      # XXX: script doesn't work
       installDoomEmacs = {
         text = ''
-		if [ ! -d "$XDG_CONFIG_HOME/emacs" ]; then
-		   git clone --depth=1 --single-branch https://github.com/doomemacs/doomemacs "$XDG_CONFIG_HOME/emacs"
-		   git clone https://github.com/Seme4eg/.doom.d.git "$XDG_CONFIG_HOME/doom"
-		fi
+          if [ ! -d "$XDG_CONFIG_HOME/emacs" ]; then
+            git clone --depth=1 --single-branch https://github.com/doomemacs/doomemacs "$XDG_CONFIG_HOME/emacs"
+            git clone https://github.com/Seme4eg/.doom.d.git "$XDG_CONFIG_HOME/doom"
+          fi
 	      '';
         };
 

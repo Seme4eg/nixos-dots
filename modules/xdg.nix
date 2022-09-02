@@ -8,6 +8,14 @@
   ### A tidy $HOME is a tidy mind
   home-manager.users.${config.user.name}.xdg.enable = true;
 
+  # Look for how to setup mime apps here
+  # https://search.nixos.org/options?channel=unstable&show=xdg.mime.addedAssociations&from=0&size=50&sort=relevance&type=packages&query=xdg
+  # These below are outdated:
+  # xdg.mimeApps.associations.removed."application/pdf" = "draw.desktop";
+  # xdg.mimeApps.associations.added."application/vnd.openxmlformats-officedocument.presentationml.presentation" =
+  #   "impress.desktop";
+  # xdg.mimeApps.associations.added."application/msword" = "writer.desktop";
+
   environment = {
     sessionVariables = {
       # These are the defaults, and xdg.enable does set them, but due to load

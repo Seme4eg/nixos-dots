@@ -44,6 +44,12 @@ When in this mode:
 
 : nixos-rebuild build --flake '/code/nixos-config#mysystem'
 
+** Subject to change for 4k laptop
+
+#+begin_src nix
+hardware.video.hidpi.enable = true;
+#+end_src
+
 ** things removed from original configuration.nix
 
 #+begin_src nix
@@ -74,42 +80,36 @@ Setup with dual monitors, making one primary, arranging those can be looked up
 in hlissners' dots in 'murasaki' host.
 
 Server setup can be looked up in 'ao' host also there.
+
+Allow to do things without sudo: https://github.com/jollheef/localhost/blob/master/security.nix#L42
+
+Secrets file example: https://github.com/jollheef/localhost/blob/master/secrets.nix.example
+
+How to write systemd units:
+- https://github.com/jollheef/localhost/blob/master/suspend.nix
+- Autoupdate units: https://github.com/jollheef/localhost/blob/master/auto-update.nix
+
+Will b useful when ima flash different android image:
+#+begin_src nix
+programs.adb.enable = true;
+users.users.${var.user.name}.extraGroups = [ "adbusers" ];
+nixpkgs.config.android_sdk.accept_license = true;
+#+end_src
+
+[[https://github.com/ninlives/emerge/tree/ce9e1c780019c1aa5d945545de7f25ba295b9f01/impl/neko/program/kitty/default.nix][Example]] of kitty setup.
+
+[[https://github.com/ninlives/emerge/tree/ce9e1c780019c1aa5d945545de7f25ba295b9f01/impl/neko/program/neovim/default.nix][Neovim setup]].
+
+Managing secrets for multiple servers / users - [[https://github.com/ryantm/agenix][agenix]]. Setup example can b
+found in hlissners' repo and on [[https://discourse.nixos.org/t/install-agenix-in-environment-systempackages-on-nixos-with-flakes/17169/2][discourse]]
+
+*** Configs reviews
+- [[github:jollheef/localhost]] - *clean*, easy to read and understand, no flakes,
+  only home-manager setup
+
 ** Todo / to check
-hardware ->autio module -> easyeffects app
 
 How to autoreload hyprland config on any change in flake hypr config dir?
-
-possible home-manager options:
-
-#+begin_src nix
-# XXX: customize theme for different one / custom, and cursor as well
-pointerCursor = {
-  name = "Dracula-cursors";
-  package = pkgs.dracula-theme;
-  size = 16;
-};
-# NixOS uses location below for default wallpaper, so below you can source it from wherever you want
-# file.".config/wall".source = ../modules/themes/wall;
-#+end_src
-
-GTK theming setup example:
-#+begin_src nix
-gtk = {
-  enable = true;
-  theme = {
-    name = "Dracula";
-    package = pkgs.dracula-theme;
-  };
-  iconTheme = {
-    name = "Papirus-Dark";
-    package = pkgs.papirus-icon-theme;
-  };
-  font = {
-    # or FiraCode Nerd Font Mono Medium
-    name = "JetBrains Mono Medium";
-  };
-};
-#+end_src
 
 Gaming performance:
 #+begin_src nix
@@ -126,6 +126,8 @@ programs = {
 };
 #+end_src
 
+Xbox-controller setup [[https://github.com/ninlives/emerge/tree/ce9e1c780019c1aa5d945545de7f25ba295b9f01/impl/lego/service/xbox-controller.nix][example]].
+
 Add ssh keygen operation automatically:
 #+begin_src bash
 ssh-keygen -t ed25519 -C "418@duck.com"
@@ -134,3 +136,99 @@ eval "$(ssh-agent -s)"
 ssh-add ~/.ssh/id_ed25519
 cat ~/.ssh/id_ed25519.pub
 #+end_src
+
+#+NAME: lexuge dots
+#+begin_src nix
+# Allow fonts to be discovered
+fonts.fontconfig.enable = true;
+
+niximg = self.nixosConfigurations.niximg.config.system.build.isoImage;
+#+end_src
+
+Whether to enable fwupd, a DBus service that allows applications to update
+firmware (???) :
+: services.fwupd.enable = true;
+
+Nix settings:
+#+begin_src nix
+# Source: https://github.com/ninlives/emerge/tree/ce9e1c780019c1aa5d945545de7f25ba295b9f01/impl/lego/misc/nix-itself.nix
+nix.settings.substituters = [
+    # "https://mirror.sjtu.edu.cn/nix-channels/store?priority=0"
+    # "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store?priority=5"
+    # "https://nixos-cn.cachix.org"
+    # "https://data.cachix.org"
+];
+nix.settings.trusted-public-keys = [
+  "nixos-cn.cachix.org-1:L0jEaL6w7kwQOPlLoCR3ADx+E3Q8SEFEcB9Jaibl0Xg="
+  "data.cachix.org-1:we/1k8A3S5cx8aM9wb6ig/DWL1cidVQluhJwD8V3VXM="
+];
+
+  nix.settings.system-features =
+    [ "benchmark" "big-parallel" "kvm" "nixos-test" "recursive-nix" ];
+  nix.settings.experimental-features =
+    [ "recursive-nix" "flakes" "nix-command" ];
+  nix.settings.flake-registry = pkgs.writeText "flake-empty.json"
+    (builtins.toJSON {
+      flakes = [ ];
+      version = 2;
+    });
+#+end_src
+
+*** [ ] Setup secrets file
+Example from [[https://github.com/ninlives/emerge][emerge]] repo:
+- [[https://github.com/ninlives/emerge/tree/ce9e1c780019c1aa5d945545de7f25ba295b9f01/bombe/default.nix][Defines]] it (follow along in this folder for file format) and [[https://github.com/ninlives/emerge/tree/ce9e1c780019c1aa5d945545de7f25ba295b9f01/impl/neko/program/qute/default.nix][imports]] it in
+  modules.
+
+*** [ ] Learn 'modules/themes' dir in hlissners' dots
+\+ also check [[https://github.com/ninlives/emerge/tree/ce9e1c780019c1aa5d945545de7f25ba295b9f01/impl/lego/hardware/boot.nix][this]] boot theming file +
+: boot.loader.grub.fontSize = 72;
+
+*** [ ] Setup theme
+possible home-manager options:
+
+#+begin_src nix
+# XXX: customize theme for different one / custom, and cursor as well
+pointerCursor = {
+  name = "Dracula-cursors";
+  package = pkgs.dracula-theme;
+  size = 16;
+};
+# NixOS uses location below for default wallpaper, so below you can source it from wherever you want
+# file.".config/wall".source = ../modules/themes/wall;
+#+end_src
+
+GTK theming setup example:
+#+begin_src nix
+gtk = {
+  enable =   true;
+  theme = {
+    name = "Dracula";
+    package = pkgs.dracula-theme;
+  };
+  iconTheme = {
+    name = "Papirus-Dark";
+    package = pkgs.papirus-icon-theme;
+  };
+  font = {
+    # or FiraCode Nerd Font Mono Medium
+    name = "JetBrains Mono Medium";
+  };
+};
+#+end_src
+
+Fonts [[https://github.com/ninlives/emerge/tree/ce9e1c780019c1aa5d945545de7f25ba295b9f01/impl/lego/ui/fonts.nix][example]].
+
+*** [ ] Setup nix img
+Shell scripts:
+- https://github.com/jollheef/localhost#installation
+- https://github.com/LEXUGE/nixos/blob/master/install.sh
+- https://github.com/Ninlives/emerge/blob/master/def/default.nix#L28
+
+*** [ ] /Setup CI/:
+
+#+NAME: source: https://github.com/LEXUGE/nixos
+![Build customized NixOS LiveCD ISO](https://github.com/LEXUGE/nixos/workflows/Build%20customized%20NixOS%20LiveCD%20ISO/badge.svg) ![Nix Flake Check](https://github.com/LEXUGE/nixos/workflows/Nix%20Flake%20Check/badge.svg) ![Release status](https://img.shields.io/github/v/release/LEXUGE/nixos.svg)
+*** [ ] Setup easyeffects (like minihost on windows)
+https://www.youtube.com/watch?v=6LbEmP1_dog
+
+hardware -> audio module -> easyeffects app

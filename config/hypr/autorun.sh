@@ -11,7 +11,9 @@ nm-applet --indicator &
 brillo -c 2
 brillo -I
 wlsunset -l 55.7 -L 37.6 -t 3000 &
-/usr/lib/polkit-kde-authentication-agent-1 &
+# /usr/lib/polkit-kde-authentication-agent-1 &
+# swhks &
+# pkexec swhkd
 
 # -i <img> -s fill
 #swayidle -w \

@@ -35,6 +35,9 @@ in {
       # For Brave adblock in qutebrowser, which is significantly better than the
       # built-in host blocking. Works on youtube and crunchyroll ads!
       python39Packages.adblock
+
+      # For userscript code-select to use newline as delimeter, nor ';'
+      python39Packages.pyperclip
     ];
 
     home = {
@@ -43,7 +46,7 @@ in {
           source = "${configDir}/qutebrowser";
           recursive = true;
         };
-        "qutebrowser/extra/00-extraConfig.py".text = cfg.extraConfig;
+        # "qutebrowser/extra/00-extraConfig.py".text = cfg.extraConfig;
       };
       dataFile."qutebrowser/userstyles.css".text = cfg.userStyles;
     };

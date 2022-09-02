@@ -41,9 +41,21 @@ with lib.my;
 			# registry.nixpkgs.flake = inputs.nixpkgs;
 			registry = registryInputs // { dotfiles.flake = inputs.self; };
 
+			# Another example of setting registry
+			# registry = {
+			#   self.flake = self;
+			#   emerge.to = {
+			#     type = "git";
+			#     url = "file://${toString var.path.entry}";
+			#   };
+			# };
+
+
 			settings = {
-				# Default - https://cache.nixos.org/
-				substituters = ["https://nix-community.cachix.org"];
+				substituters = [
+					"https://nix-community.cachix.org"
+					"http://cache.nixos.org" # Default
+				];
 				trusted-public-keys = [
 					"nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
 				];
@@ -86,19 +98,9 @@ with lib.my;
 		kernelPackages = mkDefault pkgs.linuxPackages_latest; # latest linux kernel
 		loader = {
 			efi.canTouchEfiVariables = mkDefault true;
-			systemd-boot.configurationLimit = 10;
+			systemd-boot.configurationLimit = 5;
 			systemd-boot.enable = mkDefault true;
 			timeout = 3; # works for grub and efi boot
-		};
-
-		# Use the systemd-boot EFI boot loader.
-		loader = {
-			# XXX: check grub options, there are plenty - themes, maybe jus disable it at all? so it's skipped
-			# below doesn't work, using systemd instead in /hosts/default.nix
-			# grub = {
-			# 	version = 2;
-			# 	configurationLimit = 3; # limit stored? (or showed?) system configurations
-			# };
 		};
 	};
 
@@ -109,6 +111,8 @@ with lib.my;
 		#font = "Lat2-Terminus16";
 		# keyMap = "us";
 		useXkbConfig = true; # use xkbOptions in tty.
+		# Enable setting virtual console options as early as possible (in initrd).
+		earlySetup = true;
 	};
 
 	# ---------------- END OF TRASH ------------------

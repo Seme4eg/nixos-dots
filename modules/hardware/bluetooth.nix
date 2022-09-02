@@ -12,12 +12,16 @@ in {
   config = mkIf cfg.enable {
     hardware.bluetooth = {
       enable = true;
+      # package = bluezFull;
+
       # hsphfpd.enable = true; #HSP & HFP daemon
-      # settings = {
-      #   General = {
-      #     Enable = "Source,Sink,Media,Socket";
-      #   };
-      # };
+
+      # https://nixos.wiki/wiki/Bluetooth#Enabling_A2DP_Sink
+      settings = {
+        General = {
+          Enable = "Source,Sink,Media,Socket";
+        };
+      };
     };
   };
 }

@@ -19,8 +19,6 @@
       url = "github:nix-community/home-manager"; # .. or  github:rycee/home-manager/master
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    agenix.url = "github:ryantm/agenix";
-    agenix.inputs.nixpkgs.follows = "nixpkgs";
 
     # Extras
     emacs-overlay.url = "github:nix-community/emacs-overlay";
@@ -67,11 +65,14 @@
       overlay =
         final: prev: {
           unstable = pkgs';
-          # my = self.packages."${system}";
+          my = self.packages."${system}";
         };
 
       # overlays =
       #   mapModules ./overlays import;
+
+      # packages."${system}" =
+      #   mapModules ./packages (p: pkgs.callPackage p {});
 
       # { dotfiles = import ./.; }
       nixosModules = mapModulesRec ./modules import;

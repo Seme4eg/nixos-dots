@@ -1,0 +1,15 @@
+monospace                   = "11pt Roboto"
+c.fonts.completion.category = f"bold {monospace}"
+c.fonts.completion.entry    = monospace
+c.fonts.debug_console       = monospace
+c.fonts.downloads           = monospace
+c.fonts.keyhint             = monospace
+c.fonts.messages.error      = monospace
+c.fonts.messages.info       = monospace
+c.fonts.messages.warning    = monospace
+c.fonts.prompts             = monospace
+c.fonts.statusbar           = monospace
+c.fonts.tabs.selected       = monospace
+c.fonts.tabs.unselected     = monospace
+c.fonts.hints               = "bold 13px 'DejaVu Sans Mono'"
+# c.fonts.hints = monospace

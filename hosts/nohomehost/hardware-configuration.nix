@@ -5,7 +5,8 @@
 
   boot = {
     initrd = {
-      availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "sd_mod" "rtsx_usb_sdmmc" ];
+      availableKernelModules =
+        [ "xhci_pci" "nvme" "usb_storage" "sd_mod" "rtsx_usb_sdmmc" ]; # "usbhid" "uas"
       kernelModules = [ ];
     };
     extraModulePackages = [ ];
@@ -21,6 +22,9 @@
     # Refuse ICMP echo requests on my desktop/laptop; nobody has any business
     # pinging them, unlike my servers.
     kernel.sysctl."net.ipv4.icmp_echo_ignore_broadcasts" = 1;
+
+    # REVIEW: do i need it when having ntfs3g package installed?
+    # supportedFilesystems = [ "ntfs" ];
   };
 
   # Modules
@@ -46,6 +50,8 @@
   # Power management
   environment.systemPackages = [ pkgs.acpi ];
   powerManagement.powertop.enable = true;
+  # systemd.services.powertop.wantedBy = [ "suspend.target" ];
+  # systemd.services.powertop.after = [ "suspend.target" ];
 
   # Networking
   # Without this wpa_supplicant may fail to auto-discover wireless interfaces at
@@ -59,8 +65,11 @@
   # Xbox controller support
   # hardware.xpadneo.enable = true;
 
+  # REVIEW: documentation for this option doens't explain anything...
+  # hardware.bluetooth.enable = true;
+
   # CPU
-  # nix.settings.max-jobs = lib.mkDefault 16;
+  # nix.settings.max-jobs = lib.mkDefault 16; # REVIEW
   # ondemand (default), powersave, performance
   powerManagement.cpuFreqGovernor = "powersave";
   hardware.cpu.intel.updateMicrocode = true;

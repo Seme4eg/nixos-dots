@@ -26,12 +26,12 @@ in {
     services.dbus.enable = true;
 
     user.packages = with pkgs; [
-      mako # notifications
+      mako      # notifications
       hyprpaper # background
-      waybar # bar
-      wlsunset # nightlight
-      brillo # brightness
-      bemenu # dmenu
+      waybar    # bar
+      wlsunset  # nightlight
+      brillo    # brightness
+      bemenu    # dmenu
       networkmanagerapplet
 
       # Screenshot
@@ -50,6 +50,7 @@ in {
 
     programs.waybar.enable = true;
 
+    # TODO: move it to themes later
     # Icons MS Nerdfont Icons override
     fonts = {
       fontDir.enable = true;
@@ -74,6 +75,10 @@ in {
     # This will allow brightness control from users in the video group.
     user.extraGroups = [ "video" ];
     hardware.brillo.enable = true;
+
+    # > bluetooth audio
+    # don't forget to enable bluetooth module in hardware file first
+    # services.blueman.enable = true;
 
     env = {
       CLUTTER_BACKEND = "wayland";
@@ -114,5 +119,22 @@ in {
     #   [ -s .xsession-errors ] || rm -f .xsession-errors*
     #   popd
     # '';
+
+    # TODO: fix swaylock and swayidle not letting me log back in, move locking
+    # setup from autorun.sh to systemd service (tho it might not b working then
+    # on other systems...)
+    # systemd = {
+    #   services = {
+    #     "force-lock-after-suspend" = {
+    #       serviceConfig.User = "user";
+    #       description = "Force xsecurelock after suspend";
+    #       before = [ "suspend.target" "hibernate.target" "hybrid-sleep.target" ];
+    #       wantedBy = [ "suspend.target" "hibernate.target" "hybrid-sleep.target" ];
+    #       script = ''
+    #       DISPLAY=:0 ${pkgs.xsecurelock}/bin/xsecurelock
+    #     '';
+    #     };
+    #   };
+    # };
   };
 }

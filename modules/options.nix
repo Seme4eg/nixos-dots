@@ -12,6 +12,9 @@ with lib.my;
           (findFirst pathExists (toString ../.) [
             "/mnt/etc/dotfiles"
             "/etc/dotfiles"
+            # XXX: remove it, hack cuz of weird shit happening to repo when it
+            # is in root dir
+            "/home/nohome/git/dotfiles"
           ]));
       binDir     = mkOpt path "${config.dotfiles.dir}/bin";
       configDir  = mkOpt path "${config.dotfiles.dir}/config";
