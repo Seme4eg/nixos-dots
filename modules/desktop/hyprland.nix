@@ -27,6 +27,8 @@ in {
 
     user.packages = with pkgs; [
       mako      # notifications
+      # TODO: testing notifications with notify-send (remove when done setting up mako)
+      libnotify
       hyprpaper # background
       waybar    # bar
       wlsunset  # nightlight
@@ -109,16 +111,19 @@ in {
       # "sxhkd".source = "${configDir}/sxhkd"; # XXX
       # Write it recursively so other modules can link files in their dirs
       "hypr" = { source = "${configDir}/hypr"; recursive = true; };
+      # I don't need it to be hardlink cuz i need setwp.sh to work
+      "hypr/hyprpaper.conf".text = ''
+        preload = ~/Pictures/atmosphere/Wadim Kashin/wadim-kashin-3.jpg
+        wallpaper = eDP-1,~/Pictures/atmosphere/Wadim Kashin/wadim-kashin-3.jpg
+      '';
       "waybar" = { source = "${configDir}/waybar"; recursive = true; };
     };
 
-    # Clean up leftovers, as much as we can (for X)
-    # system.userActivationScripts.cleanupHome = ''
-    #   pushd "${config.user.home}"
-    #   rm -rf .compose-cache .nv .pki .dbus .fehbg
-    #   [ -s .xsession-errors ] || rm -f .xsession-errors*
-    #   popd
-    # '';
+    system.userActivationScripts.setupWallpapers = ''
+      pushd "~/.config/hypr"
+      [ ! -f "hyprpaper.conf" ] && touch hyprpaper.conf
+      popd
+    '';
 
     # TODO: fix swaylock and swayidle not letting me log back in, move locking
     # setup from autorun.sh to systemd service (tho it might not b working then

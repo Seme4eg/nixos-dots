@@ -22,34 +22,81 @@ in {
       enable = true;
       user = config.user.name;
       openDefaultPorts = true;
+      guiAddress = "127.0.0.1:8384";
+
+      overrideDevices = true;     # overrides any devices added or deleted through the WebUI
+      overrideFolders = true;     # overrides any folders added or deleted through the WebUI
+      devices = {
+        "chost" = {
+          id = "2VVN4XC-PHZEY3X-25YR2UO-DA7NPS5-ZKERYXM-UZGONF6-XUX7QNY-NLNYIAB";
+          introducer = true;
+          # autoAcceptFolders = true;
+        };
+        # "device2" = { id = "DEVICE-ID-GOES-HERE"; };
+      };
+
       dataDir = "${config.user.home}";
 
-      # configDir = "${config.user.home}/.config/syncthing";
+      # REVIEW: any better way of defining config dir?
+      configDir = "${config.user.home}/.config/syncthing";
       # configDir = "$XDG_CONFIG_HOME/syncthing";
 
-      # key = "../../secrets/key.pem";
-      # cert = scrt."syncthing/cert.pem".path;
-      # key = scrt."syncthing/key.pem".path;
+      cert = config.age.secrets.syncthing-cert.path;
+      key = config.age.secrets.syncthing-key.path;
 
-      # folders = {
-      #   "/home/user/sync" = {
-      #     id = "syncme";
-      #     devices = [ "bigbox" ];
-      #   };
-      # };
+      # XXX: why defining 'dataDir' above if it is still required to explicitly
+      # write full path below?
+      folders = {
+        "${config.user.home}/Pictures" = {
+          id = "xmx67-zj7wg";
+          # label = ""
+          devices = [ "chost" ];
+          versioning = {type = "simple"; params.keep = "2";};
+        };
+        "${config.user.home}/Audiobooks" = {
+          id = "oqlpo-zmwq9";
+          # label = ""
+          devices = [ "chost" ];
+          versioning = {type = "simple"; params.keep = "1";};
+        };
+        "${config.user.home}/Books" = {
+          id = "hkjpb-mmqwj";
+          # label = ""
+          devices = [ "chost" ];
+          versioning = {type = "simple"; params.keep = "1";};
+        };
+        "${config.user.home}/Documents" = {
+          id = "r7asu-23rtr";
+          # label = ""
+          devices = [ "chost" ];
+          versioning = {type = "simple"; params.keep = "2";};
+        };
+        "${config.user.home}/git/books" = {
+          id = "th5g5-5t9vc";
+          # label = ""
+          devices = [ "chost" ];
+          versioning = {type = "simple"; params.keep = "1";};
+        };
+        "${config.user.home}/mem_arch" = {
+          id = "9a4kl-cxrzf";
+          # label = ""
+          devices = [ "chost" ];
+          versioning = {type = "simple"; params.keep = "3";};
+        };
+        "${config.user.home}/Music" = {
+          id = "xxwgz-nsgrz";
+          # label = ""
+          devices = [ "chost" ];
+          versioning = {type = "simple"; params.keep = "1";};
+        };
+        "${config.user.home}/git/tea" = {
+          id = "uvxlq-9vwiq";
+          # label = ""
+          devices = [ "chost" ];
+          versioning = {type = "simple"; params.keep = "2";};
+        };
 
-      # Things to put in config?
-      # devices.server.id = dp.syncthing.server.id;
-
-    };
-
-    home.configFile = {
-      "syncthing" = {
-        source = "${config.dotfiles.dir}/secrets/syncthing";
-        recursive = true;
       };
     };
-
-
   };
 }

@@ -1,5 +1,8 @@
 #+title: WIPWIPWIPWIPWIP
 
+Home-manager [[https://nix-community.github.io/home-manager/options.html][options]] documentation.
+Nixpkgs [[https://nixos.org/manual/nixpkgs/stable][lib]] documentation.
+
 ** First
 go to hlissners' dotfiles, scroll to bottom and read / watch all the sources
 
@@ -102,6 +105,8 @@ nixpkgs.config.android_sdk.accept_license = true;
 
 Managing secrets for multiple servers / users - [[https://github.com/ryantm/agenix][agenix]]. Setup example can b
 found in hlissners' repo and on [[https://discourse.nixos.org/t/install-agenix-in-environment-systempackages-on-nixos-with-flakes/17169/2][discourse]]
+
+[[https://github.com/Ninlives/data][Standalone]] github repo, which this sir is using in his dotfiles (example).
 
 *** Configs reviews
 - [[github:jollheef/localhost]] - *clean*, easy to read and understand, no flakes,
@@ -232,3 +237,11 @@ Shell scripts:
 https://www.youtube.com/watch?v=6LbEmP1_dog
 
 hardware -> audio module -> easyeffects app
+*** [ ] Try out nix-sops
+[[https://samleathers.com/posts/2022-02-11-my-new-network-and-sops.html][Good article]] to start with, but find some dotfiles with example of sops usage:
+- https://github.com/disassembler/network
+- https://github.com/ninlives/emerge
+
+[[https://github.com/Mic92/sops-nix][documentation]]
+
+[[https://discourse.nixos.org/t/flakes-secret-configs/14638][Some discussion]] on how to store secrets in nixos repo and [[https://nixos.wiki/wiki/Comparison_of_secret_managing_schemes][comparison]] of them.

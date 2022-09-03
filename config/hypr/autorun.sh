@@ -2,6 +2,7 @@ qutebrowser &
 discord &
 emacs &
 syncthing &
+syncthingtray &
 # for mako
 dbus-daemon --session --address=unix:path=$XDG_RUNTIME_DIR/bus &
 mako &

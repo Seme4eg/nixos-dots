@@ -19,6 +19,8 @@
       url = "github:nix-community/home-manager"; # .. or  github:rycee/home-manager/master
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    agenix.url = "github:ryantm/agenix";
+    agenix.inputs.nixpkgs.follows = "nixpkgs";
 
     # Extras
     emacs-overlay.url = "github:nix-community/emacs-overlay";

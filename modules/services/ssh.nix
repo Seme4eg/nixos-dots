@@ -10,12 +10,12 @@ in {
 
   config = mkIf cfg.enable {
     services.openssh = {
-      enable = true;
+      enable = true; # same as 'services.sshd.enable'
       kbdInteractiveAuthentication = false;
       passwordAuthentication = false;
     };
 
-    # programs.ssh.startAgent = true;
+    programs.ssh.startAgent = true;
 
     user.openssh.authorizedKeys.keys =
       if config.user.name == "nohome"
