@@ -32,6 +32,12 @@ in {
           introducer = true;
           # autoAcceptFolders = true;
         };
+        # REVIEW: temp
+        "losedows" = {
+          id = "4ZUEUZ5-FJX5LEY-DOZVVR6-IAIXVVQ-SEQJW5M-L3J7AAF-2BXNTQ7-INT2KAO";
+          introducer = true;
+          # autoAcceptFolders = true;
+        };
         # "device2" = { id = "DEVICE-ID-GOES-HERE"; };
       };
 

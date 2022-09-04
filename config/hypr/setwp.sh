@@ -3,6 +3,7 @@
 wp=$(find ~/Pictures/atmosphere/Wadim\ Kashin/ -type f | shuf -n 1)
 configFile=~/.config/hypr/hyprpaper.conf
 
+[ ! -f $configFile ] && touch $configFile
 pkill -9 hyprpaper
 
 > $configFile

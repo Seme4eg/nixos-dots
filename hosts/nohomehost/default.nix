@@ -19,6 +19,7 @@
 				qutebrowser.enable = true;
 			};
 			steam.enable = true;
+			webcord.enable = true;
 			graphics.enable = true; # REVIEW: not sure about naming
 			mpv.enable = true;
 			term = {

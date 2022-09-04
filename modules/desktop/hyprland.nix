@@ -69,6 +69,14 @@ in {
           ];
         })
       ];
+      # somwehere in above 'let .. in' construct:
+      # fontList = [ "Sarasa Mono SC" "FantasqueSansMono Nerd Font Mono" ];
+      # .. and then here maybe something like
+      # fontconfig.defaultFonts = {
+      #   monospace = fontList;
+      #   sansSerif = fontList;
+      #   serif = fontList;
+      # };
     };
 
     programs.nm-applet.enable = true; # in case that didn't start in hyprland
@@ -111,19 +119,8 @@ in {
       # "sxhkd".source = "${configDir}/sxhkd"; # XXX
       # Write it recursively so other modules can link files in their dirs
       "hypr" = { source = "${configDir}/hypr"; recursive = true; };
-      # I don't need it to be hardlink cuz i need setwp.sh to work
-      "hypr/hyprpaper.conf".text = ''
-        preload = ~/Pictures/atmosphere/Wadim Kashin/wadim-kashin-3.jpg
-        wallpaper = eDP-1,~/Pictures/atmosphere/Wadim Kashin/wadim-kashin-3.jpg
-      '';
       "waybar" = { source = "${configDir}/waybar"; recursive = true; };
     };
-
-    system.userActivationScripts.setupWallpapers = ''
-      pushd "~/.config/hypr"
-      [ ! -f "hyprpaper.conf" ] && touch hyprpaper.conf
-      popd
-    '';
 
     # TODO: fix swaylock and swayidle not letting me log back in, move locking
     # setup from autorun.sh to systemd service (tho it might not b working then

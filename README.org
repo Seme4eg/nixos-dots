@@ -3,6 +3,11 @@
 Home-manager [[https://nix-community.github.io/home-manager/options.html][options]] documentation.
 Nixpkgs [[https://nixos.org/manual/nixpkgs/stable][lib]] documentation.
 
+** Sources
+- https://github.com/hlissner/dotfiles
+- https://github.com/ninlives/emerge
+- TODO: add missing? Most likely it's in this readme
+
 ** First
 go to hlissners' dotfiles, scroll to bottom and read / watch all the sources
 
@@ -179,10 +184,8 @@ nix.settings.trusted-public-keys = [
     });
 #+end_src
 
-*** [ ] Setup secrets file
-Example from [[https://github.com/ninlives/emerge][emerge]] repo:
-- [[https://github.com/ninlives/emerge/tree/ce9e1c780019c1aa5d945545de7f25ba295b9f01/bombe/default.nix][Defines]] it (follow along in this folder for file format) and [[https://github.com/ninlives/emerge/tree/ce9e1c780019c1aa5d945545de7f25ba295b9f01/impl/neko/program/qute/default.nix][imports]] it in
-  modules.
+[[https://github.com/ninlives/emerge/tree/ce9e1c780019c1aa5d945545de7f25ba295b9f01/impl/lego/network/switch.nix][Example]] of writing shell scripts and adding them to user commands with [
+nopasswd ] option.
 
 *** [ ] Learn 'modules/themes' dir in hlissners' dots
 \+ also check [[https://github.com/ninlives/emerge/tree/ce9e1c780019c1aa5d945545de7f25ba295b9f01/impl/lego/hardware/boot.nix][this]] boot theming file +
@@ -228,6 +231,7 @@ Shell scripts:
 - https://github.com/jollheef/localhost#installation
 - https://github.com/LEXUGE/nixos/blob/master/install.sh
 - https://github.com/Ninlives/emerge/blob/master/def/default.nix#L28
+- [[file:~/learning/emerge/impl/echo/image.nix][another example]]
 
 *** [ ] /Setup CI/:
 
@@ -240,7 +244,9 @@ hardware -> audio module -> easyeffects app
 *** [ ] Try out nix-sops
 [[https://samleathers.com/posts/2022-02-11-my-new-network-and-sops.html][Good article]] to start with, but find some dotfiles with example of sops usage:
 - https://github.com/disassembler/network
-- https://github.com/ninlives/emerge
+- https://github.com/ninlives/emerge Example from [[https://github.com/ninlives/emerge][emerge]] repo: - [[https://github.com/ninlives/emerge/tree/ce9e1c780019c1aa5d945545de7f25ba295b9f01/bombe/default.nix][Defines]] it
+  (follow along in this folder for file format) and [[https://github.com/ninlives/emerge/tree/ce9e1c780019c1aa5d945545de7f25ba295b9f01/impl/neko/program/qute/default.nix][imports]] it in modules. He's
+  using it in his syncthing config.
 
 [[https://github.com/Mic92/sops-nix][documentation]]
 

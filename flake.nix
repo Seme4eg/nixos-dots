@@ -29,6 +29,7 @@
       url = "github:hyprwm/Hyprland";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    webcord.url = "github:fufexan/webcord-flake";
   };
 
   # Heart of the flake. It's a f-n that produces an attribute set and tells

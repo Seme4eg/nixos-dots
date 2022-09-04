@@ -12,7 +12,7 @@ in {
     doom = rec {
       enable = mkBoolOpt false;
 
-      # XXX:doesn't work, throws an error
+      # XXX: doesn't work, throws an error
       forgeUrl = mkOpt types.str "https://github.com";
       repoUrl = mkOpt types.str "${forgeUrl}/doomemacs/doomemacs"; 
       configRepoUrl = mkOpt types.str "${forgeUrl}/Seme4eg/.doom.d.git";
@@ -69,12 +69,15 @@ in {
 
     fonts.fonts = [ pkgs.emacs-all-the-icons-fonts ];
 
+    systemd.tmpfiles.rules = [
+      # Static symlink for nix.nixPath, which controls $NIX_PATH. Using nixpkgs input directly would
+      # result in $NIX_PATH containing a /nix/store value, which would be inaccurate after the first
+      # nixos-rebuild switch until logging out (and prone to garbage collection induced breakage).
+      "L+ ${config.user.home}/.local/bin/tdlib - - - - ${pkgs.tdlib}"
+    ];
+
     # XXX: Why using user activation scripts is disencouraged?
     system.userActivationScripts = mkIf cfg.doom.enable {
-      # XXX: and if so then how to symlink installed pkg to another directory
-      symlinkTdlib= ''
-        sudo ln -s ${pkgs.tdlib} /usr/local
-      '';
       # XXX: script doesn't work
       installDoomEmacs = {
         text = ''
@@ -82,17 +85,19 @@ in {
             git clone --depth=1 --single-branch https://github.com/doomemacs/doomemacs "$XDG_CONFIG_HOME/emacs"
             git clone https://github.com/Seme4eg/.doom.d.git "$XDG_CONFIG_HOME/doom"
           fi
-	      '';
-        };
-
-      # Original:
-      # installDoomEmacs = ''
-      #   if [ ! -d "$XDG_CONFIG_HOME/emacs" ]; then
-      #      git clone --depth=1 --single-branch "${cfg.doom.repoUrl}" "$XDG_CONFIG_HOME/emacs"
-      #      git clone "${cfg.doom.configRepoUrl}" "$XDG_CONFIG_HOME/doom"
-      #   fi
-      # '';
+        '';
+      };
     };
+
+    # viper
+    # system.userActivationScripts = let
+    #   doom = pkgs.fetchFromGitHub {
+    #     owner = ""; repo = ""; rev = ""; hash = "";
+    #   }; in ''
+    #   if [ ! -d folder ]; then
+    #     cp ${doom} folder
+    #   fi
+    #   '';
 
     # NOTE: this script does work
     # Installation script every time nixos-rebuild is run. So not during initial install.
