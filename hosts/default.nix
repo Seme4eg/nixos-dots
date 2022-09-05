@@ -54,10 +54,12 @@ with lib.my;
 			settings = {
 				substituters = [
 					"https://nix-community.cachix.org"
+					"https://webcord.cachix.org"
 					# "http://cache.nixos.org" # Default
 				];
 				trusted-public-keys = [
 					"nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+					"webcord.cachix.org-1:l555jqOZGHd2C9+vS8ccdh8FhqnGe8L78QrHNn+EFEs="
 				];
 				auto-optimise-store = true; # optimize syslinks
 			};

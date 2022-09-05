@@ -80,7 +80,7 @@ in {
       '';
     };
 
-    system.userActivationScripts.cleanupAntidote = ''
+    system.userActivationScripts.cleanupZsh = ''
       rm -rf $ZSH_CACHE
     '';
       # rm -fv $ANTIDOTE_DIR/init.zsh{,.zwc}

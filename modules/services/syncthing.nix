@@ -32,7 +32,7 @@ in {
           introducer = true;
           # autoAcceptFolders = true;
         };
-        # REVIEW: temp
+        # TODO: temp
         "losedows" = {
           id = "4ZUEUZ5-FJX5LEY-DOZVVR6-IAIXVVQ-SEQJW5M-L3J7AAF-2BXNTQ7-INT2KAO";
           introducer = true;
@@ -41,7 +41,7 @@ in {
         # "device2" = { id = "DEVICE-ID-GOES-HERE"; };
       };
 
-      dataDir = "${config.user.home}";
+      dataDir = "${config.user.home}"; # default path co add new dirs
 
       # REVIEW: any better way of defining config dir?
       configDir = "${config.user.home}/.config/syncthing";
@@ -50,8 +50,6 @@ in {
       cert = config.age.secrets.syncthing-cert.path;
       key = config.age.secrets.syncthing-key.path;
 
-      # XXX: why defining 'dataDir' above if it is still required to explicitly
-      # write full path below?
       folders = {
         "${config.user.home}/Pictures" = {
           id = "xmx67-zj7wg";

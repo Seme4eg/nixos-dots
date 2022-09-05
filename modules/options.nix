@@ -12,9 +12,6 @@ with lib.my;
           (findFirst pathExists (toString ../.) [
             "/mnt/etc/dotfiles"
             "/etc/dotfiles"
-            # XXX: remove it, hack cuz of weird shit happening to repo when it
-            # is in root dir
-            "/home/nohome/git/dotfiles"
           ]));
       binDir     = mkOpt path "${config.dotfiles.dir}/bin";
       configDir  = mkOpt path "${config.dotfiles.dir}/config";
@@ -57,8 +54,6 @@ with lib.my;
         home = "/home/${name}";
         group = "users";
         uid = 1000;
-        # XXX: after i setup zsh
-        # shell = pkgs.zsh;
       };
 
     # Install user packages to /etc/profiles instead. Necessary for

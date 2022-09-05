@@ -1,5 +1,3 @@
-# https://github.com/hlissner/doom-emacs.
-
 { config, lib, pkgs, inputs, ... }:
 
 with lib;
@@ -9,18 +7,8 @@ let cfg = config.modules.editors.emacs;
 in {
   options.modules.editors.emacs = {
     enable = mkBoolOpt false;
-    doom = rec {
+    doom = {
       enable = mkBoolOpt false;
-
-      # XXX: doesn't work, throws an error
-      forgeUrl = mkOpt types.str "https://github.com";
-      repoUrl = mkOpt types.str "${forgeUrl}/doomemacs/doomemacs"; 
-      configRepoUrl = mkOpt types.str "${forgeUrl}/Seme4eg/.doom.d.git";
-
-      # This as well...
-      # forgeUrl = mkOpt types.str "https://github.com/";
-      # repoUrl = mkOpt types.str "https://github.com/doomemacs/doomemacs";
-      # configRepoUrl = mkOpt types.str "https://github.com/Seme4eg/.doom.d.git";
     };
   };
 
@@ -76,49 +64,27 @@ in {
       "L+ ${config.user.home}/.local/bin/tdlib - - - - ${pkgs.tdlib}"
     ];
 
-    # XXX: Why using user activation scripts is disencouraged?
     system.userActivationScripts = mkIf cfg.doom.enable {
-      # XXX: script doesn't work
-      installDoomEmacs = {
-        text = ''
-          if [ ! -d "$XDG_CONFIG_HOME/emacs" ]; then
-            git clone --depth=1 --single-branch https://github.com/doomemacs/doomemacs "$XDG_CONFIG_HOME/emacs"
-            git clone https://github.com/Seme4eg/.doom.d.git "$XDG_CONFIG_HOME/doom"
-          fi
+      installDoomEmacs = let
+        doom = pkgs.fetchFromGitHub {
+          owner = "doomemacs";
+          repo = "doomemacs";
+          rev = "c44bc81a05f3758ceaa28921dd9c830b9c571e61";
+          hash = "sha256-3apl0eQlfBj3y0gDdoPp2M6PXYnhxs0QWOHp8B8A9sc=";
+        };
+
+        myconfig = pkgs.fetchFromGitHub {
+          owner = "Seme4eg";
+          repo = ".doom.d";
+          rev = "711de97fad87bdd94e31ac730a599edd7503cb09";
+          hash = "sha256-+pOfW2AnePJ2RqnpXaZjuF7GO4WRk67wOle0cABkidw=";
+          stripRoot = false;
+        };
+      in
+        ''
+          [ ! -d "$XDG_CONFIG_HOME/emacs" ] && cp ${doom} "$XDG_CONFIG_HOME/emacs"
+          [ ! -d "$XDG_CONFIG_HOME/doom" ] && cp ${myconfig} "$XDG_CONFIG_HOME/doom"
         '';
       };
     };
-
-    # viper
-    # system.userActivationScripts = let
-    #   doom = pkgs.fetchFromGitHub {
-    #     owner = ""; repo = ""; rev = ""; hash = "";
-    #   }; in ''
-    #   if [ ! -d folder ]; then
-    #     cp ${doom} folder
-    #   fi
-    #   '';
-
-    # NOTE: this script does work
-    # Installation script every time nixos-rebuild is run. So not during initial install.
-    # system.userActivationScripts = {                    
-    #   doomEmacs = {
-    #     text = ''
-    #     source ${config.system.build.setEnvironment}
-    #     DOOM="$HOME/.emacs.d"
-
-    #     if [ ! -d "$DOOM" ]; then
-    #       git clone https://github.com/hlissner/doom-emacs.git $DOOM
-    #       yes | $DOOM/bin/doom install
-    #       rm -r $HOME/.doom.d
-    # git clone https://github.com/Seme4eg/.doom.d.git /etc/dotfiles/modules/editos/emacs/.doom.d
-    #       ln -s /etc/dotfiles/modules/editors/emacs/doom.d $HOME/.doom.d
-    #       $DOOM/bin/doom sync
-    #     else
-    #       $DOOM/bin/doom sync
-    #     fi
-    #   '';
-    #   };
-    # };
-  };
 }

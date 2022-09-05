@@ -38,7 +38,7 @@ in {
 
       # Screenshot
       grim
-      slock
+      slurp
       wl-clipboard
 
       # Screenlock
@@ -116,7 +116,6 @@ in {
     # };
 
     home.configFile = {
-      # "sxhkd".source = "${configDir}/sxhkd"; # XXX
       # Write it recursively so other modules can link files in their dirs
       "hypr" = { source = "${configDir}/hypr"; recursive = true; };
       "waybar" = { source = "${configDir}/waybar"; recursive = true; };

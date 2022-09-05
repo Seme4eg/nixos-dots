@@ -5,8 +5,9 @@ alias -- -='cd -'
 
 # du -h --max-depth=1 ~/ | sort -h # make an alias?
 alias 0x0="curl -F 'file=@-' 0x0.st" # < file
-# XXX: write same but for nixos
 # alias hypru="cd ~/utils/Hyprland && git pull origin main && sudo make install"
+
+alias reb="nixos-rebuild switch --flake /etc/dotfiles --use-remote-sudo"
 
 alias q=exit
 alias clr=clear

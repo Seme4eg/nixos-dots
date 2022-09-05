@@ -30,7 +30,15 @@ if [[ ! -d $ANTIDOTE_DIR ]]; then
   git clone https://github.com/mattmc3/antidote.git "$ANTIDOTE_DIR"
 fi
 . $ANTIDOTE_DIR/antidote.zsh
-antidote load $ZDOTDIR/plugins # XXX: doesn't load plugins
+# HACK: i don't know where from, but on initial setup plugins.zsh (empty one)
+# appears in zdotdir and when trying to load plugins file it loads that empty
+# file instaed, so i remoev it if it exist and is empty
+[ ! -s $ZDOTDIR/plugins.zsh ] && rm $ZDOTDIR/plugins.zsh
+antidote load $ZDOTDIR/plugins
+
+# TODO: move that theme file in theme folder when i set this up
+# To customize prompt, run `p10k configure` or edit ~/.config/zsh/.p10k.zsh.
+[[ ! -f $ZDOTDIR/.p10k.zsh ]] || source $ZDOTDIR/.p10k.zsh
 
 # stty stop undef # disable C-s to freeze terminal
 # Nobody needs flow control anymore. Troublesome feature.
@@ -54,6 +62,3 @@ if [[ $TERM != dumb ]]; then
   # _cache fasd --init posix-alias zsh-{hook,{c,w}comp{,-install}}
   # autopair-init
 fi
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

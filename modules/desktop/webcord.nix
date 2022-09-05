@@ -9,12 +9,11 @@ in {
     enable = mkBoolOpt false;
   };
 
-  # XXX: find a way to install webcord instead, but i guess ima need to make a
-  # derivation for this
   config = mkIf cfg.enable {
-    # environment.systemPackages = [ agenix.defaultPackage.x86_64-linux ];
     user.packages = [
       webcord.packages.${pkgs.system}.default
     ];
+
+    env.NIXOS_OZONE_WL = "1"; # for webcord on wayland
   };
 }

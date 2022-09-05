@@ -8,7 +8,7 @@
 junegunn/fzf path:shell
 jeffreytse/zsh-vi-mode kind:defer
 zdharma-continuum/fast-syntax-highlighting
-zsh-users/zsh-completions path:src
+#zsh-users/zsh-completions path:src # says there is no init file in src dir
 zsh-users/zsh-autosuggestions
 zsh-users/zsh-history-substring-search
 romkatv/powerlevel10k
