@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 
 with lib;
 with lib.my;
@@ -21,6 +21,13 @@ in {
         gdm.enable = false;
       };
     };
+
+    # NOTE: Waybar version, which allows for wlr/workspaces module
+    nixpkgs.overlays = [
+      (final: prev: {
+        waybar = inputs.hyprland.packages.${final.system}.waybar-hyprland;
+      })
+    ];
 
     programs.hyprland.enable = true;
     services.dbus.enable = true;
@@ -50,8 +57,6 @@ in {
       # gnome3.adwaita-icon-theme # default gnome cursors
     ];
 
-    programs.waybar.enable = true;
-
     # TODO: move it to themes later
     # Icons MS Nerdfont Icons override
     fonts = {
@@ -77,6 +82,7 @@ in {
       #   sansSerif = fontList;
       #   serif = fontList;
       # };
+
     };
 
     # allow wayland lockers to unlock the screen

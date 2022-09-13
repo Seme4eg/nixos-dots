@@ -7,7 +7,7 @@ syncthingtray --wait &
 dbus-daemon --session --address=unix:path=$XDG_RUNTIME_DIR/bus &
 mako &
 hyprpaper &
-waybar &
+waybar & # don't want to put it in systemd service
 nm-applet --indicator &
 brillo -c 2
 brillo -I
