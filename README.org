@@ -22,18 +22,14 @@ Useful: hlissners' dotfiles, scroll to bottom and read / watch all the sources.
 - https://github.com/viperml/dotfiles
 
 ** Flakes
-Any subsequent build of this flake will use the version of nixpkgs recorded in
-the lock file. If you add new inputs to flake.nix, when you run any command such
-as nix build, Nix will automatically add corresponding locks to flake.lock.
-However, it won’t replace existing locks. If you want to update a locked input
-to the latest version, you need to ask for it:
+If you want to update a locked input to the latest version, you need to ask for
+it:
 
 : $ nix flake lock --update-input nixpkgs
 : $ nix build
 
 https://www.tweag.io/blog/2020-07-31-nixos-flakes - nix flakes, templates,
 updating lock files etc..
-
 
 *** Nix CLI - Flakes Usage
 Source: https://github.com/colemickens/nixos-flake-example#nix-cli---flakes-usage
@@ -59,14 +55,12 @@ When in this mode:
 
 : nixos-rebuild build --flake '/code/nixos-config#mysystem'
 
-** Subject to change for 4k laptop
-
+** Possible settings for 4k laptop config
 #+begin_src nix
 hardware.video.hidpi.enable = true;
 #+end_src
 
 ** things removed from original configuration.nix
-
 #+begin_src nix
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -91,48 +85,78 @@ hardware.video.hidpi.enable = true;
 #+end_src
 
 ** Notes
-Setup with dual monitors, making one primary, arranging those can be looked up
-in hlissners' dots in 'murasaki' host.
+[[https://github.com/ninlives/emerge/tree/ce9e1c780019c1aa5d945545de7f25ba295b9f01/impl/lego/network/switch.nix][Example]] of writing shell scripts and adding them to user commands with [
+nopasswd ] option.
 
-Server setup can be looked up in 'ao' host also there.
-
-Allow to do things without sudo: https://github.com/jollheef/localhost/blob/master/security.nix#L42
-
-Secrets file example: https://github.com/jollheef/localhost/blob/master/secrets.nix.example
-
-How to write systemd units:
-- https://github.com/jollheef/localhost/blob/master/suspend.nix
-- Autoupdate units: https://github.com/jollheef/localhost/blob/master/auto-update.nix
-
-Will b useful when ima flash different android image:
 #+begin_src nix
-programs.adb.enable = true;
-users.users.${var.user.name}.extraGroups = [ "adbusers" ];
-nixpkgs.config.android_sdk.accept_license = true;
+# Japanese input using fcitx
+i18n.inputMethod = {
+  enabled = "fcitx";
+  fcitx.engines = with pkgs.fcitx-engines; [mozc];
+};
 #+end_src
 
-[[https://github.com/ninlives/emerge/tree/ce9e1c780019c1aa5d945545de7f25ba295b9f01/impl/neko/program/kitty/default.nix][Example]] of kitty setup.
+** lack of internet questions:
 
-[[https://github.com/ninlives/emerge/tree/ce9e1c780019c1aa5d945545de7f25ba295b9f01/impl/neko/program/neovim/default.nix][Neovim setup]].
+#+NAME: ~/learning/fufexan/hosts/io/default.nix
+#+begin_src nix
+# boot.plymouth.enable = true;
+environment.systemPackages = [config.boot.kernelPackages.cpupower];
 
-Managing secrets for multiple servers / users - [[https://github.com/ryantm/agenix][agenix]]. Setup example can b
-found in hlissners' repo and on [[https://discourse.nixos.org/t/install-agenix-in-environment-systempackages-on-nixos-with-flakes/17169/2][discourse]]
+environment = {
+  # set channels
+  etc = {
+    "nix/flake-channels/system".source = inputs.self;
+    "nix/flake-channels/nixpkgs".source = inputs.nixpkgs;
+    "nix/flake-channels/home-manager".source = inputs.hm;
+  };
 
-[[https://github.com/Ninlives/data][Standalone]] github repo, which this sir is using in his dotfiles (example).
+  # enable zsh autocompletion for system packages (systemd, etc)
+  pathsToLink = ["/share/zsh"];
+};
 
-*** Configs reviews
-- [[github:jollheef/localhost]] - *clean*, easy to read and understand, no flakes,
-  only home-manager setup
+services = {
+  avahi = {
+    enable = true;
+    nssmdns = true;
+    publish.enable = true;
+    publish.domain = true;
+    publish.userServices = true;
+  };
+
+  openssh = {
+    enable = true;
+    useDns = true;
+  };
+
+  resolved.enable = true;
+
+  tailscale.enable = true;
+};
+
+zramSwap.enable = true;
+#+end_src
+
+Is it a nix repl here? - ~/learning/fufexan/pkgs/repl/default.nix
 
 ** Todo / to check
+*** Small and ez todos [0/5]
+**** TODO [[https://github.com/jollheef/localhost]]
+*clean*, easy to read and understand, no flakes, only home-manager setup
+**** TODO setup mako
 
-How to autoreload hyprland config on any change in flake hypr config dir?
+*** To setup [0/12]
+**** TODO setup openvpn
+**** TODO setup tdlib
+**** TODO mkOutOfStoreSymlink
+With hyprland, waybar and other needed configs to not rebuild flake everytime in
+config change
+**** TODO Gaming performance
+~/learning/fufexan/modules/gamemode.nix
 
-Gaming performance:
 #+begin_src nix
 programs = {
     steam.enable = true;
-    dconf.enable = true;
 
     # Better gaming performance
     # Steam: right-click game - properties - launch options: gamemoderun %command%
@@ -142,64 +166,50 @@ programs = {
     # gamemode.enable = true; # XXX: any1 uses it this setting?
 };
 #+end_src
+**** TODO Possible to store wifi passwords and other settings?
+**** TODO Setup nix img
 
-Xbox-controller setup [[https://github.com/ninlives/emerge/tree/ce9e1c780019c1aa5d945545de7f25ba295b9f01/impl/lego/service/xbox-controller.nix][example]].
-
-Add ssh keygen operation automatically:
-#+begin_src bash
-ssh-keygen -t ed25519 -C "418@duck.com"
-# add no passphrase
-eval "$(ssh-agent -s)"
-ssh-add ~/.ssh/id_ed25519
-cat ~/.ssh/id_ed25519.pub
-#+end_src
+~/learning/fufexan/modules/iso.nix
 
 #+NAME: lexuge dots
 #+begin_src nix
-# Allow fonts to be discovered
-fonts.fontconfig.enable = true;
-
 niximg = self.nixosConfigurations.niximg.config.system.build.isoImage;
 #+end_src
 
-Whether to enable fwupd, a DBus service that allows applications to update
-firmware (???) :
-: services.fwupd.enable = true;
+Shell scripts:
+- https://github.com/jollheef/localhost#installation
+- https://github.com/LEXUGE/nixos/blob/master/install.sh
+- https://github.com/Ninlives/emerge/blob/master/def/default.nix#L28
+- [[file:~/learning/emerge/impl/echo/image.nix][another example]]
 
-Nix settings:
+**** TODO Setup other nix settings
 #+begin_src nix
-# Source: https://github.com/ninlives/emerge/tree/ce9e1c780019c1aa5d945545de7f25ba295b9f01/impl/lego/misc/nix-itself.nix
-nix.settings.substituters = [
-    # "https://mirror.sjtu.edu.cn/nix-channels/store?priority=0"
-    # "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store?priority=5"
-    # "https://nixos-cn.cachix.org"
-    # "https://data.cachix.org"
-];
-nix.settings.trusted-public-keys = [
-  "nixos-cn.cachix.org-1:L0jEaL6w7kwQOPlLoCR3ADx+E3Q8SEFEcB9Jaibl0Xg="
-  "data.cachix.org-1:we/1k8A3S5cx8aM9wb6ig/DWL1cidVQluhJwD8V3VXM="
-];
+supportedFeatures = ["nixos-test" "benchmark" "kvm" "big-parallel"];
 
-  nix.settings.system-features =
-    [ "benchmark" "big-parallel" "kvm" "nixos-test" "recursive-nix" ];
-  nix.settings.experimental-features =
-    [ "recursive-nix" "flakes" "nix-command" ];
-  nix.settings.flake-registry = pkgs.writeText "flake-empty.json"
-    (builtins.toJSON {
-      flakes = [ ];
-      version = 2;
-    });
+# This is just a representation of the nix default
+nix.systemFeatures = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
+
+# nix.settings.system-features =
+#   [ "benchmark" "big-parallel" "kvm" "nixos-test" "recursive-nix" ];
+nix.settings.experimental-features =
+  [ "recursive-nix" "flakes" "nix-command" ];
+nix.settings.flake-registry = pkgs.writeText "flake-empty.json"
+  (builtins.toJSON {
+    flakes = [ ];
+    version = 2;
+  });
 #+end_src
 
-[[https://github.com/ninlives/emerge/tree/ce9e1c780019c1aa5d945545de7f25ba295b9f01/impl/lego/network/switch.nix][Example]] of writing shell scripts and adding them to user commands with [
-nopasswd ] option.
-
-*** [ ] Learn 'modules/themes' dir in hlissners' dots
-\+ also check [[https://github.com/ninlives/emerge/tree/ce9e1c780019c1aa5d945545de7f25ba295b9f01/impl/lego/hardware/boot.nix][this]] boot theming file +
+**** TODO Setup theme
+Learn 'modules/themes' dir in hlissners' dots \+ also check [[https://github.com/ninlives/emerge/tree/ce9e1c780019c1aa5d945545de7f25ba295b9f01/impl/lego/hardware/boot.nix][this]] boot theming
+file +
 : boot.loader.grub.fontSize = 72;
 
-*** [ ] Setup theme
 possible home-manager options:
+
+- [ ] also move some font and maybe other theme-related configs out from
+  hyprland.nix file, cuz for now there are plenty of unrelated to hypr
+  things in there.
 
 #+begin_src nix
 # XXX: customize theme for different one / custom, and cursor as well
@@ -232,23 +242,12 @@ gtk = {
 #+end_src
 
 Fonts [[https://github.com/ninlives/emerge/tree/ce9e1c780019c1aa5d945545de7f25ba295b9f01/impl/lego/ui/fonts.nix][example]].
-
-*** [ ] Setup nix img
-Shell scripts:
-- https://github.com/jollheef/localhost#installation
-- https://github.com/LEXUGE/nixos/blob/master/install.sh
-- https://github.com/Ninlives/emerge/blob/master/def/default.nix#L28
-- [[file:~/learning/emerge/impl/echo/image.nix][another example]]
-
-*** [ ] /Setup CI/:
-
-#+NAME: source: https://github.com/LEXUGE/nixos
-![Build customized NixOS LiveCD ISO](https://github.com/LEXUGE/nixos/workflows/Build%20customized%20NixOS%20LiveCD%20ISO/badge.svg) ![Nix Flake Check](https://github.com/LEXUGE/nixos/workflows/Nix%20Flake%20Check/badge.svg) ![Release status](https://img.shields.io/github/v/release/LEXUGE/nixos.svg)
-*** [ ] Setup easyeffects (like minihost on windows)
+**** TODO After reading thorugh hlissners theme folders cleanup lib dir
+**** TODO Setup easyeffects (like minihost on windows)
 https://www.youtube.com/watch?v=6LbEmP1_dog
 
 hardware -> audio module -> easyeffects app
-*** [ ] Try out nix-sops
+**** TODO Try out nix-sops
 [[https://samleathers.com/posts/2022-02-11-my-new-network-and-sops.html][Good article]] to start with, but find some dotfiles with example of sops usage:
 - https://github.com/disassembler/network
 - https://github.com/ninlives/emerge Example from [[https://github.com/ninlives/emerge][emerge]] repo: - [[https://github.com/ninlives/emerge/tree/ce9e1c780019c1aa5d945545de7f25ba295b9f01/bombe/default.nix][Defines]] it
@@ -258,3 +257,25 @@ hardware -> audio module -> easyeffects app
 [[https://github.com/Mic92/sops-nix][documentation]]
 
 [[https://discourse.nixos.org/t/flakes-secret-configs/14638][Some discussion]] on how to store secrets in nixos repo and [[https://nixos.wiki/wiki/Comparison_of_secret_managing_schemes][comparison]] of them.
+**** TODO Learn how to debug
+.. in order to get rid of some unnecessary hlissners abstractions, especially in
+nix settings in hosts/default.nix. For now it's a mess
+***** TODO Learn nix and understand what i need
+~/learning/calebchase/nixos-config/nixos/nix.nix - good example
+
+*** To fix [0/5]
+- [ ] fix syncthingtray service not working
+- [ ] fix warframe launcher working badly
+- [ ] fix 1:30 wait on every reboot / shutdown
+- [ ] fix syncthingtray opening in not floating mode
+- [ ] fix webcord rule not applying
+
+*** Backlog [0/2]
+# not urgent, but most likely needed setups / fixes
+
+**** TODO Xbox-controller setup [[https://github.com/ninlives/emerge/tree/ce9e1c780019c1aa5d945545de7f25ba295b9f01/impl/lego/service/xbox-controller.nix][example]].
+
+**** TODO /Setup CI/:
+
+#+NAME: source: https://github.com/LEXUGE/nixos
+![Build customized NixOS LiveCD ISO](https://github.com/LEXUGE/nixos/workflows/Build%20customized%20NixOS%20LiveCD%20ISO/badge.svg) ![Nix Flake Check](https://github.com/LEXUGE/nixos/workflows/Nix%20Flake%20Check/badge.svg) ![Release status](https://img.shields.io/github/v/release/LEXUGE/nixos.svg)
