@@ -138,22 +138,5 @@ in {
       "hypr" = { source = "${configDir}/hypr"; recursive = true; };
       "waybar" = { source = "${configDir}/waybar"; recursive = true; };
     };
-
-    # TODO: fix swaylock and swayidle not letting me log back in, move locking
-    # setup from autorun.sh to systemd service (tho it might not b working then
-    # on other systems...)
-    # systemd = {
-    #   services = {
-    #     "force-lock-after-suspend" = {
-    #       serviceConfig.User = "user";
-    #       description = "Force xsecurelock after suspend";
-    #       before = [ "suspend.target" "hibernate.target" "hybrid-sleep.target" ];
-    #       wantedBy = [ "suspend.target" "hibernate.target" "hybrid-sleep.target" ];
-    #       script = ''
-    #       DISPLAY=:0 ${pkgs.xsecurelock}/bin/xsecurelock
-    #     '';
-    #     };
-    #   };
-    # };
   };
 }
