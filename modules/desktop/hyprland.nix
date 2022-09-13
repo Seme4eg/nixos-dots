@@ -79,6 +79,9 @@ in {
       # };
     };
 
+    # allow wayland lockers to unlock the screen
+    security.pam.services.swaylock.text = "auth include login";
+
     programs.nm-applet.enable = true; # in case that didn't start in hyprland
     xdg.portal.wlr.enable = true;
 
