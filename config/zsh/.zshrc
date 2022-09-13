@@ -33,7 +33,7 @@ fi
 # HACK: i don't know where from, but on initial setup plugins.zsh (empty one)
 # appears in zdotdir and when trying to load plugins file it loads that empty
 # file instaed, so i remoev it if it exist and is empty
-[ ! -s $ZDOTDIR/plugins.zsh ] && rm $ZDOTDIR/plugins.zsh
+# [ ! -s $ZDOTDIR/plugins.zsh ] && rm $ZDOTDIR/plugins.zsh
 antidote load $ZDOTDIR/plugins
 
 # TODO: move that theme file in theme folder when i set this up
