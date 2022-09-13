@@ -21,25 +21,47 @@ with lib.my;
 
 	# Configure nix and nixpkgs
 	environment.variables.NIXPKGS_ALLOW_UNFREE = "1";
+
+	# Settings is for nix.conf. See man nix.conf.
 	nix =
 		let filteredInputs = filterAttrs (n: _: n != "self") inputs;
 				nixPathInputs  = mapAttrsToList (n: v: "${n}=${v}") filteredInputs;
 				registryInputs = mapAttrs (_: v: { flake = v; }) filteredInputs;
 		in {
-			package = pkgs.nixFlakes; # enable nixFlakes on system
+			package = pkgs.nixUnstable; # or nixFlakes ?
 
-			extraOptions = "experimental-features = nix-command flakes";
-			# keep-outputs = true
-			# keep-derivations = true
+      # for direnv GC roots add these lines in options below
+      # keep-outputs = true
+      # keep-derivations = true
 
-			# REVIEW: what brakes if i remove it?
+			extraOptions = ''
+				builders-use-substitutes = true
+				experimental-features = nix-command flakes
+			'';
+
+				# flake-registry = /etc/nix/registry.json
+
+      # Make angle bracket references (e.g. nix repl '<nixpkgs>') use my flake's
+      # nixpkgs, instead of whatever the imperatively managed version is. One
+      # day flakes will completely kill off channels... one day.
+      #
+      # NOTE: My bash or zsh profiles don't seem to use NixOS's
+      # command-not-found handler, but if that ever changes then keep in mind
+      # that removing the root channel may cause breakage. See the discourse
+      # link below.
+      #
+      # https://discourse.nixos.org/t/do-flakes-also-set-the-system-channel/19798/2
+      # https://github.com/NobbZ/nixos-config/blob/main/nixos/modules/flake.nix
 			nixPath = nixPathInputs ++ [
 				"nixpkgs-overlays=${config.dotfiles.dir}/overlays"
 				"dotfiles=${config.dotfiles.dir}"
-			];
-			# and that
-			# registry.nixpkgs.flake = inputs.nixpkgs;
+			]; # nixPath = [ "nixpkgs=${nixpkgsPath}" ];
+
+      # Make registry-based commands (e.g. nix run nixpkgs#foo) use my flake's
+      # system nixpkgs, instead of looking up the latest nixpkgs revision from
+      # GitHub.
 			registry = registryInputs // { dotfiles.flake = inputs.self; };
+			# registry.nixpkgs.flake = inputs.nixpkgs;
 
 			# Another example of setting registry
 			# registry = {
@@ -49,7 +71,6 @@ with lib.my;
 			#     url = "file://${toString var.path.entry}";
 			#   };
 			# };
-
 
 			settings = {
 				substituters = [
@@ -62,7 +83,15 @@ with lib.my;
 					"webcord.cachix.org-1:l555jqOZGHd2C9+vS8ccdh8FhqnGe8L78QrHNn+EFEs="
 				];
 				auto-optimise-store = true; # optimize syslinks
+
+        # allow-import-from-derivation = false; # REVIEW
+        experimental-features = [ "nix-command" "flakes" ];
+        # I know how to use git without nagging, thank you very much.
+        warn-dirty = false;
 			};
+
+      # Automatically hardlink identical files.
+      optimise.automatic = true;
 
 			# garbage collector setup
 			gc = {
