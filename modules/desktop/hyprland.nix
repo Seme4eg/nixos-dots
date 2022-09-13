@@ -83,7 +83,13 @@ in {
     security.pam.services.swaylock.text = "auth include login";
 
     programs.nm-applet.enable = true; # in case that didn't start in hyprland
-    xdg.portal.wlr.enable = true;
+    xdg.portal.wlr = {
+      enable = true;
+      settings.screencast = {
+        chooser_type = "simple";
+        chooser_cmd = "${pkgs.slurp}/bin/slurp -f %o -or";
+      };
+    };
 
     # This will allow brightness control from users in the video group.
     user.extraGroups = [ "video" ];
