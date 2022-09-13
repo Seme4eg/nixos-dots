@@ -132,7 +132,7 @@
     },
     "custom/clock": {
         // man date..
-        "exec": "date +'Day %j  |  %R  |  %a %d/%m/%y'" ,
+        "exec": "date +'Day %j  |  %R  |  %a %d/%m'" ,
         "interval": 2
     },
     // alternate
