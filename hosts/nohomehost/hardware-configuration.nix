@@ -6,8 +6,9 @@
   boot = {
     initrd = {
       availableKernelModules =
+        # "usbhid" "dm_mod" "tpm"
         [ "xhci_pci" "nvme" "usb_storage" "sd_mod" "rtsx_usb_sdmmc" ]; # "usbhid" "uas"
-      kernelModules = [ ];
+      kernelModules = [ ]; # "btrfs" "kvm-amd" "sd_mod" "dm_mod"
     };
     extraModulePackages = [ ];
     kernelModules = [ "kvm-intel" ];
@@ -25,6 +26,8 @@
 
     # REVIEW: do i need it when having ntfs3g package installed?
     # supportedFilesystems = [ "ntfs" ];
+    # or this one
+    # supportedFilesystems = ["btrfs"];
   };
 
   # Modules

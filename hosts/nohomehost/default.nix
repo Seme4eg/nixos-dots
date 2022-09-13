@@ -69,7 +69,10 @@
 	## Local config
 	services.openssh.startWhenNeeded = true;
 
-	networking.networkmanager.enable = true;
+	networking.networkmanager = {
+		enable = true;
+		# dns = "systemd-resolved"; # REVIEW
+	};
   # networking.wireless.enable = true;
 
   time.timeZone = "Europe/Moscow";

@@ -18,6 +18,7 @@ in {
       alsa.enable = true;
       alsa.support32Bit = true;
       pulse.enable = true;
+      # jack.enable = true;
     };
 
     # allow pulseaudio to acquire realtime priority

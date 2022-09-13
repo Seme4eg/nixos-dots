@@ -1,3 +1,5 @@
+# security tweaks borrowed from hlissners' nixos dots
+
 { config, lib, ... }:
 
 {
