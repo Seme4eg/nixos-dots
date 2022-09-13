@@ -1,18 +1,25 @@
 #+title: WIPWIPWIPWIPWIP
 
+[[https://nixos.org/manual/nix/stable/language/index.html][nix expression language]]
 Home-manager [[https://nix-community.github.io/home-manager/options.html][options]] documentation.
 Nixpkgs [[https://nixos.org/manual/nixpkgs/stable][lib]] documentation.
 
+Useful: hlissners' dotfiles, scroll to bottom and read / watch all the sources.
+
+[[https://nixos.wiki/wiki/Configuration_Collection][Configuration Collection]]
+
 ** Sources
+- https://github.com/fufexan/dotfiles
 - https://github.com/hlissner/dotfiles
 - https://github.com/ninlives/emerge
-- TODO: add missing? Most likely it's in this readme
-
-** First
-go to hlissners' dotfiles, scroll to bottom and read / watch all the sources
-
-Get some help with 'configuration.nix(5)' man page and in the NixOS manual
-(accessible by running ‘nixos-help’).
+- https://gitlab.com/chasecaleb/emacs.nix
+- https://github.com/divnix/digga
+- https://git.sr.ht/~dunklecat/nixos-config
+- https://github.com/lexuge/nixos
+- https://github.com/nobbz/nixos-config
+- https://github.com/purcell/dotfiles
+- https://github.com/bqv/rc
+- https://github.com/viperml/dotfiles
 
 ** Flakes
 Any subsequent build of this flake will use the version of nixpkgs recorded in
