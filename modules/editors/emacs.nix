@@ -51,6 +51,13 @@ in {
       tdlib
     ];
 
+    services.locate = {
+      locate = pkgs.plocate;
+      enable = true;
+      interval = "hourly";
+      localuser = null;
+    };
+
     env.PATH = [ "$XDG_CONFIG_HOME/emacs/bin" ];
 
     modules.shell.zsh.rcFiles = [ "${configDir}/emacs/aliases.zsh" ];
