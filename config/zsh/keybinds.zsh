@@ -8,8 +8,10 @@ autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
 zle -N up-line-or-beginning-search
 zle -N down-line-or-beginning-search
 
-bindkey -s '^p' up-line-or-beginning-search
-bindkey -s '^n' down-line-or-beginning-search
+# bindkey -s '^p' up-line-or-beginning-search
+# bindkey -s '^n' down-line-or-beginning-search
+bindkey "^P" history-substring-search-up
+bindkey "^N" history-substring-search-down
 
 # Use lf to switch directories and bind it to ctrl-o
 lfcd () {
