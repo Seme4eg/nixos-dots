@@ -14,7 +14,7 @@
 
     "modules-center": ["custom/clock", "sway/window"],
     "modules-right": [
-        "custom/language",
+        "hyprland/language",
         "tray",
         "idle_inhibitor",
         "pulseaudio",
@@ -42,6 +42,11 @@
             "active": "●",
             "default": "○"
         }
+    },
+    "hyprland/language": {
+        "format": "⌨ {}",
+        // "format-us": "AMERICA, HELL YEAH!",
+        "keyboard-name": "AT Translated Set 2 keyboard"
     },
     "wlr/taskbar": {
         "icon-size": 17,
@@ -119,12 +124,6 @@
 
     // --- Custom widgets ---
 
-    "custom/language": {
-        "exec": "xkblayout-state print %n | head -c 2" ,
-        "format-icons": "⌨",
-        "format": "{} {icon}",
-        "interval": 1
-    },
     // Weather with detailed forecast
     // https://gist.github.com/bjesus/f8db49e1434433f78e5200dc403d58a3
     "custom/weather": {
