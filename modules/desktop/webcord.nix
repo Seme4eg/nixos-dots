@@ -3,7 +3,6 @@
 with lib;
 with lib.my;
 let cfg = config.modules.desktop.webcord;
-    inherit (inputs) webcord;
 in {
   options.modules.desktop.webcord = with types; {
     enable = mkBoolOpt false;
@@ -11,9 +10,7 @@ in {
 
   config = mkIf cfg.enable {
     user.packages = [
-      webcord.packages.${pkgs.system}.default
+      inputs.webcord.packages.${pkgs.system}.default
     ];
-
-    env.NIXOS_OZONE_WL = "1"; # for webcord on wayland
   };
 }

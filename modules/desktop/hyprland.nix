@@ -99,6 +99,9 @@ in {
       GDK_BACKEND = "wayland";
       _JAVA_AWT_WM_NONREPARENTING = "1";
       XCURSOR_SIZE = "24";
+
+      # use Wayland where possible
+      NIXOS_OZONE_WL = "1"; # for webcord for example
     };
 
     # modules.theme.onReload.bspwm = ''

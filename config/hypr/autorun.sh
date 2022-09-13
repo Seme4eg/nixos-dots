@@ -1,5 +1,5 @@
 qutebrowser &
-discord &
+webcord &
 emacs &
 # syncthing & # starts in service
 syncthingtray --wait &
