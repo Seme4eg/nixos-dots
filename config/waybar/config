@@ -12,7 +12,8 @@
         "custom/media",
     ],
 
-    "modules-center": ["custom/clock", "sway/window"],
+    "modules-center": ["custom/clock", "sway/window", "custom/weather"],
+
     "modules-right": [
         "hyprland/language",
         "tray",
@@ -22,7 +23,6 @@
         "cpu",
         "custom/gpu-usage",
         "custom/pacman",
-        "custom/weather",
         "memory",
         "temperature",
         "backlight",
