@@ -45,7 +45,7 @@
     let
       inherit (lib.my) mapModules mapModulesRec mapHosts;
 
-      system = "x86_64-linux"; # XXX: add support for arch? do i need it?
+      system = "x86_64-linux";
 
       # Function-wrapper to generate extended pkgs set with unstable & own
       # packages. Tho i don't understand it fully + i don't have own packages
