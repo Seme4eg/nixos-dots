@@ -13,8 +13,7 @@
   # passed as arguments to the 'outputs' function.
   inputs = {
     # Core dependencies
-    nixpkgs.url = "nixpkgs/nixos-unstable"; # primary nixpkgs
-    nixpkgs-unstable.url = "nixpkgs/nixpkgs-unstable"; # for packages on the edge
+    nixpkgs.url = "nixpkgs/nixos-unstable"; # for packages on the edge
     home-manager = {
       url = "github:nix-community/home-manager"; # .. or  github:rycee/home-manager/master
       inputs.nixpkgs.follows = "nixpkgs";
@@ -37,26 +36,21 @@
   # The @self argument denotes *this* flake. Its primarily useful for referring
   # to the source of the flake (as in 'src = self;') or to other outputs (e.g.
   # 'self.defaultPackage.x86_64-linux')
-  # The attributes produced by 'outputs' are arbitrary values, except that (as we
-  # saw above) there are some standard outputs such as defaultPackage.${system}.
+  # The attributes produced by 'outputs' are arbitrary values, except that (as
+  # we saw above) there are some standard outputs such as
+  # defaultPackage.${system}.
 
-  outputs = inputs @ { self, nixpkgs, nixpkgs-unstable, ... }:
+  outputs = inputs @ { self, nixpkgs, ... }:
     # Vars that can be used in the config files.
     let
       inherit (lib.my) mapModules mapModulesRec mapHosts;
 
       system = "x86_64-linux";
 
-      # Function-wrapper to generate extended pkgs set with unstable & own
-      # packages. Tho i don't understand it fully + i don't have own packages
-      # for now.
-      mkPkgs = pkgs: extraOverlays: import pkgs {
+      pkgs = import nixpkgs {
         inherit system;
-        config.allowUnfree = true;  # forgive me Stallman senpai
-        overlays = extraOverlays; # ++ (lib.attrValues self.overlays);
+        config.allowUnfree = true;
       };
-      pkgs  = mkPkgs nixpkgs [ self.overlay ];
-      pkgs' = mkPkgs nixpkgs-unstable [];
 
       # Extended lib set.
       lib = nixpkgs.lib.extend
@@ -65,22 +59,14 @@
     in {
       lib = lib.my; # REVIEW: redefining global lib??
 
-      overlay =
-        final: prev: {
-          unstable = pkgs';
-          # my = self.packages."${system}";
-        };
-
       # overlays =
       #   mapModules ./overlays import;
 
       # packages."${system}" =
       #   mapModules ./packages (p: pkgs.callPackage p {});
 
-      # { dotfiles = import ./.; }
       nixosModules = mapModulesRec ./modules import;
 
-      # --- New new format ---
       nixosConfigurations = mapHosts ./hosts {};
 
       # --- Old format ---
