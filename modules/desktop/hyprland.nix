@@ -1,18 +1,14 @@
 { config, lib, pkgs, inputs, ... }:
 
-with lib;
-with lib.my;
 let cfg = config.modules.desktop.hyprland;
     configDir = config.dotfiles.configDir;
 in {
-  options.modules.desktop.hyprland = {
-    enable = mkBoolOpt false;
-  };
+  options.modules.desktop.hyprland.enable = lib.mkEnableOption "hyprland";
 
   # NOTE: in case of problems with notifications check 'dbus-sway-environment'
   # and 'configure-gtk' here - https://nixos.wiki/wiki/Sway
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     services.xserver = {
       enable = true;
       # layout = "us";

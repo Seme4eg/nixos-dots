@@ -1,7 +1,6 @@
-{ lib, ... }:
-
+inputs:
 with builtins;
-with lib;
+with inputs.nixpkgs.lib;
 rec {
   # attrsToList
   attrsToList = attrs:
@@ -15,12 +14,4 @@ rec {
 
   # Generate an attribute set by mapping a function over a list of values.
   genAttrs' = values: f: listToAttrs (map f values);
-
-  # anyAttrs :: (name -> value -> bool) attrs
-  anyAttrs = pred: attrs:
-    any (attr: pred attr.name attr.value) (attrsToList attrs);
-
-  # countAttrs :: (name -> value -> bool) attrs
-  countAttrs = pred: attrs:
-    count (attr: pred attr.name attr.value) (attrsToList attrs);
 }

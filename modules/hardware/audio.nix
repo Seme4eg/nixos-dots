@@ -1,14 +1,10 @@
-{ options, config, lib, pkgs, ... }:
+{ options, config, lib, ... }:
 
-with lib;
-with lib.my;
 let cfg = config.modules.hardware.audio;
 in {
-  options.modules.hardware.audio = {
-    enable = mkBoolOpt false;
-  };
+  options.modules.hardware.audio.enable = lib.mkEnableOption "audio";
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     # hardware.pulseaudio.package = pulseaudioFull;
     # hardware.pulseaudio.enable = true;
     # hardware.pulseaudio.support32Bit = true;
@@ -18,7 +14,6 @@ in {
       alsa.enable = true;
       alsa.support32Bit = true;
       pulse.enable = true;
-      # jack.enable = true;
     };
 
     # allow pulseaudio to acquire realtime priority

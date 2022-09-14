@@ -1,14 +1,13 @@
-{ config, options, lib, pkgs, ... }:
+{ config, options, lib, inputs, ... }:
 
-with lib;
-with lib.my;
 let cfg = config.modules.editors;
+    inherit (inputs.self.lib) mkOpt;
 in {
   options.modules.editors = {
-    default = mkOpt types.str "vim";
+    default = mkOpt lib.types.str "vim";
   };
 
-  config = mkIf (cfg.default != null) {
+  config = lib.mkIf (cfg.default != null) {
     env.EDITOR = cfg.default;
   };
 }

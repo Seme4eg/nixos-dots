@@ -1,18 +1,16 @@
 { config, lib, pkgs, inputs, ... }:
 
-with lib;
-with lib.my;
 let cfg = config.modules.editors.emacs;
     configDir = config.dotfiles.configDir;
 in {
   options.modules.editors.emacs = {
-    enable = mkBoolOpt false;
+    enable = lib.mkEnableOption "emacs";
     doom = {
-      enable = mkBoolOpt false;
+      enable = lib.mkEnableOption "doom";
     };
   };
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     nixpkgs.overlays = [ inputs.emacs-overlay.overlay ];
 
     user.packages = with pkgs; [
@@ -30,7 +28,7 @@ in {
       ## Optional dependencies
       fd                  # faster projectile indexing
       imagemagick         # for image-dired
-      (mkIf (config.programs.gnupg.agent.enable)
+      (lib.mkIf (config.programs.gnupg.agent.enable)
         pinentry_emacs)   # in-emacs gnupg prompts
       zstd                # for undo-fu-session/undo-tree compression
 
@@ -68,7 +66,7 @@ in {
       "L+ ${config.user.home}/.local/bin/tdlib - - - - ${pkgs.tdlib}"
     ];
 
-    system.userActivationScripts = mkIf cfg.doom.enable {
+    system.userActivationScripts = lib.mkIf cfg.doom.enable {
       installDoomEmacs = let
         doom = pkgs.fetchFromGitHub {
           owner = "doomemacs";

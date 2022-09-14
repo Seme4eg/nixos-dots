@@ -1,15 +1,11 @@
-{ options, config, lib, pkgs, ... }:
+{ options, config, lib, ... }:
 
-with lib;
-with lib.my;
 let hwCfg = config.modules.hardware;
     cfg = hwCfg.bluetooth;
 in {
-  options.modules.hardware.bluetooth = {
-    enable = mkBoolOpt false;
-  };
+  options.modules.hardware.bluetooth.enable = lib.mkEnableOption "bluetooth";
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     hardware.bluetooth = {
       enable = true;
       # package = bluezFull;

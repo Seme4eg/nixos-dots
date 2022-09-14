@@ -3,22 +3,21 @@
 # Qutebrowser is cute because it's not enough of a browser to be handsome.
 # Still, we can all tell he'll grow up to be one hell of a lady-killer.
 
-{ options, config, lib, pkgs, ... }:
+{ options, config, lib, inputs, pkgs, ... }:
 
-with lib;
-with lib.my;
 let cfg = config.modules.desktop.browsers.qutebrowser;
     configDir = config.dotfiles.configDir;
+    inherit (inputs.self.lib) mkOpt;
 in {
-  options.modules.desktop.browsers.qutebrowser = with types; {
-    enable = mkBoolOpt false;
+  options.modules.desktop.browsers.qutebrowser = with lib.types; {
+    enable = lib.mkEnableOption "qutebrowser";
     userStyles = mkOpt lines "";
     # option to pass some additional per-host settings
     extraConfig = mkOpt lines "";
     dicts = mkOpt (listOf str) [ "en-US" "ru-RU" ];
   };
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     user.packages = with pkgs; [
       qutebrowser
 
@@ -58,7 +57,7 @@ in {
         '';
       };
       qutebrowserInstallDicts =
-        concatStringsSep "\\\n" (map (lang: ''
+        lib.concatStringsSep "\\\n" (map (lang: ''
           if ! find "$XDG_DATA_HOME/qutebrowser/qtwebengine_dictionaries" -type d -maxdepth 1 -name "${lang}*" 2>/dev/null | grep -q .; then
             ${pkgs.python3}/bin/python ${pkgs.qutebrowser}/share/qutebrowser/scripts/dictcli.py install ${lang}
           fi

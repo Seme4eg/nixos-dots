@@ -2,15 +2,11 @@
 
 { options, config, lib, pkgs, ... }:
 
-with lib;
-with lib.my;
 let cfg = config.modules.desktop.term.alacritty;
 in {
-  options.modules.desktop.term.alacritty = {
-    enable = mkBoolOpt false;
-  };
+  options.modules.desktop.term.alacritty.enable = lib.mkEnableOption "alacritty";
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     user.packages = with pkgs; [
       alacritty # gpu accelerated terminal
     ];

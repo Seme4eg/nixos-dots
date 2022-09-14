@@ -5,19 +5,14 @@
 
 { config, options, lib, pkgs, ... }:
 
-with lib;
-with lib.my;
 let devCfg = config.modules.dev;
     cfg = devCfg.node;
 in {
-  options.modules.dev.node = {
-    enable = mkBoolOpt false;
-    xdg.enable = mkBoolOpt devCfg.xdg.enable;
-  };
+  options.modules.dev.node.enable = lib.mkEnableOption "node";
 
-  config = mkMerge [
-    (let node = pkgs.nodejs_latest;
-     in mkIf cfg.enable {
+  config =
+    let node = pkgs.nodejs_latest;
+    in lib.mkIf cfg.enable {
       user.packages = [
         node
         pkgs.yarn
@@ -30,9 +25,8 @@ in {
       };
 
       env.PATH = [ "$(${pkgs.yarn}/bin/yarn global bin)" ];
-    })
 
-    (mkIf cfg.xdg.enable {
+      # XDG settings
       env.NPM_CONFIG_USERCONFIG = "$XDG_CONFIG_HOME/npm/config";
       env.NPM_CONFIG_CACHE      = "$XDG_CACHE_HOME/npm";
       env.NPM_CONFIG_TMP        = "$XDG_RUNTIME_DIR/npm";
@@ -43,6 +37,5 @@ in {
         cache=$XDG_CACHE_HOME/npm
         prefix=$XDG_DATA_HOME/npm
       '';
-    })
-  ];
+    };
 }

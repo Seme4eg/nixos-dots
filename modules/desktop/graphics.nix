@@ -2,15 +2,11 @@
 
 { config, options, lib, pkgs, ... }:
 
-with lib;
-with lib.my;
 let cfg = config.modules.desktop.graphics;
 in {
-  options.modules.desktop.graphics = {
-    enable = mkBoolOpt false;
-  };
+  options.modules.desktop.graphics.enable = lib.mkEnableOption "graphics";
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     user.packages = with pkgs; [
       font-manager   # so many damned fonts...
       imagemagick    # for image manipulation from the shell

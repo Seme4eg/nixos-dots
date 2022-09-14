@@ -33,10 +33,7 @@
   # Modules
   modules.hardware = {
     audio.enable = true;
-    fs = {
-      enable = true;
-      ssd.enable = true;
-    };
+    fs.enable = true;
     nvidia.enable = true;
     sensors.enable = true;
     # bluetooth.enable = true;

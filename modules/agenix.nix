@@ -1,10 +1,8 @@
 # modules/agenix.nix -- encrypt secrets in nix store
 
-{ options, config, inputs, lib, pkgs, ... }:
+{ config, inputs, lib, ... }:
 
 with builtins;
-with lib;
-with lib.my;
 let inherit (inputs) agenix;
     # secretsDir = "${toString ../hosts}/${config.networking.hostName}/secrets";
     secretsDir = "${config.dotfiles.dir}/secrets";
@@ -16,9 +14,9 @@ in {
   age = {
     secrets =
       if pathExists secretsFile
-      then mapAttrs' (n: _: nameValuePair (removeSuffix ".age" n) {
+      then lib.mapAttrs' (n: _: lib.nameValuePair (lib.removeSuffix ".age" n) {
         file = "${secretsDir}/${n}";
-        owner = mkDefault config.user.name;
+        owner = lib.mkDefault config.user.name;
       }) (import secretsFile)
       else {};
     identityPaths = [ "${config.user.home}/.ssh/id_ed25519" ];

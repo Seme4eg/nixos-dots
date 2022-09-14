@@ -2,15 +2,11 @@
 
 # https://search.nixos.org/options?channel=unstable&show=services.syncthing.devices&from=0&size=50&sort=relevance&type=packages&query=syncthing
 
-with lib;
-with lib.my;
 let cfg = config.modules.services.syncthing;
 in {
-  options.modules.services.syncthing = {
-    enable = mkBoolOpt false;
-  };
+  options.modules.services.syncthing.enable = lib.mkEnableOption "syncthing";
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     user.packages = with pkgs; [
       syncthing
       syncthingtray # https://github.com/Martchus/syncthingtray

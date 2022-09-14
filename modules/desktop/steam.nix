@@ -1,14 +1,10 @@
 { options, config, lib, pkgs, ... }:
 
-with lib;
-with lib.my;
 let cfg = config.modules.desktop.steam;
 in {
-  options.modules.desktop.steam = with types; {
-    enable = mkBoolOpt false;
-  };
+  options.modules.desktop.steam.enable = lib.mkEnableOption "steam";
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     programs.steam.enable = true;
 
     # better for steam proton games

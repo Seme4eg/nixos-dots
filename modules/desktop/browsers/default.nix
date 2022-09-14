@@ -1,14 +1,13 @@
-{ options, config, lib, pkgs, ... }:
+{ options, config, lib, inputs, ... }:
 
-with lib;
-with lib.my;
 let cfg = config.modules.desktop.browsers;
+    inherit (inputs.self.lib) mkOpt;
 in {
   options.modules.desktop.browsers = {
-    default = mkOpt (with types; nullOr str) null;
+    default = mkOpt (with lib.types; nullOr str) null;
   };
 
-  config = mkIf (cfg.default != null) {
+  config = lib.mkIf (cfg.default != null) {
     env.BROWSER = cfg.default;
   };
 }

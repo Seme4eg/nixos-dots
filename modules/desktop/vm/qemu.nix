@@ -1,14 +1,10 @@
 { options, config, lib, pkgs, ... }:
 
-with lib;
-with lib.my;
 let cfg = config.modules.desktop.vm.qemu;
 in {
-  options.modules.desktop.vm.qemu = {
-    enable = mkBoolOpt false;
-  };
+  options.modules.desktop.vm.qemu.enable = lib.mkEnableOption "qemu";
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
       qemu
     ];

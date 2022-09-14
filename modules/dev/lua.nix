@@ -2,18 +2,14 @@
 
 { config, options, lib, pkgs, ... }:
 
-with lib;
-with lib.my;
 let cfg = config.modules.dev.lua;
 in {
-  options.modules.dev.lua = {
-    enable = mkBoolOpt false;
-  };
+  options.modules.dev.lua.enable = lib.mkEnableOption "lua";
 
-  config = (mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     user.packages = with pkgs; [
       lua
       # luaPackages.moonscript
     ];
-  });
+  };
 }

@@ -1,15 +1,17 @@
-{ config, options, lib, home-manager, ... }:
+{ config, options, lib, inputs, home-manager, ... }:
 
-with lib;
-with lib.my;
+let
+  # inherit (lib) ;
+  inherit (inputs.self.lib) mkOpt mkOpt';
+in
 {
-  options = with types; {
+  options = with lib.types; {
     user = mkOpt attrs {};
 
     dotfiles = {
       dir = mkOpt path
-        (removePrefix "/mnt"
-          (findFirst pathExists (toString ../.) [
+        (lib.removePrefix "/mnt"
+          (lib.findFirst lib.pathExists (toString ../.) [
             "/mnt/etc/dotfiles"
             "/etc/dotfiles"
           ]));
@@ -28,13 +30,13 @@ with lib.my;
 
     # Values in this 'env' are being exported in extraInit option (see end of
     # this file)
-    env = mkOption {
+    env = lib.mkOption {
       # Option type, providing type-checking and value merging.
       type = attrsOf (oneOf [ str path (listOf (either str path)) ]);
       # Convert option value to something else
-      apply = mapAttrs
-        (n: v: if isList v
-               then concatMapStringsSep ":" (x: toString x) v
+      apply = lib.mapAttrs
+        (n: v: if lib.isList v
+               then lib.concatMapStringsSep ":" (x: toString x) v
                else (toString v));
       default = {};
       description = "TODO";
@@ -45,7 +47,7 @@ with lib.my;
     user =
       # to set up USER env var just define it in shell
       let user = builtins.getEnv "USER";
-          name = if elem user [ "" "root" ] then "nohome" else user;
+          name = if lib.elem user [ "" "root" ] then "nohome" else user;
       in {
         inherit name;
         description = "The primary user account";
@@ -53,7 +55,7 @@ with lib.my;
         isNormalUser = true;
         home = "/home/${name}";
         group = "users";
-        uid = 1000;
+        # uid = 1000;
       };
 
     # Install user packages to /etc/profiles instead. Necessary for
@@ -71,19 +73,19 @@ with lib.my;
       #   home.dataFile    ->  home-manager.users.nohome.home.xdg.dataFile
       users.${config.user.name} = {
         home = {
-          file = mkAliasDefinitions options.home.file;
+          file = lib.mkAliasDefinitions options.home.file;
           # Necessary for home-manager to work with flakes, otherwise it will
           # look for a nixpkgs channel.
           stateVersion = config.system.stateVersion;
         };
         xdg = {
-          configFile = mkAliasDefinitions options.home.configFile;
-          dataFile   = mkAliasDefinitions options.home.dataFile;
+          configFile = lib.mkAliasDefinitions options.home.configFile;
+          dataFile   = lib.mkAliasDefinitions options.home.dataFile;
         };
       };
     };
 
-    users.users.${config.user.name} = mkAliasDefinitions options.user;
+    users.users.${config.user.name} = lib.mkAliasDefinitions options.user;
 
     nix.settings = let users = [ "root" config.user.name ]; in {
       trusted-users = users;
@@ -97,7 +99,7 @@ with lib.my;
     # Shell script code called during global environment initialisation after
     # all variables and profileVariables have been set.
     environment.extraInit =
-      concatStringsSep "\n"
-        (mapAttrsToList (n: v: "export ${n}=\"${v}\"") config.env);
+      lib.concatStringsSep "\n"
+        (lib.mapAttrsToList (n: v: "export ${n}=\"${v}\"") config.env);
   };
 }

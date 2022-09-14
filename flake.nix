@@ -43,7 +43,8 @@
   outputs = inputs @ { self, nixpkgs, ... }:
     # Vars that can be used in the config files.
     let
-      inherit (lib.my) mapModules mapModulesRec mapHosts;
+      lib = import ./lib inputs;
+      inherit (lib) mapModulesRec mapHosts; # mapModules
 
       system = "x86_64-linux";
 
@@ -52,12 +53,8 @@
         config.allowUnfree = true;
       };
 
-      # Extended lib set.
-      lib = nixpkgs.lib.extend
-        (self: super: { my = import ./lib { inherit pkgs inputs; lib = self; }; });
-
     in {
-      lib = lib.my; # REVIEW: redefining global lib??
+      inherit lib pkgs;
 
       # overlays =
       #   mapModules ./overlays import;
@@ -67,21 +64,11 @@
 
       nixosModules = mapModulesRec ./modules import;
 
-      nixosConfigurations = mapHosts ./hosts {};
-
-      # --- Old format ---
-      # nixosConfigurations = (
-      #   # location of configs, inports ./hosts/default.nix
-      #   import ./hosts {
-      #     inherit (nixpkgs) lib;
-      #     # also inherit home-manager so it does not need to be defined here.
-      #     inherit inputs user system home-manager;
-      #   }
-      # );
+      nixosConfigurations = mapHosts ./hosts;
 
       # XXX: not sure if i need it
-      devShell."${system}" =
-        import ./shell.nix { inherit pkgs; };
+      # devShell."${system}" =
+      #   import ./shell.nix { inherit pkgs; };
 
       defaultApp."${system}" = {
         type = "app";

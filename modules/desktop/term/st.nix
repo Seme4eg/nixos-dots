@@ -5,15 +5,11 @@
 
 { options, config, lib, pkgs, ... }:
 
-with lib;
-with lib.my;
 let cfg = config.modules.desktop.term.st;
 in {
-  options.modules.desktop.term.st = {
-    enable = mkBoolOpt false;
-  };
+  options.modules.desktop.term.st.enable = lib.mkEnableOption "st";
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     # xst-256color isn't supported over ssh, so revert to a known one
     modules.shell.zsh.rcInit = ''
       [ "$TERM" = xst-256color ] && export TERM=xterm-256color

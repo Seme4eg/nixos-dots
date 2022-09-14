@@ -2,15 +2,11 @@
 
 { options, config, lib, pkgs, ... }:
 
-with lib;
-with lib.my;
 let cfg = config.modules.services.jellyfin;
 in {
-  options.modules.services.jellyfin = {
-    enable = mkBoolOpt false;
-  };
+  options.modules.services.jellyfin.enable = lib.mkEnableOption "jellyfin";
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     services.jellyfin.enable = true;
 
     networking.firewall = {

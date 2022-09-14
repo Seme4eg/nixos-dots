@@ -4,14 +4,13 @@
 # infinite knowledge and shelter me from ads, but bless my $HOME with
 # directories nobody needs and live long enough to turn into Chrome.
 
-{ options, config, lib, pkgs, ... }:
+{ options, config, lib, inputs, pkgs, ... }:
 
-with lib;
-with lib.my;
 let cfg = config.modules.desktop.browsers.firefox;
+    inherit (inputs.self.lib) mkOpt mkOpt';
 in {
-  options.modules.desktop.browsers.firefox = with types; {
-    enable = mkBoolOpt false;
+  options.modules.desktop.browsers.firefox = with lib.types; {
+    enable = lib.mkEnableOption "firefox";
     profileName = mkOpt types.str config.user.name;
 
     settings = mkOpt' (attrsOf (oneOf [ bool int str ])) {} ''
@@ -25,7 +24,7 @@ in {
     userContent = mkOpt' lines "" "Global CSS Styles for websites";
   };
 
-  config = mkIf cfg.enable (mkMerge [
+  config = lib.mkIf cfg.enable (lib.mkMerge [
     {
       user.packages = with pkgs; [
         unstable.firefox-bin
@@ -212,9 +211,9 @@ in {
         '';
 
         "${cfgPath}/${cfg.profileName}.default/user.js" =
-          mkIf (cfg.settings != {} || cfg.extraConfig != "") {
+          lib.mkIf (cfg.settings != {} || cfg.extraConfig != "") {
             text = ''
-              ${concatStrings (mapAttrsToList (name: value: ''
+              ${lib.concatStrings (lib.mapAttrsToList (name: value: ''
                 user_pref("${name}", ${builtins.toJSON value});
               '') cfg.settings)}
               ${cfg.extraConfig}
@@ -222,12 +221,12 @@ in {
           };
 
         "${cfgPath}/${cfg.profileName}.default/chrome/userChrome.css" =
-          mkIf (cfg.userChrome != "") {
+          lib.mkIf (cfg.userChrome != "") {
             text = cfg.userChrome;
           };
 
         "${cfgPath}/${cfg.profileName}.default/chrome/userContent.css" =
-          mkIf (cfg.userContent != "") {
+          lib.mkIf (cfg.userContent != "") {
             text = cfg.userContent;
           };
       };

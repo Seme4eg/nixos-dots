@@ -2,17 +2,11 @@
 
 { config, options, lib, pkgs, ... }:
 
-with lib;
-with lib.my;
 let cfg = config.modules.hardware.fs;
 in {
-  options.modules.hardware.fs = {
-    enable = mkBoolOpt false;
-    ssd.enable = mkBoolOpt false;
-    # TODO automount.enable = mkBoolOpt false;
-  };
+  options.modules.hardware.fs.enable = lib.mkEnableOption "fs";
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     programs.udevil.enable = true;
 
     # Support for more filesystems, mostly to support external drives

@@ -1,15 +1,11 @@
 { config, options, lib, pkgs, ... }:
 
-with lib;
-with lib.my;
 let cfg = config.modules.shell.git;
     configDir = config.dotfiles.configDir;
 in {
-  options.modules.shell.git = {
-    enable = mkBoolOpt false;
-  };
+  options.modules.shell.git.enable = lib.mkEnableOption "git";
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     # user.packages = with pkgs; [
       # gitAndTools.git-annex
       # unstable.gitAndTools.gh

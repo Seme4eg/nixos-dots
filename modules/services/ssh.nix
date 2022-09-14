@@ -1,14 +1,10 @@
 { options, config, lib, ... }:
 
-with lib;
-with lib.my;
 let cfg = config.modules.services.ssh;
 in {
-  options.modules.services.ssh = {
-    enable = mkBoolOpt false;
-  };
+  options.modules.services.ssh.enable = lib.mkEnableOption "ssh";
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     services.openssh = {
       enable = true; # same as 'services.sshd.enable'
       kbdInteractiveAuthentication = false;

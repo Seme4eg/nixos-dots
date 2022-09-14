@@ -1,8 +1,6 @@
 inputs:
-let
-  inherit (inputs.lib) mkOption types;
-in
-rec {
+let inherit (inputs.nixpkgs.lib) mkOption types;
+in rec {
   mkOpt  = type: default:
     mkOption { inherit type default; };
 

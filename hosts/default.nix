@@ -4,7 +4,7 @@
 { inputs, config, lib, pkgs, ... }:
 
 with lib;
-with lib.my;
+with inputs.self.lib;
 {
 	imports = [
 		# I use home-manager to deploy files to $HOME; little else
