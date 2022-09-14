@@ -1,10 +1,15 @@
-#+title: WIPWIPWIPWIPWIP
+#+title: WIPWIPWIPWIP
 
-[[https://nixos.org/manual/nix/stable/language/index.html][nix expression language]]
-Home-manager [[https://nix-community.github.io/home-manager/options.html][options]] documentation.
-Nixpkgs [[https://nixos.org/manual/nixpkgs/stable][lib]] documentation.
+- [[https://nixos.org/manual/nix/stable/language/index.html][nix expression language]]
+- [[https://teu5us.github.io/nix-lib.html][nix builtins and nixpkgs lib packaged together]]
+- [[https://nixos.org/manual/nixos/stable/index.html#sec-nix-syntax-summary][syntax summary]]
+- [[https://nixos.org/manual/nixos/stable/options.html][nixpkgs builtins]]
+- Home-manager [[https://nix-community.github.io/home-manager/options.html][options]] documentation.
+- Nixpkgs [[https://nixos.org/manual/nixpkgs/stable][lib]] documentation.
 
 Useful: hlissners' dotfiles, scroll to bottom and read / watch all the sources.
+
+- https://www.youtube.com/watch?v=AGVXJ-TIv3Y - 3h video
 
 [[https://nixos.wiki/wiki/Configuration_Collection][Configuration Collection]]
 
@@ -88,6 +93,8 @@ hardware.video.hidpi.enable = true;
 [[https://github.com/ninlives/emerge/tree/ce9e1c780019c1aa5d945545de7f25ba295b9f01/impl/lego/network/switch.nix][Example]] of writing shell scripts and adding them to user commands with [
 nopasswd ] option.
 
+in scripts better to use #!/bin/sh cuz bash has different location
+
 #+begin_src nix
 # Japanese input using fcitx
 i18n.inputMethod = {
@@ -95,6 +102,73 @@ i18n.inputMethod = {
   fcitx.engines = with pkgs.fcitx-engines; [mozc];
 };
 #+end_src
+
+#+NAME: home-manager
+#+begin_center
+home-manager? - https://youtu.be/axOxLJ4BWmY?t=1769
+home-manager switch # updates system accordingly with config file?
+man home-manager
+man home-configuration.nix
+#+end_center
+
+- to install package that we don't want to appear in configuration (like
+  gparted), which we'll most likely use once - nix-env -iA nixos.<package>. But
+  better go to search.nixos.org and search for needed package there.
+  - ~nix-env -q~ - list packages installed that way
+  - ~nix-env --uninstall <package>~
+- if you install soft as package - it might not b what u want, instead sometimes
+  you might need to enable corresponding 'service' to start the needed soft. In
+  this case you can omit declaring package in packages set and instead only go
+  with it's options, nixos will figure it out
+
+- nix search <package> -> returns nixpkgs.<actuallpkgname> -> add this <...>
+  name in pkgs arr.
+- nixos-version
+- nix flake show - shows tree of flakes
+- man configuration.nix
+
+*Chapter 61. Logging* - journalctl -b
+
+*** Garbage Collection
+*Command line:*
+
+- list generations - ~nix-env --list-generations~
+- remove specific generations - ~nix-env --delete-generations 1 2 3 4 5 ..~
+- remove generations older than ... days - ~nix-env --delete-generations 7d~
+
+Or just use ~nix-collect-garbage~ - remove undeclared packages, dependencies and
+symlinks. Add ~-d~ flag to remove above of older generations and better run it as
+sudo. (All in 1 command: ~sudo nix-collect-garbage -d~)
+
+*Chapter 61. Cleaning the Nix Store*: ~sudo nix-collect-garbage -d~
+*** Documentation notes
+**** Chapter 3. nixos-rebuild + testing on vm
+- nixos-rebuild (--help)
+- nixos-rebuild switch - switches right away
+- nixos-rebuild test
+- nixos-rebuild boot # make it boot default, but switch only after reboot
+- nixos-rebuild build # to test if things compile, but do nothing more
+
+You can also test the new configuration in a sandbox by building and running a
+QEMU virtual machine that contains the desired configuration. Just do
+
+: $ nixos-rebuild build-vm
+: $ ./result/bin/run-*-vm
+
+**** Chapter 6. Nix repl
+#+begin_center
+Interactive exploration of the configuration is possible using nix repl, a read-eval-print loop for Nix expressions. A typical use:
+
+$ nix repl '<nixpkgs/nixos>'
+...
+#+end_center
+
+**** Chapter 7 declarative package management
+You can get a list of the available packages as follows:
+
+$ nix-env -qaP '*' --description
+nixos.firefox   firefox-23.0   Mozilla Firefox - the browser, reloaded
+...
 
 ** lack of internet questions:
 
@@ -140,9 +214,10 @@ zramSwap.enable = true;
 Is it a nix repl here? - ~/learning/fufexan/pkgs/repl/default.nix
 
 ** Todo / to check
-*** Small and ez todos [0/5]
+*** Small and ez todos [0/3]
 **** TODO [[https://github.com/jollheef/localhost]]
 *clean*, easy to read and understand, no flakes, only home-manager setup
+**** TODO https://github.com/MatthiasBenaets/nixos-config
 **** TODO setup mako
 
 *** To setup [0/12]
@@ -270,7 +345,7 @@ nix settings in hosts/default.nix. For now it's a mess
 - [ ] fix syncthingtray opening in not floating mode
 - [ ] fix webcord rule not applying
 
-*** Backlog [0/2]
+*** Backlog [0/3]
 # not urgent, but most likely needed setups / fixes
 
 **** TODO Xbox-controller setup [[https://github.com/ninlives/emerge/tree/ce9e1c780019c1aa5d945545de7f25ba295b9f01/impl/lego/service/xbox-controller.nix][example]].
@@ -279,3 +354,4 @@ nix settings in hosts/default.nix. For now it's a mess
 
 #+NAME: source: https://github.com/LEXUGE/nixos
 ![Build customized NixOS LiveCD ISO](https://github.com/LEXUGE/nixos/workflows/Build%20customized%20NixOS%20LiveCD%20ISO/badge.svg) ![Nix Flake Check](https://github.com/LEXUGE/nixos/workflows/Nix%20Flake%20Check/badge.svg) ![Release status](https://img.shields.io/github/v/release/LEXUGE/nixos.svg)
+**** TODO Setup [[https://wiki.hyprland.org/Nix/#cachix][cachix]] for hyprland
