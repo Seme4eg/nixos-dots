@@ -214,7 +214,9 @@ zramSwap.enable = true;
 Is it a nix repl here? - ~/learning/fufexan/pkgs/repl/default.nix
 
 ** Todo / to check
-*** Small and ez todos [0/3]
+*** Small and ez todos [0/4]
+**** TODO Clean out useless modules, that do not require any special configurations
+.. and jus put those in 'user.packages' list
 **** TODO [[https://github.com/jollheef/localhost]]
 *clean*, easy to read and understand, no flakes, only home-manager setup
 **** TODO https://github.com/MatthiasBenaets/nixos-config
@@ -345,7 +347,7 @@ nix settings in hosts/default.nix. For now it's a mess
 - [ ] fix syncthingtray opening in not floating mode
 - [ ] fix webcord rule not applying
 
-*** Backlog [0/3]
+*** Backlog [0/4]
 # not urgent, but most likely needed setups / fixes
 
 **** TODO Xbox-controller setup [[https://github.com/ninlives/emerge/tree/ce9e1c780019c1aa5d945545de7f25ba295b9f01/impl/lego/service/xbox-controller.nix][example]].
@@ -355,3 +357,5 @@ nix settings in hosts/default.nix. For now it's a mess
 #+NAME: source: https://github.com/LEXUGE/nixos
 ![Build customized NixOS LiveCD ISO](https://github.com/LEXUGE/nixos/workflows/Build%20customized%20NixOS%20LiveCD%20ISO/badge.svg) ![Nix Flake Check](https://github.com/LEXUGE/nixos/workflows/Nix%20Flake%20Check/badge.svg) ![Release status](https://img.shields.io/github/v/release/LEXUGE/nixos.svg)
 **** TODO Setup [[https://wiki.hyprland.org/Nix/#cachix][cachix]] for hyprland
+**** TODO (maybe) setup transmission, discourse, wireguard?
+search for those keywords in other ppls dots
