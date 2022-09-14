@@ -1,7 +1,6 @@
-{ lib, ... }:
-
+inputs:
 let
-  inherit (lib) mkOption types;
+  inherit (inputs.lib) mkOption types;
 in
 rec {
   mkOpt  = type: default:
