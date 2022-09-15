@@ -7,7 +7,10 @@
 { options, config, lib, inputs, pkgs, ... }:
 
 let cfg = config.modules.desktop.browsers.firefox;
-    inherit (inputs.self.lib) mkOpt mkOpt';
+    mkOpt = type: default:
+      lib.mkOption { inherit type default; };
+    mkOpt' = type: default: description:
+      lib.mkOption { inherit type default description; };
 in {
   options.modules.desktop.browsers.firefox = with lib.types; {
     enable = lib.mkEnableOption "firefox";
