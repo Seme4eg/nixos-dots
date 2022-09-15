@@ -1,10 +1,12 @@
 { options, config, lib, inputs, ... }:
 
 let cfg = config.modules.desktop.browsers;
-    inherit (inputs.self.lib) mkOpt;
 in {
   options.modules.desktop.browsers = {
-    default = mkOpt (with lib.types; nullOr str) null;
+    default = lib.mkOption {
+      type = (with lib.types; nullOr str);
+      default = null;
+    };
   };
 
   config = lib.mkIf (cfg.default != null) {

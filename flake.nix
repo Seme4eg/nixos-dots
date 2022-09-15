@@ -31,8 +31,6 @@
     webcord.url = "github:fufexan/webcord-flake";
   };
 
-  # Heart of the flake. It's a f-n that produces an attribute set and tells
-  # flake which to use and what to do with the deps.
   # The @self argument denotes *this* flake. Its primarily useful for referring
   # to the source of the flake (as in 'src = self;') or to other outputs (e.g.
   # 'self.defaultPackage.x86_64-linux')

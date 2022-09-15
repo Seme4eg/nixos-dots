@@ -2,15 +2,21 @@
 
 let cfg = config.modules.shell.zsh;
     configDir = config.dotfiles.configDir;
-    inherit (inputs.self.lib) mkOpt mkOpt';
 in {
-  options.modules.shell.zsh = with lib.types; {
+  options.modules.shell.zsh = {
     enable = lib.mkEnableOption "zsh";
-    rcInit = mkOpt' lines "" ''
-      Zsh lines to be written to $XDG_CONFIG_HOME/zsh/extra.zshrc and sourced by
-      $XDG_CONFIG_HOME/zsh/.zshrc
-    '';
-    rcFiles = mkOpt (listOf (either str path)) [];
+    rcInit = lib.mkOption {
+      type = lib.types.lines;
+      default = "";
+      description = ''
+        Zsh lines to be written to $XDG_CONFIG_HOME/zsh/extra.zshrc and sourced by
+        $XDG_CONFIG_HOME/zsh/.zshrc
+      '';
+    };
+    rcFiles = lib.mkOption {
+      type = (with lib.types; listOf (either str path));
+      default = [];
+    };
   };
 
   config = lib.mkIf cfg.enable {

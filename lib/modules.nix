@@ -2,7 +2,13 @@ inputs:
 let
   inherit (builtins) attrValues readDir pathExists concatLists;
   inherit (inputs.nixpkgs.lib) id mapAttrsToList filterAttrs hasPrefix hasSuffix nameValuePair removeSuffix;
-  inherit (import ./attrs.nix inputs) mapFilterAttrs;
+
+  # mapFilterAttrs ::
+  #   (name -> value -> bool)
+  #   (name -> value -> { name = any; value = any; })
+  #   attrs
+  mapFilterAttrs = pred: f: attrs:
+    filterAttrs pred (inputs.nixpkgs.lib.mapAttrs' f attrs);
 in
 rec {
   mapModules = dir: fn:

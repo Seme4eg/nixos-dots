@@ -10,6 +10,5 @@ let
   attrs = import ./attrs.nix inputs;
   modules = import ./modules.nix inputs;
   nixos = import ./nixos.nix inputs;
-  options = import ./options.nix inputs;
 in
-attrs // modules // nixos // options # // lib ?
+modules // nixos # // lib ?

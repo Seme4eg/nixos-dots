@@ -1,11 +1,13 @@
 { config, options, pkgs, lib, inputs, ... }:
 
 let cfg = config.modules.shell.pass;
-    inherit (inputs.self.lib) mkOpt;
 in {
-  options.modules.shell.pass = with lib.types; {
+  options.modules.shell.pass = {
     enable = lib.mkEnableOption "pass";
-    passwordStoreDir = mkOpt str "$HOME/.secrets/password-store";
+    passwordStoreDir = lib.mkOption {
+      type = lib.types.str;
+      default = "$HOME/.secrets/password-store";
+    };
   };
 
   config = lib.mkIf cfg.enable {

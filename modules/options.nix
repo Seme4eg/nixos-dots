@@ -1,12 +1,17 @@
 { config, options, lib, inputs, home-manager, ... }:
 
 let
-  # inherit (lib) ;
-  inherit (inputs.self.lib) mkOpt mkOpt';
+  inherit (lib.types) path attrs attrsOf oneOf str listOf either;
+
+  mkOpt = type: default:
+    lib.mkOption { inherit type default; };
+
+  mkOpt' = type: default: description:
+    lib.mkOption { inherit type default description; };
 in
 {
-  options = with lib.types; {
-    user = mkOpt attrs {};
+  options = {
+    user = mkOpt lib.types.attrs {};
 
     dotfiles = {
       dir = mkOpt path

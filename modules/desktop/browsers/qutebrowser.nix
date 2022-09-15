@@ -7,14 +7,16 @@
 
 let cfg = config.modules.desktop.browsers.qutebrowser;
     configDir = config.dotfiles.configDir;
-    inherit (inputs.self.lib) mkOpt;
 in {
-  options.modules.desktop.browsers.qutebrowser = with lib.types; {
+  options.modules.desktop.browsers.qutebrowser = {
     enable = lib.mkEnableOption "qutebrowser";
-    userStyles = mkOpt lines "";
+    userStyles = lib.mkOption { type = lib.types.lines; default = ""; };
     # option to pass some additional per-host settings
-    extraConfig = mkOpt lines "";
-    dicts = mkOpt (listOf str) [ "en-US" "ru-RU" ];
+    extraConfig = lib.mkOption { type = lib.types.lines; default = ""; };
+    dicts = lib.mkOption {
+      type = (with lib.types; listOf str);
+      default = [ "en-US" "ru-RU" ];
+    };
   };
 
   config = lib.mkIf cfg.enable {
