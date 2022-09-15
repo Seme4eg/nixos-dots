@@ -10,5 +10,7 @@ in {
     user.packages = with pkgs; [
       alacritty # gpu accelerated terminal
     ];
+
+    env.TERMINAL = "alacritty";
   };
 }

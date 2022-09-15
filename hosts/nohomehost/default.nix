@@ -1,6 +1,6 @@
 # Specific system configuration settings
 
-{ config, pkgs, lib, ... }:
+{ config, inputs, pkgs, lib, ... }:
 
 {
 	imports = [
@@ -15,28 +15,16 @@
 			# rofi.enable = true;
 			browsers = {
 				default = "qutebrowser";
-				# firefox.enable = true; # XXX
+				# firefox.enable = true; # TODO: setup maybe?
 				qutebrowser.enable = true;
 			};
 			steam.enable = true;
-			webcord.enable = true;
-			graphics.enable = true; # REVIEW: not sure about naming
-			mpv.enable = true;
-			term = {
-				default = "alacritty"; # xst
-				alacritty.enable = true;
-				# st.enable = true;
-			};
+			term.alacritty.enable = true; # TODO: try out st (have config pre-ready)
 			# vm = {
 			# 	qemu.enable = true;
 			# };
 		};
-		dev = {
-			lua.enable = true;
-			node.enable = true;
-			# shell.enable = true;
-			# common-lisp.enable = true;
-		};
+		dev.node.enable = true;
 		editors = {
 			default = "emacs"; # nvim
 			emacs.enable = true;
@@ -55,16 +43,35 @@
 			ssh.enable = true;
 			syncthing.enable = true;
 
-			# TODO:
-			# wireguard.enable = true; # migrate from openvpn to wireguard
-			# transmission.enable = true; # bittorrent client - https://transmissionbt.com/
-
-			# maybe i'll need those some day
-			# discourse.enable = true;
-			# jellyfin.enable = true;
 		};
 		# theme.active = "alucard";
 	};
+
+	# packages that do not requrie any additional configuration
+	# which i can enable / disable just by commenting those out
+	user.packages = with pkgs; [
+		# Shell script programmers are strange beasts. Writing programs in a language
+		# that wasn't intended as a programming language. Alas, it is not for us mere
+		# mortals to question the will of the ancient ones. If they want shell programs,
+		# they get shell programs.
+		shellcheck
+
+		inputs.webcord.packages.${pkgs.system}.default
+
+		# mpv
+		mpv-with-scripts
+		mpvc  # CLI controller for mpv
+
+		font-manager   # so many damned fonts...
+		# imagemagick    # for image manipulation from the shell
+
+		# common lisp
+		# sbcl
+		# lispPackages.quicklisp
+
+		lua
+
+	];
 
 	## Local config
 	services.openssh.startWhenNeeded = true;

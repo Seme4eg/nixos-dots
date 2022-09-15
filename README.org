@@ -214,9 +214,7 @@ zramSwap.enable = true;
 Is it a nix repl here? - ~/learning/fufexan/pkgs/repl/default.nix
 
 ** Todo / to check
-*** Small and ez todos [0/4]
-**** TODO Clean out useless modules, that do not require any special configurations
-.. and jus put those in 'user.packages' list
+*** Small and ez todos [0/3]
 **** TODO [[https://github.com/jollheef/localhost]]
 *clean*, easy to read and understand, no flakes, only home-manager setup
 **** TODO https://github.com/MatthiasBenaets/nixos-config

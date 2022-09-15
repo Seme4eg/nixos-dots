@@ -35,13 +35,16 @@
     audio.enable = true;
     fs.enable = true;
     nvidia.enable = true;
-    sensors.enable = true;
     # bluetooth.enable = true;
 
     # Look those up in hlissners' dots if ya'll ever ened those
     # razer.enable = true;
     # ergodox.enable = true;
   };
+
+	user.packages = with pkgs; [
+		lm_sensors # Tools for reading hardware sensors
+  ];
 
   services.xserver.xkbOptions = "ctrl:swapcaps,grp:win_space_toggle";
 	# Enable touchpad support (enabled default in most desktopManager).

@@ -15,6 +15,8 @@ in {
       [ "$TERM" = xst-256color ] && export TERM=xterm-256color
     '';
 
+    env.TERMINAL = "xst";
+
     user.packages = with pkgs; [
       xst  # st + nice-to-have extensions
       (makeDesktopItem {
