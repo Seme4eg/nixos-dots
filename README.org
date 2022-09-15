@@ -357,3 +357,6 @@ nix settings in hosts/default.nix. For now it's a mess
 **** TODO Setup [[https://wiki.hyprland.org/Nix/#cachix][cachix]] for hyprland
 **** TODO (maybe) setup transmission, discourse, wireguard?
 search for those keywords in other ppls dots
+
+# wireguard.enable = true; # migrate from openvpn to wireguard
+# transmission.enable = true; # bittorrent client - https://transmissionbt.com/
