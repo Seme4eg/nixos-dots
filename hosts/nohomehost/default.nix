@@ -10,6 +10,7 @@
 
 	## Modules
 	modules = {
+		flakes.enable = true;
 		desktop = {
 			hyprland.enable = true;
 			# rofi.enable = true;
