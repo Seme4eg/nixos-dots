@@ -20,7 +20,7 @@
 				qutebrowser.enable = true;
 			};
 			steam.enable = true;
-			term.alacritty.enable = true; # TODO: try out st (have config pre-ready)
+			term.alacritty.enable = true; # TODO: try out st (have config ready)
 			# vm = {
 			# 	qemu.enable = true;
 			# };
@@ -43,7 +43,7 @@
 		services = {
 			ssh.enable = true;
 			syncthing.enable = true;
-
+			openvpn.enable = true;
 		};
 		# theme.active = "alucard";
 	};

@@ -4,4 +4,7 @@ in
 {
   "syncthing-key.age".publicKeys = [ key ];
   "syncthing-cert.age".publicKeys = [ key ];
+  "ovpn-conf.age".publicKeys = [ key ];
+  "ovpn-crt.age".publicKeys = [ key ];
+  "ovpn-key.age".publicKeys = [ key ];
 }
