@@ -4,17 +4,34 @@
 # but this takes care of the general cases.
 
 { config, home-manager, ... }:
+let
+  browser = ["qutebrowser.desktop"]; # ["firefox.desktop"];
+
+  associations = {
+    "x-scheme-handler/http" = browser;
+    "x-scheme-handler/https" = browser;
+    "x-scheme-handler/ftp" = browser;
+    "x-scheme-handler/about" = browser;
+    "x-scheme-handler/unknown" = browser;
+
+    # "text/html" = browser;
+    "text/*" = [ "emacs.desktop" ];
+    "audio/*" = ["mpv.desktop"];
+    "video/*" = ["mpv.dekstop"];
+    # "image/*" = ["imv.desktop"];
+
+    "application/json" = browser;
+    "application/pdf" = ["emacs.desktop"];
+    "x-scheme-handler/discord" = ["WebCord.desktop"];
+  };
+in
 {
   ### A tidy $HOME is a tidy mind
   home-manager.users.${config.user.name}.xdg.enable = true;
 
-  # Look for how to setup mime apps here
-  # https://search.nixos.org/options?channel=unstable&show=xdg.mime.addedAssociations&from=0&size=50&sort=relevance&type=packages&query=xdg
-  # These below are outdated:
-  # xdg.mimeApps.associations.removed."application/pdf" = "draw.desktop";
-  # xdg.mimeApps.associations.added."application/vnd.openxmlformats-officedocument.presentationml.presentation" =
-  #   "impress.desktop";
-  # xdg.mimeApps.associations.added."application/msword" = "writer.desktop";
+  xdg.mime.enable = true;
+  xdg.mime.addedAssociations = associations;
+  xdg.mime.defaultApplications = associations;
 
   environment = {
     sessionVariables = {
