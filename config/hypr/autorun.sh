@@ -2,9 +2,9 @@ qutebrowser &
 webcord &
 emacs &
 # syncthing & # starts in service
-syncthingtray --wait &
-# for mako
-dbus-daemon --session --address=unix:path=$XDG_RUNTIME_DIR/bus &
+# syncthingtray --wait &
+# for mako to work when not using systemd
+# dbus-daemon --session --address=unix:path=$XDG_RUNTIME_DIR/bus &
 mako &
 hyprpaper &
 waybar & # don't want to put it in systemd service

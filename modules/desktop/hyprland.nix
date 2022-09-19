@@ -11,7 +11,6 @@ in {
   config = lib.mkIf cfg.enable {
     services.xserver = {
       enable = true;
-      # layout = "us";
       displayManager = {
         lightdm.enable = false;
         gdm.enable = false;

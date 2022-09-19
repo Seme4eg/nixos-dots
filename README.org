@@ -219,6 +219,7 @@ Is it a nix repl here? - ~/learning/fufexan/pkgs/repl/default.nix
 *clean*, easy to read and understand, no flakes, only home-manager setup
 **** TODO https://github.com/MatthiasBenaets/nixos-config
 **** TODO setup mako
+styles, timeouts and stuff
 
 *** To setup [0/12]
 **** TODO setup openvpn
@@ -338,12 +339,10 @@ nix settings in hosts/default.nix. For now it's a mess
 ***** TODO Learn nix and understand what i need
 ~/learning/calebchase/nixos-config/nixos/nix.nix - good example
 
-*** To fix [0/5]
+*** To fix [0/3]
 - [ ] fix syncthingtray service not working
 - [ ] fix warframe launcher working badly
-- [ ] fix 1:30 wait on every reboot / shutdown
 - [ ] fix syncthingtray opening in not floating mode
-- [ ] fix webcord rule not applying
 
 *** Backlog [0/4]
 # not urgent, but most likely needed setups / fixes
