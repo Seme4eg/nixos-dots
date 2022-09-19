@@ -43,7 +43,7 @@
 		services = {
 			ssh.enable = true;
 			syncthing.enable = true;
-			openvpn.enable = true;
+			openvpn.enable = false;
 		};
 		# theme.active = "alucard";
 	};
