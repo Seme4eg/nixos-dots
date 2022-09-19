@@ -1,9 +1,9 @@
 #+title: WIPWIPWIPWIP
 
 - [[https://nixos.org/manual/nix/stable/language/index.html][nix expression language]]
+- [[https://nixos.org/manual/nixos/stable/options.html][nixpkgs builtins]]
 - [[https://teu5us.github.io/nix-lib.html][nix builtins and nixpkgs lib packaged together]]
 - [[https://nixos.org/manual/nixos/stable/index.html#sec-nix-syntax-summary][syntax summary]]
-- [[https://nixos.org/manual/nixos/stable/options.html][nixpkgs builtins]]
 - Home-manager [[https://nix-community.github.io/home-manager/options.html][options]] documentation.
 - Nixpkgs [[https://nixos.org/manual/nixpkgs/stable][lib]] documentation.
 
@@ -25,6 +25,8 @@ Useful: hlissners' dotfiles, scroll to bottom and read / watch all the sources.
 - https://github.com/purcell/dotfiles
 - https://github.com/bqv/rc
 - https://github.com/viperml/dotfiles
+- [[https://github.com/jollheef/localhost]] *clean*, easy to read and understand, no
+  flakes, only home-manager setup
 
 ** Flakes
 If you want to update a locked input to the latest version, you need to ask for
@@ -129,6 +131,20 @@ man home-configuration.nix
 
 *Chapter 61. Logging* - journalctl -b
 
+Creating custom applications:
+#+begin_src nix
+  environment.systemPackages = with pkgs; [
+    (writeShellScriptBin "chromium" ''
+      ${chromium}/bin/chromium --force-dark-mode \
+                               --start-maximized \
+                               $@
+    '')
+  ];
+#+end_src
+
+*** Systemd examples
+- [[https://github.com/jollheef/localhost/tree/9b968991f6f108b1c7adcd17946cf9e783f6af99/auto-update.nix][auto-update channels example]]
+
 *** Garbage Collection
 *Command line:*
 
@@ -215,8 +231,7 @@ Is it a nix repl here? - ~/learning/fufexan/pkgs/repl/default.nix
 
 ** Todo / to check
 *** Small and ez todos [0/3]
-**** TODO [[https://github.com/jollheef/localhost]]
-*clean*, easy to read and understand, no flakes, only home-manager setup
+**** TODO
 **** TODO https://github.com/MatthiasBenaets/nixos-config
 **** TODO setup mako
 styles, timeouts and stuff
@@ -315,6 +330,23 @@ gtk = {
     name = "JetBrains Mono Medium";
   };
 };
+#+end_src
+
+And another [[https://github.com/jollheef/localhost/tree/9b968991f6f108b1c7adcd17946cf9e783f6af99/home-manager.nix][example]]:
+#+begin_src nix
+    gtk = {
+      enable = true;
+      theme.name = "Adwaita-dark";
+      font.name = "Ubuntu 12";
+      iconTheme = {
+        name = "Adwaita";
+        package = pkgs.gnome3.adwaita-icon-theme;
+      };
+      gtk2.extraConfig = ''
+        gtk-cursor-theme-name = capitaine-cursors;
+      '';
+      gtk3.extraConfig = { gtk-cursor-theme-name = "capitaine-cursors"; };
+    };
 #+end_src
 
 Fonts [[https://github.com/ninlives/emerge/tree/ce9e1c780019c1aa5d945545de7f25ba295b9f01/impl/lego/ui/fonts.nix][example]].
