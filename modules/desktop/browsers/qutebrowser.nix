@@ -31,13 +31,25 @@ in {
       #   categories = [ "Network" ];
       # })
 
-      # For Brave adblock in qutebrowser, which is significantly better than the
-      # built-in host blocking. Works on youtube and crunchyroll ads!
-      python39Packages.adblock
+      (python3.withPackages (p: with p; [
+        # For Brave adblock in qutebrowser, which is significantly better than the
+        # built-in host blocking. Works on youtube and crunchyroll ads!
+        adblock
 
-      # For userscript code-select to use newline as delimeter, nor ';'
-      python39Packages.pyperclip
+        # For userscript code-select to use newline as delimeter, nor ';'
+
+        # (Suggestion from discord server):
+        # In that case, the standard solution is to make a flake.nix/default.nix
+        # with buildPythonApplication/buildPythonPackage You can also just use
+        # patchShebangs
+        pyperclip # TODO: doesn't work
+        # userScriptsPatchShebang = # this also doesn't work
+        #   ''patchShebangs ${inputs.self}/config/qutebrowser/userscripts'';
+      ]))
+
     ];
+
+    env.PATH = [ "${pkgs.python3}/bin/python" ];
 
     home = {
       configFile = {
@@ -50,13 +62,11 @@ in {
       dataFile."qutebrowser/userstyles.css".text = cfg.userStyles;
     };
 
-    # Install language dictionaries for spellcheck backends
     system.userActivationScripts = {
-      qutebrowserCreateDownDir = {
-        text = ''
-          [ ! -d "$HOME/Downloads" ] && mkdir $HOME/Downloads;
-        '';
-      };
+      qutebrowserCreateDownDir =
+        ''[ ! -d "$HOME/Downloads" ] && mkdir $HOME/Downloads;'';
+
+      # Install language dictionaries for spellcheck backends
       qutebrowserInstallDicts =
         lib.concatStringsSep "\\\n" (map (lang: ''
           if ! find "$XDG_DATA_HOME/qutebrowser/qtwebengine_dictionaries" -type d -maxdepth 1 -name "${lang}*" 2>/dev/null | grep -q .; then
