@@ -16,5 +16,4 @@ wlsunset -l 55.7 -L 37.6 -t 3000 &
 
 # TODO: -i <img> -s fill
 swayidle -w \
-	timeout 300 'swaylock -f -e -k -l -c 000000' \
 	before-sleep 'swaylock -f -e -k -l -c 000000' &
