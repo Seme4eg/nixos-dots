@@ -49,7 +49,7 @@ in {
 
     ];
 
-    env.PATH = [ "${pkgs.python3}/bin/python" ];
+    environment.variables.PATH = [ "${pkgs.python3}/bin/python" ];
 
     home = {
       configFile = {

@@ -20,7 +20,7 @@ in {
       #       then [ exts.pass-tomb ]
       #       else [])))
     ];
-    env.PASSWORD_STORE_DIR = cfg.passwordStoreDir;
+    environment.variables.PASSWORD_STORE_DIR = cfg.passwordStoreDir;
   };
 
   # TODO: copy gpg key from another machine to this one, put it in agenix and

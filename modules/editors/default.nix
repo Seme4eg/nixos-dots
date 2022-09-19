@@ -7,6 +7,6 @@ in {
   };
 
   config = lib.mkIf (cfg.default != null) {
-    env.EDITOR = cfg.default;
+    environment.variables.EDITOR = cfg.default;
   };
 }

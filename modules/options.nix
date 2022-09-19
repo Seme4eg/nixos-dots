@@ -25,20 +25,6 @@ in
       configFile = mkOpt' attrs {} "Files to place in $XDG_CONFIG_HOME";
       dataFile   = mkOpt' attrs {} "Files to place in $XDG_DATA_HOME";
     };
-
-    # Values in this 'env' are being exported in extraInit option (see end of
-    # this file)
-    env = lib.mkOption {
-      # Option type, providing type-checking and value merging.
-      type = attrsOf (oneOf [ str path (listOf (either str path)) ]);
-      # Convert option value to something else
-      apply = lib.mapAttrs
-        (n: v: if lib.isList v
-               then lib.concatMapStringsSep ":" (x: toString x) v
-               else (toString v));
-      default = {};
-      description = "TODO";
-    };
   };
 
   config = {
@@ -72,11 +58,5 @@ in
         };
       };
     };
-
-    # Shell script code called during global environment initialisation after
-    # all variables and profileVariables have been set.
-    environment.extraInit =
-      lib.concatStringsSep "\n"
-        (lib.mapAttrsToList (n: v: "export ${n}=\"${v}\"") config.env);
   };
 }

@@ -46,7 +46,7 @@ in {
       tldr # Simplified and community-driven man pages
     ];
 
-    env = {
+    environment.variables = {
       ZDOTDIR   = "$XDG_CONFIG_HOME/zsh";
       ZSH_CACHE = "$XDG_CACHE_HOME/zsh";
       ANTIDOTE_DIR  = "$XDG_DATA_HOME/antidote";

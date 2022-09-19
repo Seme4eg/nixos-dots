@@ -10,6 +10,6 @@ in {
   };
 
   config = lib.mkIf (cfg.default != null) {
-    env.BROWSER = cfg.default;
+    environment.variables.BROWSER = cfg.default;
   };
 }

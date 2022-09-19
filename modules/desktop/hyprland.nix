@@ -125,7 +125,7 @@ in {
     # don't forget to enable bluetooth module in hardware file first
     # services.blueman.enable = true;
 
-    env = {
+    environment.variables = {
       CLUTTER_BACKEND = "wayland";
       XDG_SESSION_TYPE = "wayland";
       QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";

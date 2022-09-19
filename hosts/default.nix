@@ -22,7 +22,7 @@ in
 		NIXPKGS_ALLOW_UNFREE = "1"; # Configure nix and nixpkgs
 	};
 
-	env.PATH = [ "$DOTFILES_BIN" "$XDG_BIN_HOME" "$PATH" ];
+	environment.variables.PATH = [ "$DOTFILES_BIN" "$XDG_BIN_HOME" "$PATH" ];
 
 	# Settings for nix.conf. See man nix.conf.
 	nix = let users = [ "root" config.username ]; in {

@@ -11,6 +11,6 @@ in {
       alacritty # gpu accelerated terminal
     ];
 
-    env.TERMINAL = "alacritty";
+    environment.variables.TERMINAL = "alacritty";
   };
 }

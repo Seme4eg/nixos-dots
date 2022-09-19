@@ -52,7 +52,7 @@ in {
       localuser = null;
     };
 
-    env.PATH = [ "$XDG_CONFIG_HOME/emacs/bin" ];
+    environment.variables.PATH = [ "$XDG_CONFIG_HOME/emacs/bin" ];
 
     modules.shell.zsh.rcFiles = [ "${inputs.self}/config/emacs/aliases.zsh" ];
 
