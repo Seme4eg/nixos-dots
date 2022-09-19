@@ -1,7 +1,6 @@
 { config, options, pkgs, inputs, lib, ... }:
 
 let cfg = config.modules.shell.zsh;
-    configDir = config.dotfiles.configDir;
 in {
   options.modules.shell.zsh = {
     enable = lib.mkEnableOption "zsh";
@@ -54,7 +53,7 @@ in {
     };
 
     home.configFile = {
-      "zsh" = { source = "${configDir}/zsh"; recursive = true; };
+      "zsh" = { source = "${inputs.self}/config/zsh"; recursive = true; };
       # Why am I creating extra.zsh{rc,env} when I could be using extraInit?
       # Because extraInit generates those files in /etc/profile, and mine just
       # write the files to ~/.config/zsh; where it's easier to edit and tweak

@@ -8,7 +8,6 @@ let
 in
 {
 	imports = [
-		# I use home-manager to deploy files to $HOME; little else
 			inputs.home-manager.nixosModules.default
 			inputs.hyprland.nixosModules.default
 		]
@@ -18,8 +17,8 @@ in
 	# Common config for all nixos machines; and to ensure the flake operates
 	# soundly
 	environment.variables = {
-		DOTFILES = config.dotfiles.dir;
-		DOTFILES_BIN = config.dotfiles.binDir;
+		DOTFILES = "${inputs.self}";
+		DOTFILES_BIN = "${inputs.self}/bin";
 		NIXPKGS_ALLOW_UNFREE = "1"; # Configure nix and nixpkgs
 	};
 

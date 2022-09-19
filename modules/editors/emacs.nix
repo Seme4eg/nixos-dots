@@ -1,7 +1,6 @@
 { config, lib, pkgs, inputs, ... }:
 
 let cfg = config.modules.editors.emacs;
-    configDir = config.dotfiles.configDir;
 in {
   options.modules.editors.emacs = {
     enable = lib.mkEnableOption "emacs";
@@ -55,7 +54,7 @@ in {
 
     env.PATH = [ "$XDG_CONFIG_HOME/emacs/bin" ];
 
-    modules.shell.zsh.rcFiles = [ "${configDir}/emacs/aliases.zsh" ];
+    modules.shell.zsh.rcFiles = [ "${inputs.self}/config/emacs/aliases.zsh" ];
 
     fonts.fonts = [ pkgs.emacs-all-the-icons-fonts ];
 

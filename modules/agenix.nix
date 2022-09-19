@@ -5,7 +5,7 @@
 with builtins;
 let inherit (inputs) agenix;
     # secretsDir = "${toString ../hosts}/${config.networking.hostName}/secrets";
-    secretsDir = "${config.dotfiles.dir}/secrets";
+    secretsDir = "${inputs.self}/secrets";
     secretsFile = "${secretsDir}/secrets.nix";
 in {
   imports = [ agenix.nixosModules.age ];

@@ -1,7 +1,6 @@
-{ config, options, lib, pkgs, ... }:
+{ config, options, lib, pkgs, inputs, ... }:
 
 let cfg = config.modules.shell.git;
-    configDir = config.dotfiles.configDir;
 in {
   options.modules.shell.git.enable = lib.mkEnableOption "git";
 
@@ -17,10 +16,10 @@ in {
     # ];
 
     home.configFile = {
-      "git/config".source = "${configDir}/git/config";
-      "git/ignore".source = "${configDir}/git/ignore";
+      "git/config".source = "${inputs.self}/config/git/config";
+      "git/ignore".source = "${inputs.self}/config/git/ignore";
     };
 
-    modules.shell.zsh.rcFiles = [ "${configDir}/git/aliases.zsh" ];
+    modules.shell.zsh.rcFiles = [ "${inputs.self}/config/git/aliases.zsh" ];
   };
 }

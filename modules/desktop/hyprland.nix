@@ -1,7 +1,6 @@
 { config, lib, pkgs, inputs, ... }:
 
 let cfg = config.modules.desktop.hyprland;
-    configDir = config.dotfiles.configDir;
 in {
   options.modules.desktop.hyprland.enable = lib.mkEnableOption "hyprland";
 
@@ -156,8 +155,11 @@ in {
 
     home.configFile = {
       # Write it recursively so other modules can link files in their dirs
-      "hypr" = { source = "${configDir}/hypr"; recursive = true; };
-      "waybar" = { source = "${configDir}/waybar"; recursive = true; };
+      "hypr" = { source = "${inputs.self}/config/hypr"; recursive = true; };
+      "waybar" = { source = "${inputs.self}/config/waybar"; recursive = true; };
+      # "waybar/config".source = config.lib.hm.file.mkOutOfStoreSymlink "${inputs.self}/config/waybar/config";
+      # "waybar/style.css".source = config.lib.file.mkOutOfStoreSymlink
+      #   "${inputs.self}/config/waybar/style.css";
     };
   };
 }

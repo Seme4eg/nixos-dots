@@ -13,19 +13,6 @@ in
   options = {
     user = mkOpt lib.types.attrs {};
 
-    dotfiles = {
-      dir = mkOpt path
-        (lib.removePrefix "/mnt"
-          (lib.findFirst lib.pathExists (toString ../.) [
-            "/mnt/etc/dotfiles"
-            "/etc/dotfiles"
-          ]));
-      binDir     = mkOpt path "${config.dotfiles.dir}/bin";
-      configDir  = mkOpt path "${config.dotfiles.dir}/config";
-      modulesDir = mkOpt path "${config.dotfiles.dir}/modules";
-      themesDir  = mkOpt path "${config.dotfiles.modulesDir}/themes";
-    };
-
     # REVIEW: why do we need that?
     home = {
       file       = mkOpt' attrs {} "Files to place directly in $HOME";
@@ -65,6 +52,7 @@ in
     # Install user packages to /etc/profiles instead. Necessary for
     # nixos-rebuild build-vm to work.
     home-manager = {
+      # useGlobalPkgs = true;
       useUserPackages = true;
 
       # I only need a subset of home-manager's capabilities. That is, access to
@@ -96,8 +84,6 @@ in
       allowed-users = users;
     };
 
-    # must already begin with pre-existing PATH. Also, can't use binDir here,
-    # because it contains a nix store path.
     env.PATH = [ "$DOTFILES_BIN" "$XDG_BIN_HOME" "$PATH" ];
 
     # Shell script code called during global environment initialisation after

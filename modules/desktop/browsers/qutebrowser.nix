@@ -6,7 +6,6 @@
 { options, config, lib, inputs, pkgs, ... }:
 
 let cfg = config.modules.desktop.browsers.qutebrowser;
-    configDir = config.dotfiles.configDir;
 in {
   options.modules.desktop.browsers.qutebrowser = {
     enable = lib.mkEnableOption "qutebrowser";
@@ -43,7 +42,7 @@ in {
     home = {
       configFile = {
         "qutebrowser" = {
-          source = "${configDir}/qutebrowser";
+          source = "${inputs.self}/config/qutebrowser";
           recursive = true;
         };
         # "qutebrowser/extra/00-extraConfig.py".text = cfg.extraConfig;
