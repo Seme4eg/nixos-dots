@@ -27,7 +27,7 @@ let
 in
 {
   ### A tidy $HOME is a tidy mind
-  home-manager.users.${config.user.name}.xdg.enable = true;
+  home-manager.users.${config.username}.xdg.enable = true;
 
   xdg.mime.enable = true;
   xdg.mime.addedAssociations = associations;

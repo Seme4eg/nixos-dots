@@ -1,17 +1,23 @@
+  # Cross-cutting/general options (e.g. feature flags) go here.
+
 { config, options, lib, home-manager, ... }:
 
 let
   inherit (lib.types) path attrs attrsOf oneOf str listOf either;
-
-  mkOpt = type: default:
-    lib.mkOption { inherit type default; };
 
   mkOpt' = type: default: description:
     lib.mkOption { inherit type default description; };
 in
 {
   options = {
-    user = mkOpt lib.types.attrs {};
+    user = lib.mkOption { type = lib.types.attrs; default = {}; };
+
+    # Value for tracking where my username is used
+    username = lib.mkOption {
+      type = lib.types.str;
+      default = "nohome";
+      description = "Primary account username";
+    };
 
     # REVIEW: why do we need that?
     home = {
@@ -36,18 +42,8 @@ in
   };
 
   config = {
-    user =
-      # to set up USER env var just define it in shell
-      let user = builtins.getEnv "USER";
-          name = if lib.elem user [ "" "root" ] then "nohome" else user;
-      in {
-        inherit name;
-        description = "The primary user account";
-        extraGroups = [ "wheel" ];
-        isNormalUser = true;
-        home = "/home/${name}";
-        group = "users";
-      };
+
+    users.users.${config.username} = lib.mkAliasDefinitions options.user;
 
     # Install user packages to /etc/profiles instead. Necessary for
     # nixos-rebuild build-vm to work.
@@ -63,7 +59,7 @@ in
       #   home.file        ->  home-manager.users.nohome.home.file
       #   home.configFile  ->  home-manager.users.nohome.home.xdg.configFile
       #   home.dataFile    ->  home-manager.users.nohome.home.xdg.dataFile
-      users.${config.user.name} = {
+      users.${config.username} = {
         home = {
           file = lib.mkAliasDefinitions options.home.file;
           # Necessary for home-manager to work with flakes, otherwise it will
@@ -76,15 +72,6 @@ in
         };
       };
     };
-
-    users.users.${config.user.name} = lib.mkAliasDefinitions options.user;
-
-    nix.settings = let users = [ "root" config.user.name ]; in {
-      trusted-users = users;
-      allowed-users = users;
-    };
-
-    env.PATH = [ "$DOTFILES_BIN" "$XDG_BIN_HOME" "$PATH" ];
 
     # Shell script code called during global environment initialisation after
     # all variables and profileVariables have been set.

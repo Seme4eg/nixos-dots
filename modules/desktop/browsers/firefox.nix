@@ -14,7 +14,7 @@ let cfg = config.modules.desktop.browsers.firefox;
 in {
   options.modules.desktop.browsers.firefox = with lib.types; {
     enable = lib.mkEnableOption "firefox";
-    profileName = mkOpt types.str config.user.name;
+    profileName = mkOpt types.str config.username;
 
     settings = mkOpt' (attrsOf (oneOf [ bool int str ])) {} ''
       Firefox preferences to set in <filename>user.js</filename>
@@ -62,7 +62,7 @@ in {
         # Enable userContent.css and userChrome.css for our theme modules
         "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
         # Stop creating ~/Downloads!
-        "browser.download.dir" = "${config.user.home}/downloads";
+        "browser.download.dir" = "/home/${config.username}/downloads";
         # Don't use the built-in password manager. A nixos user is more likely
         # using an external one (you are using one, right?).
         "signon.rememberSignons" = false;

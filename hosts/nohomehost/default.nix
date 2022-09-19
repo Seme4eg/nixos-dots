@@ -74,6 +74,13 @@
 
 	];
 
+	# Define a user account. Don't forget to set a password with ‘passwd’.
+	users.users.nohome = {
+		extraGroups = [ "wheel" ]; # adbusers?
+		isNormalUser = true;
+		home = "/home/nohome"; # TODO: remove it
+	};
+
 	## Local config
 	services.openssh.startWhenNeeded = true;
 

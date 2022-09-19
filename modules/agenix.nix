@@ -16,10 +16,10 @@ in {
       if pathExists secretsFile
       then lib.mapAttrs' (n: _: lib.nameValuePair (lib.removeSuffix ".age" n) {
         file = "${secretsDir}/${n}";
-        owner = lib.mkDefault config.user.name;
+        owner = lib.mkDefault config.username;
       }) (import secretsFile)
       else {};
-    identityPaths = [ "${config.user.home}/.ssh/id_ed25519" ];
+    identityPaths = [ "/home/${config.username}/.ssh/id_ed25519" ];
       # options.age.identityPaths.default ++ (filter pathExists [
       #   "${config.user.home}/.ssh/id_ed25519"
       #   "${config.user.home}/.ssh/id_rsa"

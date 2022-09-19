@@ -16,7 +16,7 @@ in {
     # intallation
     services.syncthing = {
       enable = true;
-      user = config.user.name;
+      user = config.username;
       openDefaultPorts = true;
       guiAddress = "127.0.0.1:8384";
 
@@ -34,61 +34,53 @@ in {
         };
       };
 
-      dataDir = "${config.user.home}"; # default path co add new dirs
+      dataDir = "/home/${config.username}"; # default path co add new dirs
 
       # REVIEW: any better way of defining config dir?
-      configDir = "${config.user.home}/.config/syncthing";
+      configDir = "/home/${config.username}/.config/syncthing";
       # configDir = "$XDG_CONFIG_HOME/syncthing";
 
       cert = config.age.secrets.syncthing-cert.path;
       key = config.age.secrets.syncthing-key.path;
 
       folders = {
-        "${config.user.home}/Pictures" = {
+        "/home/${config.username}/Pictures" = {
           id = "xmx67-zj7wg";
-          # label = ""
           devices = [ "chost" ];
           versioning = {type = "simple"; params.keep = "2";};
         };
-        "${config.user.home}/Audiobooks" = {
+        "/home/${config.username}/Audiobooks" = {
           id = "oqlpo-zmwq9";
-          # label = ""
           devices = [ "chost" ];
           versioning = {type = "simple"; params.keep = "1";};
         };
-        "${config.user.home}/Books" = {
+        "/home/${config.username}/Books" = {
           id = "hkjpb-mmqwj";
-          # label = ""
           devices = [ "chost" ];
           versioning = {type = "simple"; params.keep = "1";};
         };
-        "${config.user.home}/Documents" = {
+        "/home/${config.username}/Documents" = {
           id = "r7asu-23rtr";
-          # label = ""
           devices = [ "chost" ];
           versioning = {type = "simple"; params.keep = "2";};
         };
-        "${config.user.home}/git/books" = {
+        "/home/${config.username}/git/books" = {
           id = "th5g5-5t9vc";
-          # label = ""
           devices = [ "chost" ];
           versioning = {type = "simple"; params.keep = "1";};
         };
-        "${config.user.home}/mem_arch" = {
+        "/home/${config.username}/mem_arch" = {
           id = "9a4kl-cxrzf";
-          # label = ""
           devices = [ "chost" ];
           versioning = {type = "simple"; params.keep = "3";};
         };
-        "${config.user.home}/Music" = {
+        "/home/${config.username}/Music" = {
           id = "xxwgz-nsgrz";
-          # label = ""
           devices = [ "chost" ];
           versioning = {type = "simple"; params.keep = "1";};
         };
-        "${config.user.home}/git/tea" = {
+        "/home/${config.username}/git/tea" = {
           id = "uvxlq-9vwiq";
-          # label = ""
           devices = [ "chost" ];
           versioning = {type = "simple"; params.keep = "2";};
         };

@@ -22,8 +22,10 @@ in
 		NIXPKGS_ALLOW_UNFREE = "1"; # Configure nix and nixpkgs
 	};
 
+	env.PATH = [ "$DOTFILES_BIN" "$XDG_BIN_HOME" "$PATH" ];
+
 	# Settings for nix.conf. See man nix.conf.
-	nix = {
+	nix = let users = [ "root" config.username ]; in {
 		registry = lib.mapAttrs (_: v: { flake = v; }) inputs;
 
 		settings = {
@@ -36,6 +38,8 @@ in
 				"nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
 				"webcord.cachix.org-1:l555jqOZGHd2C9+vS8ccdh8FhqnGe8L78QrHNn+EFEs="
 			];
+      trusted-users = users;
+      allowed-users = users;
 			auto-optimise-store = true; # optimize syslinks
 
 			# ensure that my evaluation will not require any builds to take place.
