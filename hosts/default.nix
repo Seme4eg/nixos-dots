@@ -1,16 +1,15 @@
 # General settings applicable to all hosts
 
-# these are passed from flake.nix
 { inputs, config, lib, pkgs, ... }:
 
 let
-	inherit (lib) mkDefault mapAttrs filterAttrs mapAttrsToList;
+	inherit (lib) mkDefault mapAttrs;
 	inherit (inputs.self.lib) mapModulesRec';
 in
 {
 	imports = [
 		# I use home-manager to deploy files to $HOME; little else
-			inputs.home-manager.nixosModules.home-manager
+			inputs.home-manager.nixosModules.default
 			inputs.hyprland.nixosModules.default
 		]
 		# Import all personal modules to every host
@@ -32,7 +31,7 @@ in
 			substituters = [
 				"https://nix-community.cachix.org"
 				"https://webcord.cachix.org"
-				# "http://cache.nixos.org" # Default
+				"http://cache.nixos.org" # Default
 			];
 			trusted-public-keys = [
 				"nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
