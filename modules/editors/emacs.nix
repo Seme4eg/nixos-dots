@@ -17,10 +17,12 @@ in {
       binutils       # native-comp needs 'as', provided by this
       # 29 + pgtk + native-comp
       ((emacsPackagesFor emacsPgtkNativeComp).emacsWithPackages
-        (epkgs: [ epkgs.vterm ]))
+        (epkgs: with epkgs; [
+          vterm
+          telega
+        ]))
 
       ## Doom dependencies
-      git
       (ripgrep.override {withPCRE2 = true;})
       gnutls              # for TLS connectivity
 
@@ -41,8 +43,6 @@ in {
       # :lang latex & :lang org (latex previews)
       #texlive.combined.scheme-medium
 
-      # Telegram
-      tdlib
     ];
 
     services.locate = {
@@ -58,12 +58,13 @@ in {
 
     fonts.fonts = [ pkgs.emacs-all-the-icons-fonts ];
 
-    systemd.tmpfiles.rules = [
-      # Static symlink for nix.nixPath, which controls $NIX_PATH. Using nixpkgs input directly would
-      # result in $NIX_PATH containing a /nix/store value, which would be inaccurate after the first
-      # nixos-rebuild switch until logging out (and prone to garbage collection induced breakage).
-      "L+ ${config.user.home}/.local/bin/tdlib - - - - ${pkgs.tdlib}"
-    ];
+    # systemd.tmpfiles.rules = [
+      # Static symlink for nix.nixPath, which controls $NIX_PATH. Using nixpkgs
+      # input directly would result in $NIX_PATH containing a /nix/store value,
+      # which would be inaccurate after the first nixos-rebuild switch until
+      # logging out (and prone to garbage collection induced breakage).
+      # "L+ /home/${config.username}/.local/bin/tdlib - - - - ${pkgs.tdlib}"
+    # ];
 
     system.userActivationScripts = lib.mkIf cfg.doom.enable {
       installDoomEmacs = let
