@@ -12,25 +12,20 @@ in {
       syncthingtray # https://github.com/Martchus/syncthingtray
     ];
 
-    # TODO: setup secrets in agenix so the synchting runs automatically after
-    # intallation
     services.syncthing = {
       enable = true;
       user = config.username;
       openDefaultPorts = true;
       guiAddress = "127.0.0.1:8384";
+      # override any devices/folders added or deleted through the WebUI
+      overrideDevices = true;
+      overrideFolders = true;
 
-      overrideDevices = true;     # overrides any devices added or deleted through the WebUI
-      overrideFolders = true;     # overrides any folders added or deleted through the WebUI
       devices = {
         "chost" = {
           id = "2VVN4XC-PHZEY3X-25YR2UO-DA7NPS5-ZKERYXM-UZGONF6-XUX7QNY-NLNYIAB";
           introducer = true;
           # autoAcceptFolders = true;
-        };
-        # TODO: temp
-        "losedows" = {
-          id = "4ZUEUZ5-FJX5LEY-DOZVVR6-IAIXVVQ-SEQJW5M-L3J7AAF-2BXNTQ7-INT2KAO";
         };
       };
 
