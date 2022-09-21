@@ -4,8 +4,8 @@
 
 {
 	imports = [
-		../home.nix
 		./hardware-configuration.nix
+		./home-configuration.nix
 	];
 
 	## Modules
@@ -20,7 +20,7 @@
 				qutebrowser.enable = true;
 			};
 			steam.enable = true;
-			term.alacritty.enable = true; # TODO: try out st (have config ready)
+			# term.alacritty.enable = true; # TODO: try out st (have config ready)
 			# vm = {
 			# 	qemu.enable = true;
 			# };
@@ -50,7 +50,8 @@
 
 	# packages that do not requrie any additional configuration
 	# which i can enable / disable just by commenting those out
-	user.packages = with pkgs; [
+	user = {
+		packages = with pkgs; [
 		# Shell script programmers are strange beasts. Writing programs in a language
 		# that wasn't intended as a programming language. Alas, it is not for us mere
 		# mortals to question the will of the ancient ones. If they want shell programs,
@@ -74,10 +75,10 @@
 
 		scdl
 		ffmpeg
-	];
 
-	# Define a user account. Don't forget to set a password with ‘passwd’.
-	users.users.nohome = {
+		lf # REVIEW
+	];
+		# Define a user account. Don't forget to set a password with ‘passwd’.
 		extraGroups = [ "wheel" ]; # adbusers?
 		isNormalUser = true;
 		home = "/home/nohome"; # TODO: remove it
@@ -92,5 +93,10 @@
 	};
   # networking.wireless.enable = true;
 
-  time.timeZone = "Europe/Moscow";
+	time.timeZone = lib.mkDefault "Europe/Moscow";
+	i18n.defaultLocale = lib.mkDefault "en_US.UTF-8";
+	location = (if config.time.timeZone == "Europe/Moscow" then {
+		latitude = 55.7;
+		longitude = 37.6;
+	} else {});
 }

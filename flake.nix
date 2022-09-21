@@ -54,7 +54,7 @@
     in {
       inherit lib pkgs system;
 
-      nixosModules = mkModules ./modules;
+      nixosModules = mkModules ./modules/nixos;
       nixosConfigurations = import ./hosts inputs;
 
       # XXX: not sure if i need it

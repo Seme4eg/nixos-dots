@@ -7,10 +7,10 @@ in {
   options.modules.desktop.term.alacritty.enable = lib.mkEnableOption "alacritty";
 
   config = lib.mkIf cfg.enable {
-    user.packages = with pkgs; [
+    home.packages = with pkgs; [
       alacritty # gpu accelerated terminal
     ];
 
-    environment.variables.TERMINAL = "alacritty";
+    home.sessionVariables.TERMINAL = "alacritty";
   };
 }
