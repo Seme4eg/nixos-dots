@@ -1,6 +1,6 @@
-inputs: name:
+inputs: name: system:
 inputs.nixpkgs.lib.nixosSystem {
-  system = "x86_64-linux";
+  inherit system;
   specialArgs = { inherit inputs; }; # XXX: remove this line
   modules = [
     {
@@ -8,7 +8,7 @@ inputs.nixpkgs.lib.nixosSystem {
       networking.hostName = name;
     }
     # file with general settings applicable to all hosts
-    ../hosts/default-settings.nix
+    "${inputs.self}/hosts/default-settings.nix"
     (import "${inputs.self}/hosts/${name}")
 
     inputs.home-manager.nixosModules.default # XXX: remove

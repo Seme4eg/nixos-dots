@@ -52,16 +52,9 @@
       };
 
     in {
-      inherit lib pkgs;
-
-      # overlays =
-      #   mapModules ./overlays import;
-
-      # packages."${system}" =
-      #   mapModules ./packages (p: pkgs.callPackage p {});
+      inherit lib pkgs system;
 
       nixosModules = mkModules ./modules;
-
       nixosConfigurations = import ./hosts inputs;
 
       # XXX: not sure if i need it
