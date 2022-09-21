@@ -1,8 +1,5 @@
 inputs: name:
-let
-  inherit (inputs.nixpkgs.lib) nixosSystem mkDefault removeSuffix;
-in
-nixosSystem {
+inputs.nixpkgs.lib.nixosSystem {
   system = "x86_64-linux";
   specialArgs = { inherit inputs; }; # XXX: remove this line
   modules = [
