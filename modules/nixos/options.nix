@@ -30,6 +30,7 @@ in
 
   config = {
 
+    # Alias 'users.users.<user>' -> 'user'
     users.users.${config.username} = lib.mkAliasDefinitions options.user;
 
   };

@@ -1,4 +1,5 @@
 {self, ...} @ inputs: {
   # for now only one host
-  nohomehost = self.lib.mkHost "nohomehost" self.system;
+  # XXX: duplicate username setting (how to get access to config.username here?)
+  nohomehost = self.lib.mkHost "nohomehost" "nohome" self.system;
 }

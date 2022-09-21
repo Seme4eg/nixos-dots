@@ -9,12 +9,12 @@
 
 		# I only need a subset of home-manager's capabilities. That is, access to
 		# its home.file, home.xdg.configFile and home.xdg.dataFile so I can deploy
-		# files easily to my $HOME, but 'home-manager.users.nohome.home.file.*'
+		# files easily to my $HOME, but 'home-manager.users.<user>.home.file.*'
 		# is much too long and harder to maintain, so I've made aliases in:
 		#
-		#   home.file        ->  home-manager.users.nohome.home.file
-		#   home.configFile  ->  home-manager.users.nohome.home.xdg.configFile
-		#   home.dataFile    ->  home-manager.users.nohome.home.xdg.dataFile
+		#   home.file        ->  home-manager.users.<user>.home.file
+		#   home.configFile  ->  home-manager.users.<user>.home.xdg.configFile
+		#   home.dataFile    ->  home-manager.users.<user>.home.xdg.dataFile
 		users.${config.username} = {
 			home = {
 				file = lib.mkAliasDefinitions options.home.file;

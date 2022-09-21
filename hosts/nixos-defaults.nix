@@ -10,9 +10,8 @@ let inherit (lib) mkDefault mapAttrs; in {
 		DOTFILES = "${inputs.self}";
 		DOTFILES_BIN = "${inputs.self}/bin";
 		NIXPKGS_ALLOW_UNFREE = "1"; # Configure nix and nixpkgs
+		PATH = [ "$DOTFILES_BIN" "$XDG_BIN_HOME" "$PATH" ];
 	};
-
-	environment.variables.PATH = [ "$DOTFILES_BIN" "$XDG_BIN_HOME" "$PATH" ];
 
 	# Settings for nix.conf. See man nix.conf.
 	nix = let users = [ "root" config.username ]; in {
