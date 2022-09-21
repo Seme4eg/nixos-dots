@@ -1,7 +1,7 @@
 inputs:
 let
   inherit (builtins) attrValues readDir pathExists concatLists;
-  inherit (inputs.nixpkgs.lib) id mapAttrsToList filterAttrs hasPrefix hasSuffix nameValuePair removeSuffix;
+  inherit (inputs.nixpkgs.lib) listToAttrs id mapAttrsToList filterAttrs hasPrefix hasSuffix nameValuePair removeSuffix;
 
   # mapFilterAttrs ::
   #   (name -> value -> bool)
@@ -25,28 +25,41 @@ rec {
         else nameValuePair "" null)
       (readDir dir);
 
-  mapModulesRec = dir: fn:
-    mapFilterAttrs
-      (n: v: v != null && !(hasPrefix "_" n))
-      (n: v:
-        let path = "${toString dir}/${n}"; in
+  /*
+  exportModulesDir: creates and attrSet from a folder The folder may contain
+  .nix files or folders with default.nix, which in turn contain lambdas (such as
+  nixos modules or overlays).
 
-        if v == "directory"
-        then nameValuePair n (mapModulesRec path fn)
+  As such, the result of running it on this repo:
 
-        else if v == "regular" && n != "default.nix" && hasSuffix ".nix" n
-        then nameValuePair (removeSuffix ".nix" n) (fn path)
-        else nameValuePair "" null)
-      (readDir dir);
+  nix-repl> :lf
+  nix-repl> exportModulesDir ./modules/nixos
+  {
+    channels-to-flakes = «lambda @ ... »;
+    common = «lambda @ ... »;
+    # ...
+  }
+  */
+  exportModulesDir = dir:
+    listToAttrs (map
+      # mapper function
+      (arg: {
+        name = removeSuffix ".nix" (baseNameOf arg);
+        value = import arg;
+      })
+      # values
+      (mapAttrsToList (name: _: dir + "/${name}") (readDir dir))
+    );
+
+  exportModulesDir' = dir:
+    map import (mapAttrsToList (name: _: dir + "/${name}") (readDir dir));
 
   mapModulesRec' = dir: fn:
     let
       dirs =
         mapAttrsToList
           (k: _: "${dir}/${k}")
-          (filterAttrs
-            (n: v: v == "directory" && !(hasPrefix "_" n))
-            (readDir dir));
+          (filterAttrs (n: v: v == "directory") (readDir dir));
       files = attrValues (mapModules dir id);
       paths = files ++ concatLists (map (d: mapModulesRec' d id) dirs);
     in map fn paths;

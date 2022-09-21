@@ -42,7 +42,7 @@
     # Vars that can be used in the config files.
     let
       lib = import ./lib inputs;
-      inherit (lib) mapModulesRec mapHosts; # mapModules
+      inherit (lib) exportModulesDir mapHosts; # mapModules
 
       system = "x86_64-linux";
 
@@ -60,7 +60,7 @@
       # packages."${system}" =
       #   mapModules ./packages (p: pkgs.callPackage p {});
 
-      nixosModules = mapModulesRec ./modules import;
+      nixosModules = exportModulesDir ./modules;
 
       nixosConfigurations = mapHosts ./hosts;
 
