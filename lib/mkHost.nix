@@ -1,17 +1,19 @@
-inputs: name: system:
+inputs: hostname: username: system:
 inputs.nixpkgs.lib.nixosSystem {
   inherit system;
   specialArgs = { inherit inputs; }; # XXX: remove this line
   modules = [
     {
       nixpkgs.pkgs = inputs.self.pkgs;
-      networking.hostName = name;
+      networking.hostName = hostname;
     }
-    # file with general settings applicable to all hosts
-    "${inputs.self}/hosts/default-settings.nix"
-    (import "${inputs.self}/hosts/${name}")
+    # general settings applicable to all hosts
+    "${inputs.self}/hosts/nixos-defaults.nix"
+    "${inputs.self}/hosts/home-defaults.nix"
 
-    inputs.home-manager.nixosModules.default # XXX: remove
+    (import "${inputs.self}/hosts/${hostname}")
+
+    inputs.home-manager.nixosModules.home-manager # TODO: pass username here
     inputs.hyprland.nixosModules.default
   ]
   # Import all personal modules to every host
