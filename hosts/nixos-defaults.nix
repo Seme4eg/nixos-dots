@@ -6,11 +6,27 @@ let inherit (lib) mkDefault mapAttrs; in {
 
 	# Common config for all nixos machines; and to ensure the flake operates
 	# soundly
-	environment.variables = {
-		DOTFILES = "${inputs.self}";
-		DOTFILES_BIN = "${inputs.self}/bin";
-		NIXPKGS_ALLOW_UNFREE = "1"; # Configure nix and nixpkgs
-		PATH = [ "$DOTFILES_BIN" "$XDG_BIN_HOME" "$PATH" ];
+	environment = {
+		variables = {
+			DOTFILES = "${inputs.self}";
+			DOTFILES_BIN = "${inputs.self}/bin";
+			NIXPKGS_ALLOW_UNFREE = "1"; # Configure nix and nixpkgs
+			PATH = [ "$DOTFILES_BIN" "$XDG_BIN_HOME" "$PATH" ];
+		};
+
+    # enable zsh autocompletion for system packages (systemd, etc)
+    # pathsToLink = ["/share/zsh"];
+
+		# Just the bear necessities...
+		systemPackages = with pkgs; [
+			# bind
+			cached-nix-shell
+			git
+			wget
+			# gnumake
+			unzip
+		];
+
 	};
 
 	# Settings for nix.conf. See man nix.conf.
@@ -82,14 +98,4 @@ let inherit (lib) mkDefault mapAttrs; in {
 		earlySetup = true;
 	};
 
-	# Just the bear necessities...
-	environment.systemPackages = with pkgs; [
-		# bind
-		cached-nix-shell
-		git
-		vim
-		wget
-		# gnumake
-		unzip
-	];
 }
