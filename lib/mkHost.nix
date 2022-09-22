@@ -1,7 +1,7 @@
 inputs: hostname: username: system:
 inputs.nixpkgs.lib.nixosSystem {
   inherit system;
-  specialArgs = { inherit inputs; }; # XXX: remove this line
+  specialArgs = { inherit inputs; };
   modules = [
     {
       nixpkgs.pkgs = inputs.self.pkgs;

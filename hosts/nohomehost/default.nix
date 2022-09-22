@@ -20,7 +20,6 @@
 				qutebrowser.enable = true;
 			};
 			steam.enable = true;
-			# term.alacritty.enable = true; # TODO: try out st (have config ready)
 			# vm = {
 			# 	qemu.enable = true;
 			# };
