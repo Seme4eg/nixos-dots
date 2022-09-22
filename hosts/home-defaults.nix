@@ -7,6 +7,8 @@
 		useGlobalPkgs = true;
 		useUserPackages = true;
 
+		extraSpecialArgs = {inherit inputs;};
+
 		# I only need a subset of home-manager's capabilities. That is, access to
 		# its home.file, home.xdg.configFile and home.xdg.dataFile so I can deploy
 		# files easily to my $HOME, but 'home-manager.users.<user>.home.file.*'
