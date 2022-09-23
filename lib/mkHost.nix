@@ -1,7 +1,7 @@
 inputs: hostname: username: system:
 inputs.nixpkgs.lib.nixosSystem {
   inherit system;
-  specialArgs = { inherit inputs; };
+  specialArgs = { inherit inputs; }; # Pass flake variable
   modules = [
     {
       nixpkgs.pkgs = inputs.self.pkgs;

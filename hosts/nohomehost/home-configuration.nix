@@ -1,16 +1,16 @@
 # Specific system home-manager settings
 
-{ config, inputs, pkgs, lib, ... }:
-
-let homeModules = inputs.self.lib.mkModules ../../modules/home; in
-{
+{ config, inputs, pkgs, lib, ... }: {
   home-manager.users.${config.username} = {
-    imports = builtins.attrValues homeModules;
-
     # default applications (to not create separate 'default' setting modules)
-    home.sessionVariables = {
-      BROWSER = "qutebrowser";
-      EDITOR = "emacs"; # nvim
+    home = {
+      # REVIEW: do i need that?
+      # username = "${user}"; # and if i define it how do i refer to it ?
+      # homeDirectory = "/home/${user}";
+      sessionVariables = {
+        BROWSER = "qutebrowser";
+        EDITOR = "emacs"; # nvim
+      };
     };
 
     modules = {
