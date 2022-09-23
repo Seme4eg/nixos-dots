@@ -15,7 +15,7 @@
 			hyprland.enable = true;
 			# rofi.enable = true;
 			# browsers.firefox.enable = true; # TODO: setup maybe?
-			steam.enable = true;
+			gaming.enable = true;
 			# vm.qemu.enable = true;
 		};
 		dev.node.enable = true;

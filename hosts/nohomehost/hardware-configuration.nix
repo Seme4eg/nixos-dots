@@ -43,7 +43,7 @@
   };
 
 	user.packages = with pkgs; [
-		lm_sensors # Tools for reading hardware sensors
+		lm_sensors # Tools for reading hardware sensors (gpu temperature, etc..)
   ];
 
   services.xserver.xkbOptions = "ctrl:swapcaps,grp:win_space_toggle";
