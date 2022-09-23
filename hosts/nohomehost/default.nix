@@ -12,12 +12,12 @@
 	modules = {
 		flakes.enable = true;
 		desktop = {
-			hyprland.enable = true;
 			# rofi.enable = true;
 			# browsers.firefox.enable = true; # TODO: setup maybe?
 			gaming.enable = true;
 			# vm.qemu.enable = true;
 		};
+		wayland.enable = true;
 		dev.node.enable = true;
 		editors = {
 			emacs.enable = true;

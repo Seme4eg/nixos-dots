@@ -12,7 +12,9 @@ let homeModules = inputs.self.lib.mkModules ../modules/home; in
 
 		users.${config.username} = {
 			# import all modules by default for all users
-			imports = builtins.attrValues homeModules;
+			imports = [
+				inputs.hyprland.homeManagerModules.default
+			] ++ builtins.attrValues homeModules;
 
 			# REVIEW: is that necessary?
 			programs = {

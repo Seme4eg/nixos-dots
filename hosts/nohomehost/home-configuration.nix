@@ -46,6 +46,10 @@
         term.alacritty.enable = true; # TODO: try out st (have config ready)
         browsers.qutebrowser.enable = true;
       };
+      wayland = {
+        enable = true;
+        waybar.enable = true;
+      };
       shell = {
         git.enable = true;
         zsh.enable = false;
