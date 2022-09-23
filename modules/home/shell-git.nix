@@ -5,21 +5,27 @@ in {
   options.modules.shell.git.enable = lib.mkEnableOption "git";
 
   config = lib.mkIf cfg.enable {
-    # user.packages = with pkgs; [
+    # home.packages = with pkgs; [
       # gitAndTools.git-annex
-      # unstable.gitAndTools.gh
       # gitAndTools.git-open
       # gitAndTools.diff-so-fancy
-      # (mkIf config.modules.shell.gnupg.enable
-        # gitAndTools.git-crypt)
       # act
     # ];
 
-    home.configFile = {
+    programs = {
+      git = {
+        enable = true;
+        userName = "Seme4eg";
+        userEmail = "418@duck.com";
+      };
+    };
+
+    xdg.configFile = {
       "git/config".source = "${inputs.self}/config/git/config";
       "git/ignore".source = "${inputs.self}/config/git/ignore";
     };
 
-    modules.shell.zsh.rcFiles = [ "${inputs.self}/config/git/aliases.zsh" ];
+    # XXX: bring back
+    # modules.shell.zsh.rcFiles = [ "${inputs.self}/config/git/aliases.zsh" ];
   };
 }

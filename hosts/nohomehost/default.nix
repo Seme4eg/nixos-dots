@@ -27,7 +27,6 @@
 		shell = {
 			# adl.enable = true;
 			# vaultwarden.enable = true; # lightweigt client for bitwarden
-		 	git.enable   = true;
 			gnupg.enable = true;
 			pass.enable  = true;
 			zsh.enable   = true;

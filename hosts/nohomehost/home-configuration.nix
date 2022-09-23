@@ -18,7 +18,11 @@
         term.alacritty.enable = true; # TODO: try out st (have config ready)
         browsers.qutebrowser.enable = true;
       };
-      # shell.zsh.enable = false;
+      shell = {
+        git.enable = true;
+        # zsh.enable = false;
+      };
     };
+
   };
 }
