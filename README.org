@@ -185,6 +185,22 @@ You can get a list of the available packages as follows:
 $ nix-env -qaP '*' --description
 nixos.firefox   firefox-23.0   Mozilla Firefox - the browser, reloaded
 ...
+*** Overlays
+example from [[https://github.com/matthiasbenaets/nixos-config/tree/0d8cc23b718d404c1e61738a73cc9db924b64ee8/hosts/desktop/default.nix][here]]
+#+begin_src nix
+
+  nixpkgs.overlays = [                          # This overlay will pull the latest version of Discord
+    (self: super: {
+      discord = super.discord.overrideAttrs (
+        _: { src = builtins.fetchTarball {
+          url = "https://discord.com/api/download?platform=linux&format=tar.gz";
+          sha256 = "1kwqn1xr96kvrlbjd14m304g2finc5f5ljvnklg6fs5k4avrvmn4";
+        };}
+      );
+    })
+  ];
+
+#+end_src
 
 ** lack of internet questions:
 
