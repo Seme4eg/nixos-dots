@@ -46,6 +46,7 @@
         term.alacritty.enable = true; # TODO: try out st (have config ready)
         browsers.qutebrowser.enable = true;
       };
+      dev.node.enable = true;
       wayland = {
         enable = true;
         waybar.enable = true;

@@ -52,7 +52,7 @@
       enable = false;
       events = [
         {
-          event = "before-sleep";
+  event = "before-sleep";
           command = "swaylock -f -e -k -l -c 000000";
           # command = "gtklock"; # TODO
         }
