@@ -19,5 +19,14 @@ in {
         };
       };
     };
+
+    # services = {                            # Applets
+    #   blueman-applet.enable = true;         # Bluetooth
+    # };
+
+    # > bluetooth audio
+    # don't forget to enable bluetooth module in hardware file first
+    # services.blueman.enable = true;
+
   };
 }

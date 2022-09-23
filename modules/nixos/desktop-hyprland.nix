@@ -121,10 +121,6 @@ in {
     user.extraGroups = [ "video" ];
     hardware.brillo.enable = true;
 
-    # > bluetooth audio
-    # don't forget to enable bluetooth module in hardware file first
-    # services.blueman.enable = true;
-
     environment.variables = {
       CLUTTER_BACKEND = "wayland";
       XDG_SESSION_TYPE = "wayland";
