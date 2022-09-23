@@ -201,6 +201,11 @@ example from [[https://github.com/matthiasbenaets/nixos-config/tree/0d8cc23b718d
   ];
 
 #+end_src
+*** Packages setup
+**** qemu
+- [[https://github.com/matthiasbenaets/nixos-config/tree/0d8cc23b718d404c1e61738a73cc9db924b64ee8/modules/desktop/virtualisation/qemu.nix][mattias]]
+**** dunst
+[[https://github.com/matthiasbenaets/nixos-config/tree/0d8cc23b718d404c1e61738a73cc9db924b64ee8/modules/services/dunst.nix][example]]
 
 ** lack of internet questions:
 
@@ -401,7 +406,7 @@ nix settings in hosts/default.nix. For now it's a mess
 - [ ] fix warframe launcher working badly
 - [ ] fix syncthingtray opening in not floating mode
 
-*** Backlog [0/5]
+*** Backlog [0/4]
 # not urgent, but most likely needed setups / fixes
 
 **** TODO Xbox-controller setup [[https://github.com/ninlives/emerge/tree/ce9e1c780019c1aa5d945545de7f25ba295b9f01/impl/lego/service/xbox-controller.nix][example]].
@@ -416,5 +421,3 @@ search for those keywords in other ppls dots
 
 # wireguard.enable = true; # migrate from openvpn to wireguard
 # transmission.enable = true; # bittorrent client - https://transmissionbt.com/
-**** TODO dunst
-[[https://github.com/matthiasbenaets/nixos-config/tree/0d8cc23b718d404c1e61738a73cc9db924b64ee8/modules/services/dunst.nix][example]]
