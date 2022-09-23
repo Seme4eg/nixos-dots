@@ -349,6 +349,16 @@ And another [[https://github.com/jollheef/localhost/tree/9b968991f6f108b1c7adcd1
     };
 #+end_src
 
+home.pointerCursor
+#+begin_src nix
+# This will set cursor systemwide so applications can not choose their own
+pointerCursor = {
+  name = "Dracula-cursors";
+  package = pkgs.dracula-theme;
+  size = 16;
+};
+#+end_src
+
 Fonts [[https://github.com/ninlives/emerge/tree/ce9e1c780019c1aa5d945545de7f25ba295b9f01/impl/lego/ui/fonts.nix][example]].
 **** TODO After reading thorugh hlissners theme folders cleanup lib dir
 **** TODO Setup easyeffects (like minihost on windows)
