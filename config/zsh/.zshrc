@@ -2,7 +2,6 @@
 
 # --- Sourcing ---
 . $ZDOTDIR/config.zsh
-# . $ZDOTDIR/.zprofile
 # for now using powerlevel10k instead
 # [ -f "~/.config/zsh/theming.zsh" ] && . "~/.config/zsh/theming.zsh"
 
@@ -24,7 +23,7 @@ fi
 # --- Antidote (https://getantidote.github.io/) ---
 # run 'antidote update' to update plugins
 
-# NOTE ANTIDOTE_DIR is forward-declared in modules/shell/zsh.nix
+# NOTE ANTIDOTE_DIR is forward-declared in modules/home/shell-zsh.nix
 if [[ ! -d $ANTIDOTE_DIR ]]; then
   echo "Installing mattmc3/antidote"
   git clone https://github.com/mattmc3/antidote.git "$ANTIDOTE_DIR"

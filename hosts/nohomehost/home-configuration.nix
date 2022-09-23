@@ -48,7 +48,7 @@
       };
       shell = {
         git.enable = true;
-        # zsh.enable = false;
+        zsh.enable = false;
       };
     };
 

@@ -3,13 +3,13 @@
 #   `autoload -Uz promptinit && promptinit && prompt pure`
 # sindresorhus/pure     kind:fpath
 
-# NOTE Be extra careful about plugin load order, or subtle breakage can
-#   emerge. This is the best order I've sussed out for these plugins.
 junegunn/fzf path:shell
-jeffreytse/zsh-vi-mode kind:defer
-zdharma-continuum/fast-syntax-highlighting
-#zsh-users/zsh-completions path:src # says there is no init file in src dir
-zsh-users/zsh-autosuggestions
-zsh-users/zsh-history-substring-search
+jeffreytse/zsh-vi-mode kind:defer # better vi mode
+
+# Moved these 3 below to nix home module
+# zdharma-continuum/fast-syntax-highlighting
+# zsh-users/zsh-autosuggestions
+# zsh-users/zsh-history-substring-search
+
 romkatv/powerlevel10k
-hlissner/zsh-autopair path:autopair.zsh
+hlissner/zsh-autopair path:autopair.zsh # REVIEW: maybe i ain't need it
