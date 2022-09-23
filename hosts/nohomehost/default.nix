@@ -46,6 +46,7 @@
 		extraGroups = [ "wheel" ]; # adbusers?
 		isNormalUser = true;
 		home = "/home/nohome"; # TODO: remove it
+		shell = pkgs.zsh;
 	};
 
 	## Local config
