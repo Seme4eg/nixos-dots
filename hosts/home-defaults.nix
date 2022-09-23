@@ -14,6 +14,11 @@ let homeModules = inputs.self.lib.mkModules ../modules/home; in
 			# import all modules by default for all users
 			imports = builtins.attrValues homeModules;
 
+			# REVIEW: is that necessary?
+			programs = {
+				home-manager.enable = true;
+			};
+
 			# XXX: remove it
 			#   home.file        ->  home-manager.users.<user>.home.file
 			#   home.configFile  ->  home-manager.users.<user>.home.xdg.configFile
