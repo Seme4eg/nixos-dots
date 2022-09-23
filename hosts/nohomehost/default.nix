@@ -42,33 +42,6 @@
 	# packages that do not requrie any additional configuration
 	# which i can enable / disable just by commenting those out
 	user = {
-		packages = with pkgs; [
-		# Shell script programmers are strange beasts. Writing programs in a language
-		# that wasn't intended as a programming language. Alas, it is not for us mere
-		# mortals to question the will of the ancient ones. If they want shell programs,
-		# they get shell programs.
-		shellcheck
-
-		inputs.webcord.packages.${pkgs.system}.default
-
-		# mpv
-		mpv-with-scripts
-		mpvc  # CLI controller for mpv
-
-		font-manager   # so many damned fonts...
-		# imagemagick    # for image manipulation from the shell
-
-		# common lisp
-		# sbcl
-		# lispPackages.quicklisp
-
-		lua
-
-		scdl
-		ffmpeg
-
-		lf # REVIEW
-	];
 		# Define a user account. Don't forget to set a password with ‘passwd’.
 		extraGroups = [ "wheel" ]; # adbusers?
 		isNormalUser = true;
