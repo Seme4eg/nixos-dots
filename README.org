@@ -204,6 +204,42 @@ example from [[https://github.com/matthiasbenaets/nixos-config/tree/0d8cc23b718d
 *** Packages setup
 **** qemu
 - [[https://github.com/matthiasbenaets/nixos-config/tree/0d8cc23b718d404c1e61738a73cc9db924b64ee8/modules/desktop/virtualisation/qemu.nix][mattias]]
+
+# some example from somewhere idr
+#+begin_src nix
+{ options, config, lib, pkgs, ... }:
+
+with lib;
+let cfg = config.modules.desktop.vm.virtualbox;
+in {
+  options.modules.desktop.vm.virtualbox.enable = lib.mkEnableOption "virtualbox";
+
+  config = mkIf cfg.enable {
+
+    virtualisation.libvirtd = {
+      enable = true;
+      qemu.package = qemu_kvm;
+      onBoot = "ignore";
+    };
+
+    environment.systemPackages = with pkgs; [
+      # Creating an image:
+      #   qemu-img create -f qcow2 disk.img
+      # Creating a snapshot (don't tamper with disk.img):
+      #   qemu-img create -f qcow2 -b disk.img snapshot.img
+      qemu
+
+      virtmanager
+    ]; # spice-gtk ?
+
+    user.extraGroups = [ "libvirtd" ];
+
+    # https://github.com/ninlives/emerge/tree/ce9e1c780019c1aa5d945545de7f25ba295b9f01/impl/lego/hardware/virtualisation.nix
+    # boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+  };
+}
+#+end_src
+
 **** dunst
 [[https://github.com/matthiasbenaets/nixos-config/tree/0d8cc23b718d404c1e61738a73cc9db924b64ee8/modules/services/dunst.nix][example]]
 
