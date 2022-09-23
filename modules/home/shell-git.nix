@@ -5,19 +5,9 @@ in {
   options.modules.shell.git.enable = lib.mkEnableOption "git";
 
   config = lib.mkIf cfg.enable {
-    # home.packages = with pkgs; [
-      # gitAndTools.git-annex
-      # gitAndTools.git-open
-      # gitAndTools.diff-so-fancy
-      # act
-    # ];
-
-    programs = {
-      git = {
-        enable = true;
-        userName = "Seme4eg";
-        userEmail = "418@duck.com";
-      };
+    programs.git = {
+      userName = "Seme4eg";
+      userEmail = "418@duck.com";
     };
 
     xdg.configFile = {
