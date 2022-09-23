@@ -24,7 +24,6 @@ in
     home = {
       file       = mkOpt' attrs {} "Files to place directly in $HOME";
       configFile = mkOpt' attrs {} "Files to place in $XDG_CONFIG_HOME";
-      dataFile   = mkOpt' attrs {} "Files to place in $XDG_DATA_HOME";
     };
   };
 

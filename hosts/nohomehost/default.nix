@@ -14,19 +14,12 @@
 		desktop = {
 			hyprland.enable = true;
 			# rofi.enable = true;
-			browsers = {
-				default = "qutebrowser";
-				# firefox.enable = true; # TODO: setup maybe?
-				qutebrowser.enable = true;
-			};
+			# browsers.firefox.enable = true; # TODO: setup maybe?
 			steam.enable = true;
-			# vm = {
-			# 	qemu.enable = true;
-			# };
+			# vm.qemu.enable = true;
 		};
 		dev.node.enable = true;
 		editors = {
-			default = "emacs"; # nvim
 			emacs.enable = true;
 			emacs.doom.enable = true;
 			# vim.enable = true;

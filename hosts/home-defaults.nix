@@ -9,14 +9,9 @@
 
 		extraSpecialArgs = {inherit inputs;};
 
-		# I only need a subset of home-manager's capabilities. That is, access to
-		# its home.file, home.xdg.configFile and home.xdg.dataFile so I can deploy
-		# files easily to my $HOME, but 'home-manager.users.<user>.home.file.*'
-		# is much too long and harder to maintain, so I've made aliases in:
-		#
+		# XXX: remove it
 		#   home.file        ->  home-manager.users.<user>.home.file
 		#   home.configFile  ->  home-manager.users.<user>.home.xdg.configFile
-		#   home.dataFile    ->  home-manager.users.<user>.home.xdg.dataFile
 		users.${config.username} = {
 			home = {
 				file = lib.mkAliasDefinitions options.home.file;
@@ -24,10 +19,7 @@
 				# look for a nixpkgs channel.
 				stateVersion = config.system.stateVersion;
 			};
-			xdg = {
-				configFile = lib.mkAliasDefinitions options.home.configFile;
-				dataFile   = lib.mkAliasDefinitions options.home.dataFile;
-			};
+			xdg.configFile = lib.mkAliasDefinitions options.home.configFile;
 		};
 	};
 }
