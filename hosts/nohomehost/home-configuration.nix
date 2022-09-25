@@ -45,6 +45,7 @@
       desktop = {
         term.alacritty.enable = true; # TODO: try out st (have config ready)
         browsers.qutebrowser.enable = true;
+        # desktop.browsers.firefox.enable = true; # TODO: setup maybe?
       };
       dev.node.enable = true;
       wayland = {

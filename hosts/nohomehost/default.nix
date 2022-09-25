@@ -11,11 +11,7 @@
 	## Modules
 	modules = {
 		flakes.enable = true;
-		desktop = {
-			# rofi.enable = true;
-			# browsers.firefox.enable = true; # TODO: setup maybe?
-			gaming.enable = true;
-		};
+		desktop.gaming.enable = true;
 		wayland.enable = true;
 		editors = {
 			emacs.enable = true;

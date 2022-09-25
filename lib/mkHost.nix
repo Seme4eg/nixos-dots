@@ -13,7 +13,7 @@ inputs.nixpkgs.lib.nixosSystem {
 
     (import "${inputs.self}/hosts/${hostname}")
 
-    inputs.home-manager.nixosModules.home-manager # TODO: pass username here
+    inputs.home-manager.nixosModules.home-manager
     inputs.hyprland.nixosModules.default
   ]
   # Import all personal modules to every host
