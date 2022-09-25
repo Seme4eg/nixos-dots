@@ -287,14 +287,18 @@ zramSwap.enable = true;
 Is it a nix repl here? - ~/learning/fufexan/pkgs/repl/default.nix
 
 ** Todo / to check
-*** Small and ez todos [0/2]
+*** Small and ez todos [0/3]
 **** TODO https://github.com/MatthiasBenaets/nixos-config
+**** TODO setup gpg
+Copy gpg key from another machine to this one, put it in agenix and add my
+password-store repo
 **** TODO setup mako
 styles, timeouts and stuff
 
-*** To setup [0/12]
+*** To setup [0/13]
 **** TODO setup openvpn
 **** TODO setup tdlib
+**** TODO setup mu4e
 **** TODO mkOutOfStoreSymlink
 With hyprland, waybar and other needed configs to not rebuild flake everytime in
 config change
