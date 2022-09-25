@@ -13,13 +13,9 @@
 		flakes.enable = true;
 		desktop.gaming.enable = true;
 		wayland.enable = true;
-		shell = {
-			# adl.enable = true;
-			# vaultwarden.enable = true; # lightweigt client for bitwarden
-			gnupg.enable = true;
-			pass.enable  = true;
-			zsh.enable   = true; # XXX: remove it when yall wana fuc ur brein
-		};
+
+
+		shell.zsh.enable = true; # XXX: remove it when yall wana fuc ur brein
 		services = {
 			ssh.enable = true;
 			syncthing.enable = true;

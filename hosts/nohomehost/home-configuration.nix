@@ -55,8 +55,11 @@
       emacs.enable = true;
       # TODO: add vim module
       shell = {
+        # adl.enable = true;
+        # vaultwarden.enable = true; # lightweigt client for bitwarden
         git.enable = true;
         zsh.enable = false;
+        pass.enable = true;
       };
     };
 
