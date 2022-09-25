@@ -1,16 +1,10 @@
-{ config, options, pkgs, lib, ... }:
-
-# https://search.nixos.org/options?channel=unstable&show=services.syncthing.devices&from=0&size=50&sort=relevance&type=packages&query=syncthing
-
-let cfg = config.modules.services.syncthing;
-in {
+{ config, options, pkgs, lib, ... }: {
   options.modules.services.syncthing.enable = lib.mkEnableOption "syncthing";
 
-  config = lib.mkIf cfg.enable {
-    user.packages = with pkgs; [
-      syncthing
-      syncthingtray # https://github.com/Martchus/syncthingtray
-    ];
+  config = lib.mkIf config.modules.services.syncthing.enable {
+    environment.systemPackages = [ pkgs.syncthing ];
+
+    # https://search.nixos.org/options?channel=unstable&show=services.syncthing.devices&from=0&size=50&sort=relevance&type=packages&query=syncthing
 
     services.syncthing = {
       enable = true;
