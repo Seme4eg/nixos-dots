@@ -1,24 +1,14 @@
-{ config, lib, pkgs, inputs, ... }:
+{ config, lib, pkgs, inputs, ... }: {
+  options.modules.emacs.enable = lib.mkEnableOption "emacs";
 
-let cfg = config.modules.editors.emacs;
-in {
-  options.modules.editors.emacs = {
-    enable = lib.mkEnableOption "emacs";
-    doom = {
-      enable = lib.mkEnableOption "doom";
-    };
-  };
-
-  config = lib.mkIf cfg.enable {
-    nixpkgs.overlays = [ inputs.emacs-overlay.overlay ];
-
-    user.packages = with pkgs; [
+  config = lib.mkIf config.modules.emacs.enable {
+    home.packages = with pkgs; [
       ## Emacs itself
       binutils       # native-comp needs 'as', provided by this
       # 29 + pgtk + native-comp
       ((emacsPackagesFor emacsPgtkNativeComp).emacsWithPackages
         (epkgs: with epkgs; [
-          vterm
+  vterm
           telega
         ]))
 
@@ -29,8 +19,9 @@ in {
       ## Optional dependencies
       fd                  # faster projectile indexing
       imagemagick         # for image-dired
-      (lib.mkIf (config.programs.gnupg.agent.enable)
-        pinentry_emacs)   # in-emacs gnupg prompts
+      # TODO: when going to setup mu4e - uncomment it and enable programs.gnupg.agent
+      # (lib.mkIf (config.programs.gnupg.agent.enable)
+      #   pinentry_emacs)   # in-emacs gnupg prompts
       zstd                # for undo-fu-session/undo-tree compression
 
       ## Module dependencies
@@ -45,18 +36,10 @@ in {
 
     ];
 
-    services.locate = {
-      locate = pkgs.plocate;
-      enable = true;
-      interval = "hourly";
-      localuser = null;
-    };
+    home.sessionPath = [ "$XDG_CONFIG_HOME/emacs/bin" ];
 
-    environment.variables.PATH = [ "$XDG_CONFIG_HOME/emacs/bin" ];
-
-    modules.shell.zsh.rcFiles = [ "${inputs.self}/config/emacs/aliases.zsh" ];
-
-    fonts.fonts = [ pkgs.emacs-all-the-icons-fonts ];
+    # XXX: bring back when zsh module will be in hm
+    # modules.shell.zsh.rcFiles = [ "${inputs.self}/config/emacs/aliases.zsh" ];
 
     # systemd.tmpfiles.rules = [
       # Static symlink for nix.nixPath, which controls $NIX_PATH. Using nixpkgs
@@ -66,7 +49,7 @@ in {
       # "L+ /home/${config.username}/.local/bin/tdlib - - - - ${pkgs.tdlib}"
     # ];
 
-    system.userActivationScripts = lib.mkIf cfg.doom.enable {
+    home.activation = {
       installDoomEmacs = let
         doom = pkgs.fetchFromGitHub {
           owner = "doomemacs";

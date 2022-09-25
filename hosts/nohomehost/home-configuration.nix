@@ -52,6 +52,8 @@
         enable = true;
         waybar.enable = true;
       };
+      emacs.enable = true;
+      # TODO: add vim module
       shell = {
         git.enable = true;
         zsh.enable = false;

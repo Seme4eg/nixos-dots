@@ -79,6 +79,10 @@
 
     xdg.configFile = {
       "hypr" = { source = "${inputs.self}/config/hypr"; recursive = true; };
+      # TODO: doesn't work
+      # "hypr/bindings".source =
+      #   config.lib.file.mkOutOfStoreSymlink
+      #     "${inputs.self}/config/hypr/bindings";
     };
   };
 }

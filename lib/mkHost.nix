@@ -6,6 +6,8 @@ inputs.nixpkgs.lib.nixosSystem {
     {
       nixpkgs.pkgs = inputs.self.pkgs;
       networking.hostName = hostname;
+
+      nixpkgs.overlays = [ inputs.emacs-overlay.overlay ]; # REVIEW: idk where
     }
     # general settings applicable to all hosts
     "${inputs.self}/hosts/nixos-defaults.nix"

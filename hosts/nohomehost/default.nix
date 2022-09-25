@@ -13,11 +13,6 @@
 		flakes.enable = true;
 		desktop.gaming.enable = true;
 		wayland.enable = true;
-		editors = {
-			emacs.enable = true;
-			emacs.doom.enable = true;
-			# vim.enable = true;
-		};
 		shell = {
 			# adl.enable = true;
 			# vaultwarden.enable = true; # lightweigt client for bitwarden
@@ -45,6 +40,16 @@
 
 	## Local config
 	services.openssh.startWhenNeeded = true;
+
+	# REVIEW: for emacs only, maybe move somewhere else
+	fonts.fonts = [ pkgs.emacs-all-the-icons-fonts ];
+	services.locate = {
+		locate = pkgs.plocate;
+		enable = true;
+		interval = "hourly";
+		localuser = null;
+	};
+	# --- end
 
 	networking.networkmanager = {
 		enable = true;
