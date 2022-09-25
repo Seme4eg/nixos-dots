@@ -3,25 +3,6 @@
   options.modules.wayland.waybar.enable = lib.mkEnableOption "hyprland";
 
   config = lib.mkIf config.modules.wayland.waybar.enable {
-
-    # NOTE: Waybar version, which allows for wlr/workspaces module
-    nixpkgs.overlays = [
-      (final: prev: {
-        waybar = inputs.hyprland.packages.${final.system}.waybar-hyprland;
-      })
-    ];
-
-    # Another way of doing the above:
-
-    # Waybar needs to be compiled with the experimental flag for wlr/workspaces to work
-    # nixpkgs.overlays = [
-    #   (self: super: {
-    #     waybar = super.waybar.overrideAttrs (oldAttrs: {
-    #       mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
-    #     });
-    #   })
-    # ];
-
     programs.waybar = {
       enable = true;
       systemd = {

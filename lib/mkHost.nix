@@ -7,7 +7,18 @@ inputs.nixpkgs.lib.nixosSystem {
       nixpkgs.pkgs = inputs.self.pkgs;
       networking.hostName = hostname;
 
-      nixpkgs.overlays = [ inputs.emacs-overlay.overlay ]; # REVIEW: idk where
+      nixpkgs.overlays = [
+        inputs.emacs-overlay.overlay
+
+        # NOTE: Waybar version, which allows for wlr/workspaces module
+        (final: prev: {
+          waybar = inputs.hyprland.packages.${final.system}.waybar-hyprland;
+          # Another way of doing the above:
+          # waybar = super.waybar.overrideAttrs (oldAttrs: {
+          #   mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
+          # });
+        })
+      ];
     }
     # general settings applicable to all hosts
     "${inputs.self}/hosts/nixos-defaults.nix"
