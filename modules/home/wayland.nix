@@ -45,14 +45,13 @@
       NIXOS_OZONE_WL = "1"; # for webcord for example
     };
 
+    # https://github.com/nix-community/home-manager/blob/master/modules/services/mako.nix#blob-path
     programs.mako = {
       enable = true;
       anchor = "top-center";
       borderRadius = 8;
       defaultTimeout = 5;
     };
-
-    services.network-manager-applet.enable = true;
 
     services.wlsunset = {
       enable = true;

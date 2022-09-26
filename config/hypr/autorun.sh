@@ -1,11 +1,12 @@
 qutebrowser &
 webcord &
 emacs &
-# syncthingtray --wait &
 hyprpaper &
 # waybar & # don't want to put it in systemd service
+# nm-applet --indicator &
 brillo -c 2
 brillo -I
+mako &
 
 # TODO: -i <img> -s fill
 # moved locking to nixos wayland hm module for now

@@ -8,7 +8,7 @@
       # 29 + pgtk + native-comp
       ((emacsPackagesFor emacsPgtkNativeComp).emacsWithPackages
         (epkgs: with epkgs; [
-  vterm
+          vterm
           telega
         ]))
 

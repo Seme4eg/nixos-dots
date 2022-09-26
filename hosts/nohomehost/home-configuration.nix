@@ -36,8 +36,6 @@
 
         scdl
         ffmpeg
-
-        lf # REVIEW
       ];
     };
 
@@ -62,8 +60,5 @@
         pass.enable = true;
       };
     };
-
-    services.syncthing.tray.enable = true;
-
   };
 }
