@@ -6,15 +6,16 @@
     programs.waybar = {
       enable = true;
       package = inputs.hyprland.packages.${inputs.self.system}.waybar-hyprland;
-      # NOTE: requires date and curl in my waybar config to be absolute path
-      # if starting waybar with systemd, which requires me to move my waybar
-      # config here, which i don't think is worth it
       systemd = {
         enable = true;
         target = "graphical-session.target"; # default
       };
-      # style = import ./style.nix colors;
+      style = config.lib.file.mkOutOfStoreSymlink
+        "${inputs.self}/config/waybar/style.css";
 
+      # NOTE: requires date and curl in my waybar config to be absolute path
+      # if starting waybar with systemd, which requires me to move my waybar
+      # config here, which i don't think is worth it
       settings = [
         {
           # "layer" = "top", // Waybar at top layer
@@ -159,11 +160,6 @@
           # };
         }
       ];
-    };
-
-    xdg.configFile = {
-      "waybar/style.css".source = config.lib.file.mkOutOfStoreSymlink
-        "${inputs.self}/config/waybar/style.css";
     };
   };
 }
