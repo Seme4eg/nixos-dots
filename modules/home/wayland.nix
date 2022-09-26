@@ -12,14 +12,11 @@
     wayland.windowManager.hyprland.enable = true;
 
     home.packages = with pkgs; [
-      mako      # notifications
       # TODO: testing notifications with notify-send (remove when done setting up mako)
-      libnotify
+      # libnotify
       hyprpaper # background
-      wlsunset  # nightlight
       brillo    # brightness
       bemenu    # dmenu
-      networkmanagerapplet
 
       # Screenshot
       grim
@@ -27,9 +24,9 @@
       wl-clipboard
 
       # Screenlock
-      swayidle
       swaylock
 
+      # TODO: move to theme module
       # Taken from sway nixos.wiki page
       dracula-theme # gtk-theme
       # gnome3.adwaita-icon-theme # default gnome cursors
@@ -48,29 +45,45 @@
       NIXOS_OZONE_WL = "1"; # for webcord for example
     };
 
+    programs.mako = {
+      enable = true;
+      anchor = "top-center";
+      borderRadius = 8;
+      defaultTimeout = 5;
+    };
+
+    services.network-manager-applet.enable = true;
+
+    services.wlsunset = {
+      enable = true;
+      latitude = "33.9";
+      longitude = "18.4";
+      temperature.night = 3000;
+    };
+
     services.swayidle = {
-      enable = false;
+      enable = true;
       events = [
         {
           event = "before-sleep";
-          command = "swaylock -f -e -k -l -c 000000";
-          # command = "gtklock"; # TODO
+          command = "${pkgs.swaylock}/bin/swaylock -f -e -k -l -c 000000";
+          # command = "${pkgs.swaylock-effects}/bin/swaylock -fF";
         }
         {
           event = "lock";
-          command = "swaylock -f -e -k -l -c 000000";
-          # command = "gtklock";
+          command = "${pkgs.swaylock}/bin/swaylock -f -e -k -l -c 000000";
+          # command = "${pkgs.swaylock-effects}/bin/swaylock -fF";
         }
       ];
       timeouts = [
         {
           timeout = 300;
-          command = "hyprctl dispatch dpms off";
-          resumeCommand = "hyprctl dispatch dpms on";
+          command = "${config.wayland.windowManager.hyprland.package}/bin/hyprctl dispatch dpms off";
+          resumeCommand = "${config.wayland.windowManager.hyprland.package}/bin/hyprctl dispatch dpms on";
         }
         {
           timeout = 310;
-          command = "loginctl lock-session";
+          command = "${pkgs.systemd}/bin/loginctl lock-session";
         }
       ];
     };

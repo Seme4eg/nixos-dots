@@ -12,7 +12,6 @@
     # allow wayland lockers to unlock the screen
     security.pam.services.swaylock.text = "auth include login";
 
-    programs.nm-applet.enable = true; # in case that didn't start in hyprland
     xdg.portal.wlr = {
       enable = true;
       settings.screencast = {
@@ -77,6 +76,7 @@
 
     # This will allow brightness control from users in the video group.
     user.extraGroups = [ "video" ];
+    # TODO: restores brighness level (from nighttime) in tty, which makes me c nothin
     hardware.brillo.enable = true;
 
     environment = {
