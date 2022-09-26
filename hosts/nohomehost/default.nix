@@ -45,7 +45,7 @@
 	# --- end
 
 	# gnupg setup
-	# environment.variables.GNUPGHOME = "$XDG_CONFIG_HOME/gnupg";
+	# environment.variables.GNUPGHOME = "$HOME/.config/gnupg";
 	# programs.gnupg.agent.enable = true;
 	# agent.enableSSHSupport = true;
 

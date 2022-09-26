@@ -61,5 +61,8 @@
         pass.enable = true;
       };
     };
+
+    xdg.enable = true;
+
   };
 }

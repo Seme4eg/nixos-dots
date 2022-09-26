@@ -42,7 +42,7 @@ in {
     ];
 
     home.sessionVariables = {
-      ZDOTDIR   = "$XDG_CONFIG_HOME/zsh";
+      ZDOTDIR   = "$HOME/.config/zsh";
       ZSH_CACHE = "$XDG_CACHE_HOME/zsh";
       ANTIDOTE_DIR  = "$XDG_DATA_HOME/antidote";
     };

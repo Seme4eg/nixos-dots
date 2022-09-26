@@ -33,20 +33,11 @@
       sqlite
       # :lang latex & :lang org (latex previews)
       #texlive.combined.scheme-medium
-
     ];
 
-    home.sessionPath = [ "$XDG_CONFIG_HOME/emacs/bin" ];
+    home.sessionPath = [ "$HOME/.config/emacs/bin" ];
 
     modules.shell.zsh.rcFiles = [ "${inputs.self}/config/emacs/aliases.zsh" ];
-
-    # systemd.tmpfiles.rules = [
-      # Static symlink for nix.nixPath, which controls $NIX_PATH. Using nixpkgs
-      # input directly would result in $NIX_PATH containing a /nix/store value,
-      # which would be inaccurate after the first nixos-rebuild switch until
-      # logging out (and prone to garbage collection induced breakage).
-      # "L+ /home/${config.username}/.local/bin/tdlib - - - - ${pkgs.tdlib}"
-    # ];
 
     home.activation = {
       installDoomEmacs = let
@@ -66,8 +57,8 @@
         };
       in
         ''
-          [ ! -d "$XDG_CONFIG_HOME/emacs" ] && cp ${doom} "$XDG_CONFIG_HOME/emacs"
-          [ ! -d "$XDG_CONFIG_HOME/doom" ] && cp ${myconfig} "$XDG_CONFIG_HOME/doom"
+          [ ! -d "$HOME/.config/emacs" ] && cp ${doom} "$HOME/.config/emacs"
+          [ ! -d "$HOME/.config/doom" ] && cp ${myconfig} "$HOME/.config/doom"
         '';
       };
     };

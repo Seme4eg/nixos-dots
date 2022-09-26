@@ -27,7 +27,6 @@
 
       # REVIEW: any better way of defining config dir?
       configDir = "/home/${config.username}/.config/syncthing";
-      # configDir = "$XDG_CONFIG_HOME/syncthing";
 
       cert = config.age.secrets.syncthing-cert.path;
       key = config.age.secrets.syncthing-key.path;
