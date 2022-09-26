@@ -24,8 +24,8 @@
     # TODO: move it to themes later
     # Icons MS Nerdfont Icons override
     fonts = {
-      fontDir.enable = true;
-      enableGhostscriptFonts = true;
+      # fontDir.enable = true;
+      # enableGhostscriptFonts = true;
       fonts = with pkgs; [
         # font-awesome dejavu_fonts symbola corefonts
 
@@ -63,16 +63,6 @@
         monospace = ["JetBrainsMono Nerd Font" "Noto Color Emoji"];
         emoji = ["Noto Color Emoji"];
       };
-
-      # somwehere in above 'let .. in' construct:
-      # fontList = [ "Sarasa Mono SC" "FantasqueSansMono Nerd Font Mono" ];
-      # .. and then here maybe something like
-      # fontconfig.defaultFonts = {
-      #   monospace = fontList;
-      #   sansSerif = fontList;
-      #   serif = fontList;
-      # };
-
     };
 
     # This will allow brightness control from users in the video group.
