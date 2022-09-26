@@ -287,31 +287,15 @@ zramSwap.enable = true;
 Is it a nix repl here? - ~/learning/fufexan/pkgs/repl/default.nix
 
 ** Todo / to check
-*** Small and ez todos [0/3]
-**** TODO https://github.com/MatthiasBenaets/nixos-config
+*** Small and ez todos [0/1]
 **** TODO setup gpg
 Copy gpg key from another machine to this one, put it in agenix and add my
 password-store repo
-*** To setup [0/13]
+*** To setup [0/9]
 **** TODO setup openvpn
 **** TODO setup tdlib
 **** TODO setup mu4e
-**** TODO Gaming performance
-~/learning/fufexan/modules/gamemode.nix
-
-#+begin_src nix
-programs = {
-    steam.enable = true;
-
-    # Better gaming performance
-    # Steam: right-click game - properties - launch options: gamemoderun %command%
-    # Lutris: General Preferences - enable feral gamemode
-    # 			      - global options - add environment variables:
-    # LD_PRELOAD=/nix/xtore/*-gamemode-*-lib/lib/libgamemodeauto.so
-    # gamemode.enable = true; # XXX: any1 uses it this setting?
-};
-#+end_src
-**** TODO Possible to store wifi passwords and other settings?
+**** TODO setup node
 **** TODO Setup nix img
 
 ~/learning/fufexan/modules/iso.nix
@@ -328,6 +312,8 @@ Shell scripts:
 - [[file:~/learning/emerge/impl/echo/image.nix][another example]]
 
 **** TODO Setup other nix settings
+~/learning/calebchase/nixos-config/nixos/nix.nix - good example
+
 #+begin_src nix
 supportedFeatures = ["nixos-test" "benchmark" "kvm" "big-parallel"];
 
@@ -414,7 +400,6 @@ pointerCursor = {
 #+end_src
 
 Fonts [[https://github.com/ninlives/emerge/tree/ce9e1c780019c1aa5d945545de7f25ba295b9f01/impl/lego/ui/fonts.nix][example]].
-**** TODO After reading thorugh hlissners theme folders cleanup lib dir
 **** TODO Setup easyeffects (like minihost on windows)
 https://www.youtube.com/watch?v=6LbEmP1_dog
 
@@ -429,11 +414,6 @@ hardware -> audio module -> easyeffects app
 [[https://github.com/Mic92/sops-nix][documentation]]
 
 [[https://discourse.nixos.org/t/flakes-secret-configs/14638][Some discussion]] on how to store secrets in nixos repo and [[https://nixos.wiki/wiki/Comparison_of_secret_managing_schemes][comparison]] of them.
-**** TODO Learn how to debug
-.. in order to get rid of some unnecessary hlissners abstractions, especially in
-nix settings in hosts/default.nix. For now it's a mess
-***** TODO Learn nix and understand what i need
-~/learning/calebchase/nixos-config/nixos/nix.nix - good example
 
 *** To fix [0/3]
 - [ ] default browser not applying to emacs
