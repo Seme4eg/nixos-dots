@@ -79,6 +79,11 @@
     # TODO: restores brighness level (from nighttime) in tty, which makes me c nothin
     hardware.brillo.enable = true;
 
+    nix.settings = {
+      substituters = ["https://hyprland.cachix.org"];
+      trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
+    };
+
     environment = {
       # Will automatically open hyprland when logged into tty1
       loginShellInit = ''
