@@ -1,6 +1,6 @@
-  # Cross-cutting/general options (e.g. feature flags) go here.
+# Cross-cutting/general options (e.g. feature flags) go here.
 
-{ config, options, lib, home-manager, ... }: {
+{ config, options, lib, ... }: {
   options = {
     user = lib.mkOption { type = lib.types.attrs; default = {}; };
 
