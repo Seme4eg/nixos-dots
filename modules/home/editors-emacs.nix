@@ -38,8 +38,7 @@
 
     home.sessionPath = [ "$XDG_CONFIG_HOME/emacs/bin" ];
 
-    # XXX: bring back when zsh module will be in hm
-    # modules.shell.zsh.rcFiles = [ "${inputs.self}/config/emacs/aliases.zsh" ];
+    modules.shell.zsh.rcFiles = [ "${inputs.self}/config/emacs/aliases.zsh" ];
 
     # systemd.tmpfiles.rules = [
       # Static symlink for nix.nixPath, which controls $NIX_PATH. Using nixpkgs

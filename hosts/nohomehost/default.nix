@@ -13,9 +13,6 @@
 		flakes.enable = true;
 		desktop.gaming.enable = true;
 		wayland.enable = true;
-
-
-		shell.zsh.enable = true; # XXX: remove it when yall wana fuc ur brein
 		services = {
 			ssh.enable = true;
 			syncthing.enable = true;

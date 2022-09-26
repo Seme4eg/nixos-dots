@@ -58,7 +58,7 @@
         # adl.enable = true;
         # vaultwarden.enable = true; # lightweigt client for bitwarden
         git.enable = true;
-        zsh.enable = false;
+        zsh.enable = true;
         pass.enable = true;
       };
     };

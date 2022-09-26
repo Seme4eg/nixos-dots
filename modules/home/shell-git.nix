@@ -15,7 +15,6 @@ in {
       "git/ignore".source = "${inputs.self}/config/git/ignore";
     };
 
-    # XXX: bring back
-    # modules.shell.zsh.rcFiles = [ "${inputs.self}/config/git/aliases.zsh" ];
+    modules.shell.zsh.rcFiles = [ "${inputs.self}/config/git/aliases.zsh" ];
   };
 }

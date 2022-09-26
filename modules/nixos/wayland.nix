@@ -84,19 +84,6 @@
       loginShellInit = ''
           [ -z $DISPLAY ] && [ "$(tty)" = "/dev/tty1" ] && exec Hyprland
         '';
-      # XXX: remove it and leave those that r in hm module
-      variables = {
-        CLUTTER_BACKEND = "wayland";
-        XDG_SESSION_TYPE = "wayland";
-        QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
-        MOZ_ENABLE_WAYLAND = "1";
-        QT_A_PLATFORM = "wayland";
-        GDK_BACKEND = "wayland";
-        _JAVA_AWT_WM_NONREPARENTING = "1";
-        XCURSOR_SIZE = "24";
-        # use Wayland where possible
-        NIXOS_OZONE_WL = "1"; # for webcord for example
-      };
     };
 
   };

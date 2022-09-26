@@ -60,7 +60,7 @@ in {
         '';
     };
 
-    # system.userActivationScripts.cleanupZsh = ''
+    # home.activation.cleanupZsh = ''
     #   rm -rf $ZSH_CACHE
     #   rm -fv $ZDOTDIR/plugins.zsh
     # '';
