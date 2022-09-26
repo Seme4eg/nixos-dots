@@ -1,11 +1,36 @@
 { options, config, inputs, lib, pkgs, ... }:
+let
+  programs = lib.makeBinPath (with pkgs; [
+    inputs.hyprland.packages.${pkgs.system}.default
+    systemd
+  ]);
 
-let cfg = config.modules.desktop.gaming;
-    # inherit (inputs) gaming;
+  startscript = pkgs.writeShellScript "gamemode-start" ''
+    export PATH=$PATH:${programs}
+    export HYPRLAND_INSTANCE_SIGNATURE=$(ls -w1 /tmp/hypr | tail -1)
+    hyprctl --batch 'keyword decoration:blur 0 ; keyword animations:enabled 0 ; keyword misc:no_vfr 1 ; keyword decoration:active_opacity 1'
+
+    status=$(systemctl --user --machine=1000@ is-active easyeffects)
+    if [[ $status == "active" ]]; then
+      systemctl --user stop easyeffects
+      echo "start" > /tmp/gamemodestate
+    else
+      echo "stop" > /tmp/gamemodestate
+    fi
+  '';
+
+  endscript = pkgs.writeShellScript "gamemode-end" ''
+    export PATH=$PATH:${programs}
+    export HYPRLAND_INSTANCE_SIGNATURE=$(ls -w1 /tmp/hypr | tail -1)
+    hyprctl --batch 'keyword decoration:blur 1 ; keyword animations:enabled 1 ; keyword misc:no_vfr 0 ; keyword decoration:active_opacity 0.7'
+
+    action=$(cat /tmp/gamemodestate)
+    systemctl --user $action easyeffects
+  '';
 in {
   options.modules.desktop.gaming.enable = lib.mkEnableOption "gaming";
 
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf config.modules.desktop.gaming.enable {
 
     # TODO: check fufexan gaming module to make this one better
 
@@ -31,6 +56,10 @@ in {
           };
           gpu = {
             apply_gpu_optimisations = "accept-responsibility";
+          };
+          custom = {
+            start = "${startscript}";
+            end = "${endscript}";
           };
         };
       };

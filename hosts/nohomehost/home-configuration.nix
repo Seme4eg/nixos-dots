@@ -64,5 +64,9 @@
 
     xdg.enable = true;
 
+    services = {
+      easyeffects.enable = true;
+      playerctld.enable = true;
+    };
   };
 }
