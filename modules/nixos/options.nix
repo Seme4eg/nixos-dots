@@ -1,14 +1,6 @@
   # Cross-cutting/general options (e.g. feature flags) go here.
 
-{ config, options, lib, home-manager, ... }:
-
-let
-  inherit (lib.types) path attrs attrsOf oneOf str listOf either;
-
-  mkOpt' = type: default: description:
-    lib.mkOption { inherit type default description; };
-in
-{
+{ config, options, lib, home-manager, ... }: {
   options = {
     user = lib.mkOption { type = lib.types.attrs; default = {}; };
 
@@ -19,18 +11,10 @@ in
       default = "nohome";
       description = "Primary account username";
     };
-
-    # XXX: get rid of this
-    home = {
-      file       = mkOpt' attrs {} "Files to place directly in $HOME";
-      configFile = mkOpt' attrs {} "Files to place in $XDG_CONFIG_HOME";
-    };
   };
 
   config = {
-
     # Alias 'users.users.<user>' -> 'user'
     users.users.${config.username} = lib.mkAliasDefinitions options.user;
-
   };
 }

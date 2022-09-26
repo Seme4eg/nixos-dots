@@ -17,20 +17,11 @@ let homeModules = inputs.self.lib.mkModules ../modules/home; in
 			] ++ builtins.attrValues homeModules;
 
 			# REVIEW: is that necessary?
-			programs = {
-				home-manager.enable = true;
-			};
+			programs.home-manager.enable = true;
 
-			# XXX: remove it
-			#   home.file        ->  home-manager.users.<user>.home.file
-			#   home.configFile  ->  home-manager.users.<user>.home.xdg.configFile
-			home = {
-				file = lib.mkAliasDefinitions options.home.file;
-				# Necessary for home-manager to work with flakes, otherwise it will
-				# look for a nixpkgs channel.
-				stateVersion = config.system.stateVersion;
-			};
-			xdg.configFile = lib.mkAliasDefinitions options.home.configFile;
+			# Necessary for home-manager to work with flakes, otherwise it will
+			# look for a nixpkgs channel.
+			home.stateVersion = config.system.stateVersion;
 		};
 	};
 }
