@@ -26,13 +26,13 @@
           # "gtk-layer-shell" = false;
           # Choose the order of the modules
           # TODO: taskbar not working, breaking my waybar
-          modules-left = ["wlr/workspaces"]; # "wlr/taskbar" "custom/media"];
+          modules-left = ["wlr/workspaces" "custom/media"]; # "wlr/taskbar" "custom/media"];
           modules-center = ["custom/clock" "custom/weather"];
           modules-right = [
             # "hyprland/language"
             "tray"
             "idle_inhibitor"
-            # "pulseaudio"
+            "pulseaudio"
             # "network"
             "cpu"
             # "custom/gpu-usage"
@@ -68,23 +68,22 @@
           };
           "tray" = {"icon-size" = 20; "spacing" = 5;};
           "cpu" = {"format" = "{usage}% "; "tooltip" = true;};
-          # "pulseaudio" = {
-          #   # "scroll-step" = 1, // %, can be a float
-          #   "format" = "{volume}% {icon}";
-          #   "format-bluetooth" = "{volume}% {icon} {format_source}";
-          #   "format-bluetooth-muted" = " {icon} {format_source}";
-          #   "format-muted" = " {format_source}";
-          #   "format-icons" = {
-          #     "headphone" = "";
-          #     "hands-free" = "";
-          #     "headset" = "";
-          #     "phone" = "";
-          #     "portable" = "";
-          #     "car" = "";
-          #     "default" = ["" "" ""];
-          #   };
-          #   "on-click" = "pavucontrol";
-          # };
+          "pulseaudio" = {
+            # "scroll-step" = 1, // %, can be a float
+            "format" = "{volume}% {icon}";
+            "format-bluetooth" = "{volume}% {icon} {format_source}";
+            "format-bluetooth-muted" = " {icon} {format_source}";
+            "format-muted" = " {format_source}";
+            "format-icons" = {
+              "headphone" = "";
+              "hands-free" = "";
+              "headset" = "";
+              "phone" = "";
+              "portable" = "";
+              "car" = "";
+              "default" = ["" "" ""];
+            };
+          };
           memory.format = "{used:0.1f}G/{total:0.1f}G ";
           "temperature" = {
             # "thermal-zone" = 2,
@@ -146,20 +145,25 @@
           # "exec" = "$HOME/.config/waybar/mediaplayer.py 2> /dev/null" // Script in resources folder
           # // "exec" = "$HOME/.config/waybar/mediaplayer.py --player spotify 2> /dev/null" // Filter player based on name
           # },
-          # "custom/media" = {
-          #   "format" = "{icon} {}";
-          #   "escape" = true;
-          #   "return-type" = "json";
-          #   "max-length" = 40;
-          #   "on-click" = "playerctl play-pause";
-          #   "on-click-right" = "playerctl stop";
-          #   "smooth-scrolling-threshold" = 10; # This value was tested using a trackpad, it should be lowered if using a mouse.
-          #   "on-scroll-up" = "playerctl next";
-          #   "on-scroll-down" = "playerctl previous";
-          #   "exec" = "~/.config/waybar/mediaplayer.py 2> /dev/null";
-          # };
+          "custom/media" = {
+            "format" = "{icon} {}";
+            "escape" = true;
+            "return-type" = "json";
+            "max-length" = 40;
+            "on-click" = "playerctl play-pause";
+            "on-click-right" = "playerctl stop";
+            "smooth-scrolling-threshold" = 10; # This value was tested using a trackpad, it should be lowered if using a mouse.
+            "on-scroll-up" = "playerctl next";
+            "on-scroll-down" = "playerctl previous";
+            "exec" = "~/.config/waybar/mediaplayer.py 2> /dev/null";
+          };
         }
       ];
+    };
+
+    xdg.configFile = {
+      "waybar/mediaplayer.py".source =
+        "${inputs.self}/config/waybar/mediaplayer.py";
     };
   };
 }
