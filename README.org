@@ -292,16 +292,10 @@ Is it a nix repl here? - ~/learning/fufexan/pkgs/repl/default.nix
 **** TODO setup gpg
 Copy gpg key from another machine to this one, put it in agenix and add my
 password-store repo
-**** TODO setup mako
-styles, timeouts and stuff
-
 *** To setup [0/13]
 **** TODO setup openvpn
 **** TODO setup tdlib
 **** TODO setup mu4e
-**** TODO mkOutOfStoreSymlink
-With hyprland, waybar and other needed configs to not rebuild flake everytime in
-config change
 **** TODO Gaming performance
 ~/learning/fufexan/modules/gamemode.nix
 
@@ -442,9 +436,8 @@ nix settings in hosts/default.nix. For now it's a mess
 ~/learning/calebchase/nixos-config/nixos/nix.nix - good example
 
 *** To fix [0/3]
-- [ ] fix syncthingtray service not working
+- [ ] default browser not applying to emacs
 - [ ] fix warframe launcher working badly
-- [ ] fix syncthingtray opening in not floating mode
 
 *** Backlog [0/4]
 # not urgent, but most likely needed setups / fixes
