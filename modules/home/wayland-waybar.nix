@@ -5,7 +5,14 @@
   config = lib.mkIf config.modules.wayland.waybar.enable {
     programs.waybar = {
       enable = true;
+      # NOTE: Waybar version, which allows for wlr/workspaces module
       package = inputs.hyprland.packages.${inputs.self.system}.waybar-hyprland;
+      # Another way of doing the above:
+      # (final: prev: {
+        # waybar = super.waybar.overrideAttrs (oldAttrs: {
+        #   mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
+        # });
+      # })
       systemd = {
         enable = true;
         target = "graphical-session.target"; # default
