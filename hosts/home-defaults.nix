@@ -16,12 +16,15 @@ let homeModules = inputs.self.lib.mkModules ../modules/home; in
 				inputs.hyprland.homeManagerModules.default
 			] ++ builtins.attrValues homeModules;
 
-			# REVIEW: is that necessary?
 			programs.home-manager.enable = true;
 
 			# Necessary for home-manager to work with flakes, otherwise it will
 			# look for a nixpkgs channel.
-			home.stateVersion = config.system.stateVersion;
+			home = {
+				username = "${config.username}";
+				homeDirectory = "/home/${config.username}";
+				stateVersion = config.system.stateVersion;
+			};
 		};
 	};
 }

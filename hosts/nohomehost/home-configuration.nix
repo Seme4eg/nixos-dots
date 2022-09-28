@@ -4,9 +4,6 @@
   home-manager.users.${config.username} = {
     # default applications (to not create separate 'default' setting modules)
     home = {
-      # REVIEW: do i need that?
-      # username = "${user}"; # and if i define it how do i refer to it ?
-      # homeDirectory = "/home/${user}";
       sessionVariables = {
         BROWSER = "qutebrowser";
         EDITOR = "emacs"; # nvim

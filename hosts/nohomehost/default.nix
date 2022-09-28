@@ -21,13 +21,10 @@
 		# theme.active = "alucard";
 	};
 
-	# packages that do not requrie any additional configuration
-	# which i can enable / disable just by commenting those out
 	user = {
 		# Define a user account. Don't forget to set a password with ‘passwd’.
 		extraGroups = [ "wheel" ]; # adbusers?
 		isNormalUser = true;
-		home = "/home/nohome"; # TODO: remove it
 		shell = pkgs.zsh;
 	};
 
