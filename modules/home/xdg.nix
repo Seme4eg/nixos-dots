@@ -2,6 +2,8 @@
 #
 # Set up and enforce XDG compliance. Other modules will take care of their own,
 # but this takes care of the general cases.
+#
+# https://github.com/nix-community/home-manager/blob/master/modules/misc/xdg.nix#blob-path
 
 { config, ... }:
 let
@@ -31,11 +33,11 @@ in
     defaultApplications = associations;
   };
 
-  home.sessionPath = [ "$XDG_BIN_HOME" ];
+  home.sessionPath = [ "${config.home.homeDirectory}/.local/bin" ];
 
   # REVIEW: don't think it should b here
   home.sessionVariables = {
-    HISTFILE     = "$XDG_DATA_HOME/bash/history";
-    LESSHISTFILE = "$XDG_CACHE_HOME/lesshst";
+    HISTFILE     = "${config.xdg.dataHome}/bash/history";
+    LESSHISTFILE = "${config.xdg.cacheHome}/lesshst";
   };
 }

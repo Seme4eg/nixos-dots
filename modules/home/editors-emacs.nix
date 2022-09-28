@@ -35,7 +35,7 @@
       #texlive.combined.scheme-medium
     ];
 
-    home.sessionPath = [ "$HOME/.config/emacs/bin" ];
+    home.sessionPath = [ "${config.xdg.configHome}/emacs/bin" ];
 
     modules.shell.zsh.rcFiles = [ "${inputs.self}/config/emacs/aliases.zsh" ];
 
@@ -57,8 +57,10 @@
         };
       in
         ''
-          [ ! -d "$HOME/.config/emacs" ] && cp ${doom} "$HOME/.config/emacs"
-          [ ! -d "$HOME/.config/doom" ] && cp ${myconfig} "$HOME/.config/doom"
+          [ ! -d "${config.xdg.configHome}/emacs" ] &&
+            cp ${doom} "${config.xdg.configHome}/emacs"
+          [ ! -d "${config.xdg.configHome}/doom" ] &&
+            cp ${myconfig} "${config.xdg.configHome}/doom"
         '';
       };
     };

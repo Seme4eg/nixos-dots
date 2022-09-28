@@ -57,7 +57,7 @@ in {
 
       # Install language dictionaries for spellcheck backends
       qbInstallDicts = lib.concatStringsSep "\\\n" (map (lang: ''
-          if ! find "$XDG_DATA_HOME/qutebrowser/qtwebengine_dictionaries" -type d -maxdepth 1 -name "${lang}*" 2>/dev/null | grep -q .; then
+          if ! find "${config.xdg.dataHome}/qutebrowser/qtwebengine_dictionaries" -type d -maxdepth 1 -name "${lang}*" 2>/dev/null | grep -q .; then
             ${pkgs.python3}/bin/python ${pkgs.qutebrowser}/share/qutebrowser/scripts/dictcli.py install ${lang}
           fi
         '') [ "en-US" "ru-RU" ]);
