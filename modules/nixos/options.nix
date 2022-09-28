@@ -4,8 +4,7 @@
   options = {
     user = lib.mkOption { type = lib.types.attrs; default = {}; };
 
-    # Value for tracking where my username is used
-    # REVIEW: maybe move it to flake.nix?
+    # Value for tracking where my username is used, using it in hm and nixos
     username = lib.mkOption {
       type = lib.types.str;
       default = "nohome";

@@ -50,7 +50,7 @@
 		enable = true;
 		# dns = "systemd-resolved"; # REVIEW
 	};
-  # networking.wireless.enable = true;
+	# networking.wireless.enable = true;
 
 	time.timeZone = lib.mkDefault "Europe/Moscow";
 	i18n.defaultLocale = lib.mkDefault "en_US.UTF-8";
