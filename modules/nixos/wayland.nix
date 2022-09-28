@@ -6,7 +6,13 @@
 
   config = lib.mkIf config.modules.wayland.enable {
 
-    programs.hyprland.enable = true;
+    programs = {
+      hyprland = {
+        enable = true;
+        package = null;
+      };
+    };
+
     services.dbus.enable = true;
 
     # allow wayland lockers to unlock the screen
