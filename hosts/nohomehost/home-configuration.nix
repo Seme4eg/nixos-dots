@@ -19,10 +19,11 @@
         inputs.webcord.packages.${pkgs.system}.default
 
         # mpv
+        # error: 'mpv-with-scripts' has been renamed to/replaced by 'self.wrapMpv'
         # mpv-with-scripts
-        mpvc  # CLI controller for mpv
+        mpvc # CLI controller for mpv
 
-        font-manager   # so many damned fonts...
+        font-manager # so many damned fonts...
         # imagemagick    # for image manipulation from the shell
 
         # common lisp
@@ -60,6 +61,21 @@
     };
 
     xdg.enable = true;
+
+    editorconfig = {
+      enable = true;
+      settings = {
+        "*" = {
+          charset = "utf-8";
+          end_of_line = "lf";
+          trim_trailing_whitespace = true;
+          insert_final_newline = true;
+          max_line_width = 80;
+          indent_style = "space";
+          indent_size = 2;
+        };
+      };
+    };
 
     services = {
       easyeffects.enable = true;

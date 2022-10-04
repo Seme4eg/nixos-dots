@@ -17,6 +17,7 @@
       hyprpaper # background
       brillo    # brightness
       bemenu    # dmenu
+      networkmanagerapplet
 
       # Screenshot
       grim
@@ -31,6 +32,9 @@
       dracula-theme # gtk-theme
       # gnome3.adwaita-icon-theme # default gnome cursors
     ];
+
+    # in case that didn't start in hyprland
+    services.network-manager-applet.enable = true;
 
     home.sessionVariables = {
       CLUTTER_BACKEND = "wayland";

@@ -2,7 +2,7 @@
   options.modules.emacs.enable = lib.mkEnableOption "emacs";
 
   config = lib.mkIf config.modules.emacs.enable {
-    home.packages = with pkgs; [
+    user.packages = with pkgs; [
       ## Emacs itself
       binutils # native-comp needs 'as', provided by this
       # 29 + pgtk + native-comp
@@ -35,9 +35,9 @@
       tdlib
     ];
 
-    home.sessionPath = [ "${config.xdg.configHome}/emacs/bin" ];
+    # home.sessionPath = [ "${config.xdg.configHome}/emacs/bin" ];
 
-    modules.shell.zsh.rcFiles = [ "${inputs.self}/config/emacs/aliases.zsh" ];
+    # modules.shell.zsh.rcFiles = [ "${inputs.self}/config/emacs/aliases.zsh" ];
 
     # NOTE: doens't work at all
     # systemd.user.tmpfiles.rules = [
@@ -48,28 +48,28 @@
     #   "L ${config.home.homeDirectory}/.local/bin/tdlib - - - - ${pkgs.tdlib}"
     # ];
 
-    home.activation = {
-      installDoomEmacs = let
-        doom = pkgs.fetchFromGitHub {
-          owner = "doomemacs";
-          repo = "doomemacs";
-          rev = "c44bc81a05f3758ceaa28921dd9c830b9c571e61";
-          hash = "sha256-3apl0eQlfBj3y0gDdoPp2M6PXYnhxs0QWOHp8B8A9sc=";
-        };
-
-        myconfig = pkgs.fetchFromGitHub {
-          owner = "Seme4eg";
-          repo = ".doom.d";
-          rev = "711de97fad87bdd94e31ac730a599edd7503cb09";
-          hash = "sha256-+pOfW2AnePJ2RqnpXaZjuF7GO4WRk67wOle0cABkidw=";
-          stripRoot = false;
-        };
-      in ''
-        [ ! -d "${config.xdg.configHome}/emacs" ] &&
-          cp ${doom} "${config.xdg.configHome}/emacs"
-        [ ! -d "${config.xdg.configHome}/doom" ] &&
-          cp ${myconfig} "${config.xdg.configHome}/doom"
-      '';
-    };
+    # home.activation = {
+      # installDoomEmacs = let
+        # doom = pkgs.fetchFromGitHub {
+          # owner = "doomemacs";
+          # repo = "doomemacs";
+          # rev = "c44bc81a05f3758ceaa28921dd9c830b9c571e61";
+          # hash = "sha256-3apl0eQlfBj3y0gDdoPp2M6PXYnhxs0QWOHp8B8A9sc=";
+        # };
+# 
+        # myconfig = pkgs.fetchFromGitHub {
+          # owner = "Seme4eg";
+          # repo = ".doom.d";
+          # rev = "711de97fad87bdd94e31ac730a599edd7503cb09";
+          # hash = "sha256-+pOfW2AnePJ2RqnpXaZjuF7GO4WRk67wOle0cABkidw=";
+          # stripRoot = false;
+        # };
+      # in ''
+        # [ ! -d "${config.xdg.configHome}/emacs" ] &&
+          # cp ${doom} "${config.xdg.configHome}/emacs"
+        # [ ! -d "${config.xdg.configHome}/doom" ] &&
+          # cp ${myconfig} "${config.xdg.configHome}/doom"
+      # '';
+    # };
   };
 }

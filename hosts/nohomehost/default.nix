@@ -10,9 +10,9 @@
 
 	## Modules
 	modules = {
-		flakes.enable = true;
 		desktop.gaming.enable = true;
 		wayland.enable = true;
+		emacs.enable = true;
 		services = {
 			ssh.enable = true;
 			syncthing.enable = true;
@@ -39,6 +39,14 @@
 		interval = "hourly";
 		localuser = null;
 	};
+
+	systemd.tmpfiles.rules = [
+		# Static symlink for nix.nixPath, which controls $NIX_PATH. Using nixpkgs
+		# input directly would result in $NIX_PATH containing a /nix/store value,
+		# which would be inaccurate after the first nixos-rebuild switch until
+		# logging out (and prone to garbage collection induced breakage).
+		"L+ /usr/local/tdlib - - - - ${pkgs.tdlib}"
+	];
 	# --- end
 
 	# gnupg setup
@@ -48,9 +56,12 @@
 
 	networking.networkmanager = {
 		enable = true;
-		# dns = "systemd-resolved"; # REVIEW
+		# dns = "systemd-resolved"; # "default"
 	};
 	# networking.wireless.enable = true;
+
+	# enable zsh autocompletion for system packages (systemd, etc)
+  environment.pathsToLink = ["/share/zsh"];
 
 	time.timeZone = lib.mkDefault "Europe/Moscow";
 	i18n.defaultLocale = lib.mkDefault "en_US.UTF-8";

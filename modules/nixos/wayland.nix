@@ -18,12 +18,15 @@
     # allow wayland lockers to unlock the screen
     security.pam.services.swaylock.text = "auth include login";
 
-    programs.nm-applet.enable = true; # in case that didn't start in hyprland
-    xdg.portal.wlr = {
+    xdg.portal = {
       enable = true;
-      settings.screencast = {
-        chooser_type = "simple";
-        chooser_cmd = "${pkgs.slurp}/bin/slurp -f %o -or";
+      # wlroots screensharing
+      wlr = {
+        enable = true;
+        settings.screencast = {
+          chooser_type = "simple";
+          chooser_cmd = "${pkgs.slurp}/bin/slurp -f %o -or";
+        };
       };
     };
 

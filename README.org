@@ -400,6 +400,13 @@ pointerCursor = {
 #+end_src
 
 Fonts [[https://github.com/ninlives/emerge/tree/ce9e1c780019c1aa5d945545de7f25ba295b9f01/impl/lego/ui/fonts.nix][example]].
+
+  environment.systemPackages = with pkgs; [
+    glib
+    gsettings-desktop-schemas
+    quintom-cursor-theme
+  ];
+
 **** TODO Setup easyeffects (like minihost on windows)
 https://www.youtube.com/watch?v=6LbEmP1_dog
 
