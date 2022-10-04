@@ -19,7 +19,7 @@
         inputs.webcord.packages.${pkgs.system}.default
 
         # mpv
-        mpv-with-scripts
+        # mpv-with-scripts
         mpvc  # CLI controller for mpv
 
         font-manager   # so many damned fonts...
