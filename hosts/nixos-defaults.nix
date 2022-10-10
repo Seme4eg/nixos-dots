@@ -11,12 +11,6 @@ in {
       "nix/flake-channels/nixpkgs".source = inputs.nixpkgs;
       "nix/flake-channels/home-manager".source = inputs.home-manager;
     };
-    variables = {
-      DOTFILES = "${inputs.self}";
-      DOTFILES_BIN = "${inputs.self}/bin";
-      NIXPKGS_ALLOW_UNFREE = "1"; # Configure nix and nixpkgs
-      PATH = [ "$DOTFILES_BIN" "$HOME/.local/bin" "$PATH" ];
-    };
 
     # enable zsh autocompletion for system packages (systemd, etc)
     # pathsToLink = ["/share/zsh"];
