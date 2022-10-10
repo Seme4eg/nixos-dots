@@ -49,12 +49,7 @@
         noto-fonts-emoji
         roboto
 
-        (nerdfonts.override {
-          fonts = [
-            "FiraCode"
-            "JetBrainsMono"
-          ];
-        })
+        (nerdfonts.override { fonts = [ "FiraCode" "JetBrainsMono" ]; })
       ];
 
       # use fonts specified by user rather than default ones
@@ -67,10 +62,10 @@
       # the reason there's Noto Color Emoji everywhere is to override DejaVu's
       # B&W emojis that would sometimes show instead of some Color emojis
       fontconfig.defaultFonts = {
-        serif = ["Noto Serif" "Noto Color Emoji"];
-        sansSerif = ["Noto Sans" "Noto Color Emoji"];
-        monospace = ["JetBrainsMono Nerd Font" "Noto Color Emoji"];
-        emoji = ["Noto Color Emoji"];
+        serif = [ "Noto Serif" "Noto Color Emoji" ];
+        sansSerif = [ "Noto Sans" "Noto Color Emoji" ];
+        monospace = [ "JetBrainsMono Nerd Font" "Noto Color Emoji" ];
+        emoji = [ "Noto Color Emoji" ];
       };
     };
 
@@ -80,15 +75,17 @@
     hardware.brillo.enable = true;
 
     nix.settings = {
-      substituters = ["https://hyprland.cachix.org"];
-      trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
+      substituters = [ "https://hyprland.cachix.org" ];
+      trusted-public-keys = [
+        "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
+      ];
     };
 
     environment = {
       # Will automatically open hyprland when logged into tty1
       loginShellInit = ''
-          [ -z $DISPLAY ] && [ "$(tty)" = "/dev/tty1" ] && exec Hyprland
-        '';
+        [ -z $DISPLAY ] && [ "$(tty)" = "/dev/tty1" ] && exec Hyprland
+      '';
     };
 
   };
