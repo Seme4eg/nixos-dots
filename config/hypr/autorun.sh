@@ -1,4 +1,4 @@
-qutebrowser &
+firefox &
 webcord &
 emacs &
 hyprpaper &

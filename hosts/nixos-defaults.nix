@@ -62,7 +62,7 @@ in {
       auto-optimise-store = true; # optimize syslinks
 
       # ensure that my evaluation will not require any builds to take place.
-      allow-import-from-derivation = false;
+      allow-import-from-derivation = true;
       builders-use-substitutes = true;
       # I know how to use git without nagging, thank you very much.
       warn-dirty = false;

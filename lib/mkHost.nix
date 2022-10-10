@@ -6,7 +6,7 @@ inputs.nixpkgs.lib.nixosSystem {
     {
       nixpkgs.pkgs = inputs.self.pkgs;
       networking.hostName = hostname;
-      nixpkgs.overlays = [inputs.emacs-overlay.overlay];
+      nixpkgs.overlays = [ inputs.emacs-overlay.overlay inputs.nur.overlay ];
     }
     # general settings applicable to all hosts
     "${inputs.self}/hosts/nixos-defaults.nix"
@@ -18,5 +18,5 @@ inputs.nixpkgs.lib.nixosSystem {
     inputs.hyprland.nixosModules.default
   ]
   # Import all personal modules to every host
-  ++ builtins.attrValues inputs.self.nixosModules;
+    ++ builtins.attrValues inputs.self.nixosModules;
 }

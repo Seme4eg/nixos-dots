@@ -15,7 +15,8 @@
     # Core dependencies
     nixpkgs.url = "nixpkgs/nixos-unstable"; # for packages on the edge
     home-manager = {
-      url = "github:nix-community/home-manager"; # .. or  github:rycee/home-manager/master
+      url =
+        "github:nix-community/home-manager"; # .. or  github:rycee/home-manager/master
       inputs.nixpkgs.follows = "nixpkgs";
     };
     agenix.url = "github:ryantm/agenix";
@@ -23,6 +24,7 @@
 
     # Extras
     emacs-overlay.url = "github:nix-community/emacs-overlay";
+    nur.url = "github:nix-community/NUR";
     nixos-hardware.url = "github:nixos/nixos-hardware";
     hyprland = {
       url = "github:hyprwm/Hyprland";
@@ -38,7 +40,7 @@
   # we saw above) there are some standard outputs such as
   # defaultPackage.${system}.
 
-  outputs = inputs @ { self, nixpkgs, ... }:
+  outputs = inputs@{ self, nixpkgs, ... }:
     # Vars that can be used in the config files.
     let
       lib = import ./lib inputs;

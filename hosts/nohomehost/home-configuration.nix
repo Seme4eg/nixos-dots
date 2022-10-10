@@ -5,7 +5,7 @@
     # default applications (to not create separate 'default' setting modules)
     home = {
       sessionVariables = {
-        BROWSER = "qutebrowser";
+        BROWSER = "firefox";
         EDITOR = "emacs"; # nvim
       };
 
@@ -40,9 +40,8 @@
     modules = {
       desktop = {
         term.alacritty.enable = true; # TODO: try out st (have config ready)
-        browsers.qutebrowser.enable = true;
-        # TODO: setup maybe? and when ya'll do it - take a look at hlissners config
-        # desktop.browsers.firefox.enable = true;
+        # browsers.qutebrowser.enable = true;
+        browsers.firefox.enable = true;
       };
       dev.node.enable = true;
       wayland = {
