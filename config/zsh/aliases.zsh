@@ -47,12 +47,7 @@ if (( $+commands[fasd] )); then
   }
 fi
 
-autoload -U zmv
-
-function take {
-  mkdir "$1" && cd "$1";
-}; compdef take=mkdir
-
+# REVIEW
 function zman {
   PAGER="less -g -I -s '+/^       "$1"'" man zshall;
 }
