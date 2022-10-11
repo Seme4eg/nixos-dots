@@ -1,4 +1,4 @@
-inputs: hostname: username: system:
+inputs: hostname: system:
 inputs.nixpkgs.lib.nixosSystem {
   inherit system;
   specialArgs = { inherit inputs; }; # Pass flake variable
