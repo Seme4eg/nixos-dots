@@ -48,19 +48,18 @@ in {
         ublock-origin
         # unpaywall
 
-        dark-mode-website-switcher
-        darkreader
+        # dark-mode-website-switcher
+        darkreader # complements the one above
         behind-the-overlay-revival
         buster-captcha-solver
         no-pdf-download
-        onetab
+        onetab # simple-tab-groups, test out onetab and maybe switch to simple
         sponsorblock
         to-deepl
         vue-js-devtools
         wappalyzer
         web-scrobbler
         tridactyl # vimium (https://github.com/philc/vimium)
-        simple-tab-groups
         enhancer-for-youtube
       ];
       profiles.main = {
