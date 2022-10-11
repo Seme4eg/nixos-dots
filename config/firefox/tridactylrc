@@ -15,12 +15,19 @@ set hintfiltermode vimperator-reflow
 # set hintchars asdfghjkl
 set hintnames numeric
 
-alias sr source
-
-guiset_quiet gui full
-# guiset_quiet titlebar show # show / hide
-guiset_quiet tabs always # autohide
-guiset_quiet navbar autohide # always / autohide
+# I'd like to get rid of all those predefined values first, but each of those
+# requires a separate 'setnull searchurls.<url>' line, you can't feed multiple
+# keys to one directive, otherwise you get a weird value in searchurls.
+# So i just define new ones and keep old ones.
+set searchurls.ecorp https://www.google.com/search?q=
+set searchurls.ddg   https://duckduckgo.com/?q=
+set searchurls.pedia https://en.wikipedia.org/wiki/Special:Search/
+set searchurls.yt    https://www.youtube.com/results?search_query=
+set searchurls.gh    https://github.com/search?utf8=✓&q=
+set searchurls.sp    https://startpage.com/do/search?language=english&cat=web&query=
+set searchurls.sx    https://searx.me/?category_general=on&q=
+set searchurls.osm   https://www.openstreetmap.org/search?query=
+set searchurls.mdn   https://developer.mozilla.org/en-US/search?q=
 
 
 # ------------------- Bindings -------------------
