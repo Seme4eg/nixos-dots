@@ -61,6 +61,12 @@
 
     xdg.enable = true;
 
+    programs.fzf = {
+      enable = true;
+      defaultCommand = "fd --type f --hidden --follow --exclude .git";
+      defaultOptions = [ "--layout=reverse" ]; # "--height=80%"
+    };
+
     editorconfig = {
       enable = true;
       settings = {

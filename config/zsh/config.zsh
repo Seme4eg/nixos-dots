@@ -19,15 +19,6 @@ export ZVM_VI_INSERT_ESCAPE_BINDKEY=jk
 export _FASD_DATA="$XDG_CACHE_HOME/fasd"
 export _FASD_VIMINFO="$XDG_CACHE_HOME/viminfo"
 
-# fzf
-if (( $+commands[fd] )); then
-  export FZF_DEFAULT_OPTS="--reverse --ansi"
-  export FZF_DEFAULT_COMMAND="fd ."
-  export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-  export FZF_ALT_C_COMMAND="fd -t d . $HOME"
-fi
-
-
 ## ZSH configuration
 # Treat these characters as part of a word.
 WORDCHARS='_-*?[]~&.;!#$%^(){}<>'
