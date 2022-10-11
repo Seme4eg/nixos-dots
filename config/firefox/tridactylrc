@@ -51,7 +51,12 @@ bind --mode=normal ,R restart
 bind --mode=normal ,S source
 # REVIEW: maybe i don't need it
 bind --mode=normal ,d tabduplicate
-bind --mode=normal ,hn composite viewconfig nmaps | zoom 1.4
+# TODO: binding below zooms in *current* page (since viewconfig opens with delay)
+# bind --mode=normal ,hn composite viewconfig nmaps | zoom 1.4
+bind --mode=normal ,hn viewconfig nmaps # how to zoom *opened* page?
+# TODO: first it 'forwards' and only then it tabduplicates, which is a bs to me
+# bind --mode=normal ,L composite tabduplicate; forward
+# bind --mode=normal ,H composite tabduplicate; back
 
 # rudimentary find mode
 bind / fillcmdline find
@@ -63,7 +68,6 @@ bind ,<Space> nohlsearch
 unbind --mode=normal <S-Insert> <AC-Escape> <AC-`> <S-Escape> # escapes
 unbind --mode=normal gT gt ;; # tabs and hints
 unbind --mode=normal zI zM zO zR zi zm zo zr zz # don't need all those zoom bindings
-# unbind --mode=normal ;A # REVIEW
 # nice easter egg, but i don't need it
 unbind --mode=normal <AS-ArrowUp><AS-ArrowUp><AS-ArrowDown><AS-ArrowDown><AS-ArrowLeft><AS-ArrowRight><AS-ArrowLeft><AS-ArrowRight>ba
 
