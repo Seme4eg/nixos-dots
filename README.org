@@ -257,9 +257,6 @@ environment = {
     "nix/flake-channels/nixpkgs".source = inputs.nixpkgs;
     "nix/flake-channels/home-manager".source = inputs.hm;
   };
-
-  # enable zsh autocompletion for system packages (systemd, etc)
-  pathsToLink = ["/share/zsh"];
 };
 
 services = {
@@ -287,10 +284,6 @@ zramSwap.enable = true;
 Is it a nix repl here? - ~/learning/fufexan/pkgs/repl/default.nix
 
 ** Todo / to check
-*** Small and ez todos [0/1]
-**** TODO setup gpg
-Copy gpg key from another machine to this one, put it in agenix and add my
-password-store repo
 *** To setup [0/9]
 **** TODO setup openvpn
 **** TODO setup tdlib
