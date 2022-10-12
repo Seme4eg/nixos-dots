@@ -12,9 +12,6 @@ in {
       "nix/flake-channels/home-manager".source = inputs.home-manager;
     };
 
-    # enable zsh autocompletion for system packages (systemd, etc)
-    # pathsToLink = ["/share/zsh"];
-
     # Just the bear necessities...
     systemPackages = with pkgs; [
       # bind

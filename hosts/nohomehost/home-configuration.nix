@@ -34,6 +34,7 @@
 
         scdl
         ffmpeg
+        manix
       ];
     };
 

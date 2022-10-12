@@ -14,28 +14,32 @@ in {
 
     programs.zsh = {
       enable = true;
-      enableCompletion = true;
+      enableCompletion = true; # default value
       enableAutosuggestions = true;
       enableSyntaxHighlighting = true;
+      # completion configured in zshrc file instead
+      completionInit = ''
+        # autoload -U compinit && compinit
+        autoload -Uz compinit && compinit -u -d $ZSH_CACHE/zcompdump
+        # pure prompt
+        autoload -U promptinit && promptinit
+      '';
       autocd = true;
-      # dotdir = "./config/zsh" # default one
-      # ? this option is not found
-      # historySubstringSearch = {
-      #   enable = true;
-      #   searchDownKey = "^N";
-      #   searchUpKey = "^P";
-      # };
+      historySubstringSearch = {
+        enable = true;
+        searchDownKey = "^N";
+        searchUpKey = "^P";
+      };
     };
 
     home.packages = with pkgs; [
       bat # A cat(1) clone with syntax highlighting and Git integration
       exa # modern replacement for the command-line program ls
 
-      fasd # Quick command-line access to files and directories for POSIX shells
-      # zoxide # A fast cd command that learns your habits
+      zoxide # A fast cd command that learns your habits
 
       fd # A simple, fast and user-friendly alternative to find
-      # jq # command line JSON processor
+      lf
       ripgrep
       tldr # Simplified and community-driven man pages
     ];

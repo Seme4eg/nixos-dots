@@ -2,11 +2,15 @@ alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
 alias -- -='cd -'
+alias cd=z # cuz ima forget bout it sometimes
 
 # du -h --max-depth=1 ~/ | sort -h # make an alias?
 alias 0x0="curl -F 'file=@-' 0x0.st" # < file
 # alias hypru="cd ~/utils/Hyprland && git pull origin main && sudo make install"
 
+# https://github.com/NixOS/nixpkgs/issues/169193
+# Configuring git's safe.directory doesn't seem to work, possibly because of
+# /etc/nixos/flake.nix symlink... so alias to the rescue.
 alias reb="nixos-rebuild switch --flake /etc/dotfiles --use-remote-sudo"
 
 alias q=exit
@@ -38,16 +42,16 @@ if (( $+commands[exa] )); then
   alias tree='exa --tree'
 fi
 
-if (( $+commands[fasd] )); then
-  # fuzzy completion with 'z' when called without args
-  unalias z 2>/dev/null
-  function z {
-    [ $# -gt 0 ] && _z "$*" && return
-    cd "$(_z -l 2>&1 | fzf --height 40% --nth 2.. --reverse --inline-info +s --tac --query "${*##-* }" | sed 's/^[0-9,.]* *//')"
-  }
-fi
-
 # REVIEW
 function zman {
   PAGER="less -g -I -s '+/^       "$1"'" man zshall;
+}
+
+# https://github.com/mlvzk/manix#fzf
+function nixdoc() {
+  manix "" \
+    | grep '^# ' \
+    | sed 's/^# \(.*\) (.*/\1/;s/ (.*//;s/^# //' \
+    | fzf --preview="manix '{}'" \
+    | xargs manix
 }
