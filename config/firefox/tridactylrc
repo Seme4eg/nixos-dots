@@ -58,6 +58,9 @@ bind --mode=normal ,hn viewconfig nmaps # how to zoom *opened* page?
 # bind --mode=normal ,L composite tabduplicate; forward
 # bind --mode=normal ,H composite tabduplicate; back
 
+# yank source blocks
+bind ;s hint -c pre -p
+
 # rudimentary find mode
 bind / fillcmdline find
 bind ? fillcmdline find -?
