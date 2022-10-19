@@ -9,7 +9,6 @@
   modules = {
     desktop.gaming.enable = true;
     wayland.enable = true;
-    emacs.enable = true;
     services = {
       ssh.enable = true;
       syncthing.enable = true;
@@ -29,7 +28,6 @@
   services.openssh.startWhenNeeded = true;
 
   # REVIEW: for emacs only, maybe move somewhere else
-  fonts.fonts = [ pkgs.emacs-all-the-icons-fonts ];
   services.locate = {
     locate = pkgs.plocate;
     enable = true;
