@@ -49,14 +49,16 @@
         noto-fonts-emoji
         roboto
 
+        # Material Design, all-the-icons, GitHub octicons, and a few others.
+        emacs-all-the-icons-fonts
+
         (nerdfonts.override { fonts = [ "FiraCode" "JetBrainsMono" ]; })
       ];
 
-      # use fonts specified by user rather than default ones
-      enableDefaultFonts = false;
-
-      # REVIEW: is it false or grue by default? Do i need it with below strings?
-      # fontconfig.enable = true; # Allow fonts to be discovered
+      # Defaults listed here (including some for unicode coverage):
+      # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/config/fonts/fonts.nix
+      enableDefaultFonts = true;
+      fontconfig.enable = true; # Allow fonts to be discovered
 
       # user defined fonts
       # the reason there's Noto Color Emoji everywhere is to override DejaVu's
