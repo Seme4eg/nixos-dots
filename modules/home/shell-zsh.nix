@@ -19,9 +19,7 @@ in {
       enableSyntaxHighlighting = true;
       # completion configured in zshrc file instead
       completionInit = ''
-        # autoload -U compinit && compinit
-        autoload -Uz compinit && compinit -u -d $ZSH_CACHE/zcompdump
-        # pure prompt
+        autoload -U compinit && compinit
         autoload -U promptinit && promptinit
       '';
       autocd = true;
