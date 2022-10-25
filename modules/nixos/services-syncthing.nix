@@ -17,7 +17,8 @@
 
       devices = {
         "chost" = {
-          id = "2VVN4XC-PHZEY3X-25YR2UO-DA7NPS5-ZKERYXM-UZGONF6-XUX7QNY-NLNYIAB";
+          id =
+            "2VVN4XC-PHZEY3X-25YR2UO-DA7NPS5-ZKERYXM-UZGONF6-XUX7QNY-NLNYIAB";
           introducer = true;
           # autoAcceptFolders = true;
         };
@@ -35,42 +36,70 @@
         "/home/${config.username}/Pictures" = {
           id = "xmx67-zj7wg";
           devices = [ "chost" ];
-          versioning = {type = "simple"; params.keep = "2";};
+          versioning = {
+            type = "simple";
+            params.keep = "1";
+          };
+        };
+        "/home/${config.username}/apps" = {
+          id = "kur5v-mxacx";
+          devices = [ "chost" ];
+          versioning = {
+            type = "simple";
+            params.keep = "1";
+          };
         };
         "/home/${config.username}/Audiobooks" = {
           id = "oqlpo-zmwq9";
           devices = [ "chost" ];
-          versioning = {type = "simple"; params.keep = "1";};
         };
         "/home/${config.username}/Books" = {
           id = "hkjpb-mmqwj";
           devices = [ "chost" ];
-          versioning = {type = "simple"; params.keep = "1";};
+          versioning = {
+            type = "simple";
+            params.keep = "1";
+          };
         };
         "/home/${config.username}/Documents" = {
           id = "r7asu-23rtr";
           devices = [ "chost" ];
-          versioning = {type = "simple"; params.keep = "2";};
+          versioning = {
+            type = "simple";
+            params.keep = "2";
+          };
         };
         "/home/${config.username}/git/books" = {
           id = "th5g5-5t9vc";
           devices = [ "chost" ];
-          versioning = {type = "simple"; params.keep = "1";};
+          versioning = {
+            type = "simple";
+            params.keep = "1";
+          };
         };
         "/home/${config.username}/mem_arch" = {
           id = "9a4kl-cxrzf";
           devices = [ "chost" ];
-          versioning = {type = "simple"; params.keep = "3";};
+          versioning = {
+            type = "simple";
+            params.keep = "1";
+          };
         };
         "/home/${config.username}/Music" = {
           id = "xxwgz-nsgrz";
           devices = [ "chost" ];
-          versioning = {type = "simple"; params.keep = "1";};
+          versioning = {
+            type = "simple";
+            params.keep = "1";
+          };
         };
         "/home/${config.username}/git/tea" = {
           id = "uvxlq-9vwiq";
           devices = [ "chost" ];
-          versioning = {type = "simple"; params.keep = "2";};
+          versioning = {
+            type = "simple";
+            params.keep = "1";
+          };
         };
 
       };
