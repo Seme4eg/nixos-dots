@@ -35,6 +35,8 @@
         scdl
         ffmpeg
         manix
+        xdg-utils # for xdg-open
+        gnutls # for irc
       ];
     };
 

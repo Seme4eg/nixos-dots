@@ -419,7 +419,7 @@ hardware -> audio module -> easyeffects app
 - [ ] default browser not applying to emacs
 - [ ] fix warframe launcher working badly
 
-*** Backlog [0/4]
+*** Backlog [0/5]
 # not urgent, but most likely needed setups / fixes
 
 **** TODO Xbox-controller setup [[https://github.com/ninlives/emerge/tree/ce9e1c780019c1aa5d945545de7f25ba295b9f01/impl/lego/service/xbox-controller.nix][example]].
@@ -434,3 +434,5 @@ search for those keywords in other ppls dots
 
 # wireguard.enable = true; # migrate from openvpn to wireguard
 # transmission.enable = true; # bittorrent client - https://transmissionbt.com/
+**** TODO maybe setup [[https://github.com/kennylevinsen/greetd][greetd]] login manager?
+https://wiki.archlinux.org/title/Greetd

@@ -11,9 +11,10 @@ set smoothscroll true
 set theme midnight
 
 # NOTE: testing this "sane hinting mode"
-set hintfiltermode vimperator-reflow
-# set hintchars asdfghjkl
-set hintnames numeric
+# vimperator vimperator-reflow
+set hintfiltermode simple
+set hintchars asdfghjkl
+set hintnames short
 
 # I'd like to get rid of all those predefined values first, but each of those
 # requires a separate 'setnull searchurls.<url>' line, you can't feed multiple
@@ -53,13 +54,16 @@ bind --mode=normal ,S source
 bind --mode=normal ,d tabduplicate
 # TODO: binding below zooms in *current* page (since viewconfig opens with delay)
 # bind --mode=normal ,hn composite viewconfig nmaps | zoom 1.4
-bind --mode=normal ,hn viewconfig nmaps # how to zoom *opened* page?
+# how to zoom *opened* page?
+bind --mode=normal ,hn viewconfig nmaps
 # TODO: first it 'forwards' and only then it tabduplicates, which is a bs to me
 # bind --mode=normal ,L composite tabduplicate; forward
 # bind --mode=normal ,H composite tabduplicate; back
 
 # yank source blocks
 bind ;s hint -c pre -p
+# open multiple hints in background
+bind ;r hint -qb
 
 # rudimentary find mode
 bind / fillcmdline find

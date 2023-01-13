@@ -1,17 +1,13 @@
 # General settings applicable to all hosts
 
 { inputs, config, lib, pkgs, ... }:
-let inherit (lib) mkDefault mapAttrs;
+let
+  inherit (lib) mkDefault mapAttrs;
+  nixpkgsPath = "/etc/nixpkgs-channel";
 in {
   # Common config for all nixos machines; and to ensure the flake operates
   # soundly
   environment = {
-    etc = {
-      "nix/flake-channels/system".source = inputs.self;
-      "nix/flake-channels/nixpkgs".source = inputs.nixpkgs;
-      "nix/flake-channels/home-manager".source = inputs.home-manager;
-    };
-
     # Just the bear necessities...
     systemPackages = with pkgs; [
       # bind
@@ -29,17 +25,28 @@ in {
   nix = let users = [ "root" config.username ];
   in {
     package = pkgs.nixUnstable;
-    settings.experimental-features =
-      "nix-command flakes"; # ? [ "nix-command" "flakes" ];
 
-    nixPath = [
-      # List of directories to be searched for <...> file references.
-      "nixpkgs=/etc/nix/flake-channels/nixpkgs"
-      "home-manager=/etc/nix/flake-channels/home-manager"
-    ];
-    registry = lib.mapAttrs (_: v: { flake = v; }) inputs;
+    # Make angle bracket references (e.g. nix repl '<nixpkgs>') use my flake's
+    # nixpkgs, instead of whatever the imperatively managed version is. One day
+    # flakes will completely kill off channels... one day.
+    #
+    # NOTE: My bash or zsh profiles don't seem to use NixOS's command-not-found
+    # handler, but if that ever changes then keep in mind that removing the root
+    # channel may cause breakage. See the discourse link below.
+    #
+    # https://discourse.nixos.org/t/do-flakes-also-set-the-system-channel/19798/2
+    # https://github.com/NobbZ/nixos-config/blob/main/nixos/modules/flake.nix
+    nixPath = [ "nixpkgs=${nixpkgsPath}" ];
 
+    # Make registry-based commands (e.g. nix run nixpkgs#foo) use my flake's
+    # system nixpkgs, instead of looking up the latest nixpkgs revision from
+    # GitHub.
+    registry.nixpkgs.flake = inputs.nixpkgs;
+    # registry = lib.mapAttrs (_: v: { flake = v; }) inputs;
+
+    # Settings is for nix.conf. See man nix.conf.
     settings = {
+      experimental-features = [ "nix-command" "flakes" ];
       substituters = [
         "https://nix-community.cachix.org"
         "https://webcord.cachix.org"
@@ -53,9 +60,8 @@ in {
       auto-optimise-store = true; # optimize syslinks
 
       # ensure that my evaluation will not require any builds to take place.
-      allow-import-from-derivation = true;
+      allow-import-from-derivation = true; # true cuz of 'nur'
       builders-use-substitutes = true;
-      # I know how to use git without nagging, thank you very much.
       warn-dirty = false;
     };
 
@@ -65,7 +71,6 @@ in {
     # garbage collector setup
     gc = {
       automatic = true;
-      dates = "weekly";
       options = "--delete-older-than 7d";
     };
   };
@@ -76,6 +81,13 @@ in {
     configurationRevision = inputs.self.rev or "dirty";
     stateVersion = "21.05";
   };
+
+  systemd.tmpfiles.rules = [
+    # Static symlink for nix.nixPath, which controls $NIX_PATH. Using nixpkgs input directly would
+    # result in $NIX_PATH containing a /nix/store value, which would be inaccurate after the first
+    # nixos-rebuild switch until logging out (and prone to garbage collection induced breakage).
+    "L+ ${nixpkgsPath} - - - - ${inputs.nixpkgs}"
+  ];
 
   # The global useDHCP flag is deprecated, therefore explicitly set to false
   # here. Per-interface useDHCP will be mandatory in the future, so we enforce

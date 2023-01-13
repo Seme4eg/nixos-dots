@@ -32,10 +32,11 @@
       #texlive.combined.scheme-medium
 
       nixfmt
-      tdlib
+      # tdlib
     ];
 
-    home.sessionPath = [ "${config.xdg.configHome}/emacs/bin" ];
+    home.sessionPath =
+      [ "${config.xdg.configHome}/emacs/bin" "$HOME/.config/doom" ];
 
     modules.shell.zsh.rcFiles = [ "${inputs.self}/config/emacs/aliases.zsh" ];
 

@@ -1,13 +1,19 @@
 { config, lib, pkgs, modulesPath, ... }:
 
 {
-  imports = [ (modulesPath + "/installer/scan/not-detected.nix")];
+  imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
   boot = {
     initrd = {
       availableKernelModules =
         # "usbhid" "dm_mod" "tpm"
-        [ "xhci_pci" "nvme" "usb_storage" "sd_mod" "rtsx_usb_sdmmc" ]; # "usbhid" "uas"
+        [
+          "xhci_pci"
+          "nvme"
+          "usb_storage"
+          "sd_mod"
+          "rtsx_usb_sdmmc"
+        ]; # "usbhid" "uas"
       kernelModules = [ ]; # "btrfs" "kvm-amd" "sd_mod" "dm_mod"
     };
     extraModulePackages = [ ];
@@ -42,12 +48,13 @@
     # ergodox.enable = true;
   };
 
-	user.packages = with pkgs; [
-		lm_sensors # Tools for reading hardware sensors (gpu temperature, etc..)
-  ];
+  user.packages = with pkgs;
+    [
+      lm_sensors # Tools for reading hardware sensors (gpu temperature, etc..)
+    ];
 
   services.xserver.xkbOptions = "ctrl:swapcaps,grp:win_space_toggle";
-	# Enable touchpad support (enabled default in most desktopManager).
+  # Enable touchpad support (enabled default in most desktopManager).
   services.xserver.libinput.enable = true;
 
   # Power management
@@ -72,7 +79,8 @@
   # hardware.bluetooth.enable = true;
 
   # CPU
-  # nix.settings.max-jobs = lib.mkDefault 16; # REVIEW
+  # so Nix can build multiple store paths in parallel
+  nix.settings.max-jobs = lib.mkDefault 8;
   # ondemand (default), powersave, performance
   powerManagement.cpuFreqGovernor = "powersave";
   hardware.cpu.intel.updateMicrocode = true;
